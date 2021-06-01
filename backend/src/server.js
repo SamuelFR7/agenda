@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/person', {
     useUnifiedTopology: true
 })
 
+
 server.use(cors())
 server.use(express.json())
 server.use(routes)

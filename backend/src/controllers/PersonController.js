@@ -35,11 +35,9 @@ module.exports = {
 
     async show(req, res){
         const { id } = req.body
-
         const showPerson = await Person.findById(id)
 
         return res.json(showPerson)
-
     },
 
     async update(req, res){
