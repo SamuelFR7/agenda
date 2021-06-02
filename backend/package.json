@@ -4,14 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "node-dev --respawn --notify=false src/server.js"
+    "start": "nodemon src/server.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.12",
-    "node-dev": "^7.0.0"
+    "nodemon": "^2.0.7"
   },
   "devDependencies": {}
 }
