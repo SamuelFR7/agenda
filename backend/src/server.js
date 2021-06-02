@@ -1,4 +1,6 @@
 const express = require('express')
+const dotenv = require('dotenv')
+dotenv.config()
 const mongoose = require('mongoose')
 const cors = require('cors')
 
@@ -6,7 +8,7 @@ const routes = require('./routes')
 
 const server = express()
 
-mongoose.connect('mongodb://localhost/person', {
+mongoose.connect(process.env.MONGO_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
