@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import Header from '../components/Header'
 
 import api from '../services/api'
 
@@ -44,42 +43,37 @@ export default function Add({ history }){
 
     return (
         <div>
-           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-           <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet" />
             
+            <div>    
+
             <div>
-            <Header />     
-
-            <div className="container w-50">
-                <h1 className="text-black text-center mt-5 mb-3">Adicionar Contato</h1>
-                    <form onSubmit={handleSubmit} className="d-flex flex-column">
-                        <input className="form-control mb-2" placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value)} />
-                        <input className="form-control mb-2" placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value)} />
-                        <input className="form-control mb-2" placeholder="Email" value={Email} onChange={e => setEmail(e.target.value)} />
-                        <div className="d-inline">
-                            <input className="form-control mb-2" placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} />
-                            <input className="form-control mb-2 ml-5" placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value)} />
+                <h1>Adicionar Contato</h1>
+                    <form onSubmit={handleSubmit}>
+                        <input placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
+                        <input placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
+                        <input placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
+                        <div>
+                            <input placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} />
+                            <input placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                         </div>
-                        <div className="form-inline">
-                            <input className="form-control mb-2" placeholder="Telefone 2" value={Telefone2} onChange={e => setTelefone2(e.target.value)} />
-                            <input className="form-control mb-2 ml-5" placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value)} />
+                        <div>
+                            <input placeholder="Telefone 2" value={Telefone2} onChange={e => setTelefone2(e.target.value)} />
+                            <input placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
                         </div>
-                        <div className="form-inline">
-                            <input className="form-control mb-2" placeholder="Telefone 3" value={Telefone3} onChange={e => setTelefone3(e.target.value)} />
-                            <input className="form-control mb-2 ml-5" placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value)} />
+                        <div>
+                            <input placeholder="Telefone 3" value={Telefone3} onChange={e => setTelefone3(e.target.value)} />
+                            <input placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                         </div>
-                        <div className="form-inline">
-                            <input className="form-control mb-2" placeholder="Telefone 4" value={Telefone4} onChange={e => setTelefone4(e.target.value)} />
-                            <input className="form-control mb-2 ml-5" placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value)} />
+                        <div>
+                            <input placeholder="Telefone 4" value={Telefone4} onChange={e => setTelefone4(e.target.value)} />
+                            <input placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
                         </div>
-                        <div className="form-inline">
-                            <input className="form-control mb-2" placeholder="Telefone 5" value={Telefone5} onChange={e => setTelefone5(e.target.value)} />
-                            <input className="form-control mb-2 ml-5" placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value)} />
+                        <div>
+                            <input placeholder="Telefone 5" value={Telefone5} onChange={e => setTelefone5(e.target.value)} />
+                            <input placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                         </div>
-
-                        <input className="form-control mb-4" placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value)} />
-                        <button type="submit" className="btn btn-primary">Adicionar</button>
+                        <input placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
+                        <button type="submit">Adicionar</button>
                     </form>
             </div>
             </div>
