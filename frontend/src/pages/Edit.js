@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header'
 import api from '../services/api'
 
 
@@ -54,24 +53,20 @@ export default function Edit({ match, history }){
 
     return (
         <div>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-           <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet" />
-            <Header />
-            <div className="container mt-3">
-            <input defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value)} />
+            <div>
+            <input defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
             <input defaultValue={person.Telefone1} onChange={e => setTelefone1(e.target.value)} />
             <input defaultValue={person.Telefone2} onChange={e => setTelefone2(e.target.value)} />
             <input defaultValue={person.Telefone3} onChange={e => setTelefone3(e.target.value)} />
             <input defaultValue={person.Telefone4} onChange={e => setTelefone4(e.target.value)} />
             <input defaultValue={person.Telefone5} onChange={e => setTelefone5(e.target.value)} />
-            <input defaultValue={person.Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value)} />
-            <input defaultValue={person.Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value)} />
-            <input defaultValue={person.Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value)} />
-            <input defaultValue={person.Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value)} />
-            <input defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value)} />
-            <input defaultValue={person.Email} onChange={e => setEmail(e.target.value)} />
-            <input defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value)} />
+            <input defaultValue={person.Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
+            <input defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
             <button type='button' onClick={() => handleSubmit()}>ENVIAR</button>
             </div>
         </div>

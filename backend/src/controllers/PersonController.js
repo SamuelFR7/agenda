@@ -70,5 +70,12 @@ module.exports = {
         const deletePerson = await Person.findByIdAndDelete(id)
 
         return res.json(deletePerson)
+    },
+
+    async filter(req, res){
+        const { name } = req.headers
+        const regexp = new RegExp("^"+name)
+        const searchPerson = await Person.find({RazaoSocial: regexp})
+        return res.json(searchPerson)
     }
 }
