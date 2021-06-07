@@ -7,5 +7,6 @@ routes.post('/add', PersonController.store)
 routes.get('/show', PersonController.show)
 routes.post('/update', PersonController.update)
 routes.delete('/delete', PersonController.delete)
+routes.get('/filter', PersonController.filter)
 
 module.exports = routes
