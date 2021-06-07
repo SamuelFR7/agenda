@@ -65,10 +65,8 @@ module.exports = {
     },
 
     async delete(req, res){
-        const { id } = req.body 
-
+        const { id } = req.headers 
         const deletePerson = await Person.findByIdAndDelete(id)
-
         return res.json(deletePerson)
     },
 
