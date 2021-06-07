@@ -1,11 +1,13 @@
 const axios = require('axios')
-const { collection } = require('../model/Person')
 const Person = require('../model/Person')
 
 
 module.exports = {
     async index(req, res){
-        const people = await Person.find({}).sort({RazaoSocial: 1})
+        const { page, limit } = req.headers
+        const skip = (page * 10) - 10
+        const limitcount = limit * 10
+        const people = await Person.find({}).sort({RazaoSocial: 1}).skip(skip).limit(limitcount)
 
         return res.json(people)
 
