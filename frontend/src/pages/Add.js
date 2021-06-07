@@ -49,11 +49,11 @@ export default function Add({ history }){
             <div>
                 <h1>Adicionar Contato</h1>
                     <form onSubmit={handleSubmit}>
-                        <input placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
+                        <input placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required="true" />
                         <input placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
                         <input placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
                         <div>
-                            <input placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} />
+                            <input placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} required="true" />
                             <input placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                         </div>
                         <div>
