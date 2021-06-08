@@ -57,6 +57,7 @@ module.exports = {
         if (req.body.Telefone1Contato) person.Telefone4Contato = req.body.Telefone4Contato
         if (req.body.Telefone1Contato) person.Telefone5Contato = req.body.Telefone5Contato
         if (req.body.Email) person.Email = req.body.Email
+        if (req.body.Endereco) person.Endereco = req.body.Endereco
         if (req.body.Observacoes) person.Observacoes = req.body.Observacoes
 
         person = { $set: person }
