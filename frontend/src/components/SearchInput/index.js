@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../pages/Main.css'
 
 export default function SearchInput({ value, onChange }){
     function handleChange(e){
@@ -6,6 +7,6 @@ export default function SearchInput({ value, onChange }){
     }
 
     return (
-        <input type="search" value={value} onChange={handleChange}/>
+        <input className="searchInput" placeholder="Pesquisar" type="search" value={value} onChange={handleChange}/>
     )
 }
