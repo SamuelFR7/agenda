@@ -73,9 +73,9 @@ module.exports = {
     },
 
     async filter(req, res){
-        const { name } = req.headers
-        const regexp = new RegExp("^"+name)
-        const searchPerson = await Person.find({RazaoSocial: regexp})
+        const { name, limit } = req.headers
+        const limitcount = limit * 10
+        const searchPerson = await Person.find({ RazaoSocial: {$regex: name}}).limit(limitcount)
         return res.json(searchPerson)
     }
 }
