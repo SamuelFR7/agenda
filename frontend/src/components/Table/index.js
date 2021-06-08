@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import SearchInput from '../SearchInput'
+import './Table.css'
 import Pagination from 'rc-pagination'
+
 
 import 'rc-pagination/assets/index.css'
 
@@ -12,14 +14,15 @@ export default function Table(){
   const [text, setText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPeople, setTotalPeople] = useState([])
-
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function search(){
       if(text) {
         const response = await api.get('/filter', {
           headers: {
-            name: text.toUpperCase()
+            name: text.toUpperCase(),
+            limit: 2
           }
         })
         const resdata = response.data
@@ -60,7 +63,9 @@ export default function Table(){
     const response = data.data
     setPeople(response)}
     loadPeople()
+    setLoading(false)
   }, [currentPage])
+
 
 
   async function handleDelete(id){
@@ -85,14 +90,21 @@ export default function Table(){
     }
   }
 
-
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    )
+  }
 
 
   return (
     <div>
-      <SearchInput value={text} onChange={(search) => setText(search)} />
       <header>
+        <a href="/add"><button>Adicionar</button></a>
       </header>
+      <SearchInput value={text} onChange={(search) => setText(search)} />
       <table>
         <thead>
           <tr>
@@ -112,8 +124,8 @@ export default function Table(){
         <td>{item.Email}</td>
         <td>{item.Telefone1Contato}</td>
         <td><button type="button" onClick={() => {if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id)}}>Deletar</button></td>
-        <td><a href={"/edit/"+item._id}>Editar</a></td>
-        <td><a href={"/show/"+item._id}>Visualizar</a></td>
+        <td><a href={"/edit/"+item._id}><button>Editar</button></a></td>
+        <td><a href={"/show/"+item._id}><button>Visualizar</button></a></td>
         </tr>))}
       </tbody>
       </table>
