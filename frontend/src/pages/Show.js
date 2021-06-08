@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import api from '../services/api'
 
-export default function Show({ match }){
+import './Show.css'
+
+export default function Show({ match, history }){
     const [person, setPerson] = useState([])
     
     useEffect(() => {
@@ -18,25 +20,31 @@ export default function Show({ match }){
         loadPerson()
     }, [match.params.id])
 
-    console.log(person)
+    function handleReturn(){
+        history.push('/')
+    }
+
 
     return (
-        <div>
-            <ul>
-                <li>Nome: {person.RazaoSocial}</li>
-                <li>Telefone 1: {person.Telefone1}</li>
-                <li>Telefone 2: {person.Telefone2}</li>
-                <li>Telefone 3: {person.Telefone3}</li>
-                <li>Telefone 4: {person.Telefone4}</li>
-                <li>Telefone 5: {person.Telefone5}</li>
-                <li>Contato 1: {person.Telefone1Contato}</li>
-                <li>Contato 2: {person.Telefone2Contato}</li>
-                <li>Contato 3: {person.Telefone3Contato}</li>
-                <li>Contato 4: {person.Telefone4Contato}</li>
-                <li>Contato 5: {person.Telefone5Contato}</li>
-                <li>Email: {person.Email}</li>
-                <li>Observacoes: {person.Observacoes}</li>
+        <div className="list-container">
+            <ul className="list-content" >
+                
+                <li className="list-item"><p>Nome:</p>{person.RazaoSocial}</li>
+                <li className="list-item"><p>Telefone 1:</p>{person.Telefone1}</li>
+                <li className="list-item"><p>Telefone 2:</p>{person.Telefone2}</li>
+                <li className="list-item"><p>Telefone 3:</p>{person.Telefone3}</li>
+                <li className="list-item"><p>Telefone 4:</p>{person.Telefone4}</li>
+                <li className="list-item"><p>Telefone 5:</p>{person.Telefone5}</li>
+                <li className="list-item"><p>Contato 1:</p>{person.Telefone1Contato}</li>
+                <li className="list-item"><p>Contato 2:</p>{person.Telefone2Contato}</li>
+                <li className="list-item"><p>Contato 3:</p>{person.Telefone3Contato}</li>
+                <li className="list-item"><p>Contato 4:</p>{person.Telefone4Contato}</li>
+                <li className="list-item"><p>Contato 5:</p>{person.Telefone5Contato}</li>
+                <li className="list-item"><p>Email:</p>{person.Email}</li>
+                <li className="list-item"><p>Observações:</p>{person.Observacoes}</li>
+                <li className="list-item"><p>Endereço:</p>{person.Endereco}</li>
             </ul>
+            <button onClick={handleReturn}>Retornar</button>
         </div>
     )
 }
