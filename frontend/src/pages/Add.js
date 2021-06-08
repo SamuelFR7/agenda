@@ -2,7 +2,9 @@ import React, {useState} from 'react'
 
 import api from '../services/api'
 
-export default function Add({ history }){
+import './Add.css'
+
+export default function AddForm({ history }){
     const [RazaoSocial, setRazaoSocial] = useState('')
     const [Endereco, setEndereco] = useState('')
     const [Email, setEmail] = useState('')
@@ -41,41 +43,31 @@ export default function Add({ history }){
         history.push('/')
     }
 
-    return (
-        <div>
-            
-            <div>    
+    function handleReturn(){
+        history.push('/')
+    }
 
-            <div>
-                <h1>Adicionar Contato</h1>
-                    <form onSubmit={handleSubmit}>
-                        <input placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required="true" />
-                        <input placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
-                        <input placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
-                        <div>
-                            <input placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} required="true" />
-                            <input placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
-                        </div>
-                        <div>
-                            <input placeholder="Telefone 2" value={Telefone2} onChange={e => setTelefone2(e.target.value)} />
-                            <input placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
-                        </div>
-                        <div>
-                            <input placeholder="Telefone 3" value={Telefone3} onChange={e => setTelefone3(e.target.value)} />
-                            <input placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
-                        </div>
-                        <div>
-                            <input placeholder="Telefone 4" value={Telefone4} onChange={e => setTelefone4(e.target.value)} />
-                            <input placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
-                        </div>
-                        <div>
-                            <input placeholder="Telefone 5" value={Telefone5} onChange={e => setTelefone5(e.target.value)} />
-                            <input placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
-                        </div>
-                        <input placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
+    return (
+        <div className="form-container">
+            <button className="buttonReturn" onClick={handleReturn}>Retornar</button>
+            <div className="form-content">
+                    <form  onSubmit={handleSubmit}>
+                        <input className="inputField" placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required="true" />
+                        <input className="inputField" placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} required="true" />
+                        <input className="inputField" placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Telefone 2" value={Telefone2} onChange={e => setTelefone2(e.target.value)} />
+                        <input className="inputField" placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Telefone 3" value={Telefone3} onChange={e => setTelefone3(e.target.value)} />
+                        <input className="inputField" placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Telefone 4" value={Telefone4} onChange={e => setTelefone4(e.target.value)} />
+                        <input className="inputField" placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Telefone 5" value={Telefone5} onChange={e => setTelefone5(e.target.value)} />
+                        <input className="inputField" placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
+                        <input className="inputField" placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
                         <button type="submit">Adicionar</button>
                     </form>
-            </div>
             </div>
         </div>
     )
