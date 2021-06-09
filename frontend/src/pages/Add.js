@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import api from '../services/api'
 
@@ -19,6 +19,25 @@ export default function AddForm({ history }){
     const [Telefone5, setTelefone5] = useState('')
     const [Telefone5Contato, setTelefone5Contato] = useState('')
     const [Observacoes, setObservacoes] = useState('')
+    const [logout, setLogout] = useState(false)
+
+    useEffect(() => {
+        async function Check(){
+            try {
+                const token = localStorage.getItem('token')
+                const response = await api.get('/user/check', {
+                    headers: {
+                        authorization: token
+                    }
+                })
+                console.log(response)
+            } catch (error) {
+                setLogout(true)
+            }
+        }
+        Check()
+    }, [])
+
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -39,23 +58,27 @@ export default function AddForm({ history }){
             Telefone5Contato,
             Observacoes
         })
-
-        history.push('/')
+        history.push('/main')
     }
 
     function handleReturn(){
-        history.push('/')
+        history.push('/main')
     }
+
+    if (logout === true) {
+        history.push('/main')
+    }
+
 
     return (
         <div className="form-container">
             <button className="buttonReturn" onClick={handleReturn}>Retornar</button>
             <div className="form-content">
                     <form  onSubmit={handleSubmit}>
-                        <input className="inputField" placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required="true" />
+                        <input className="inputField" placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required={true} />
                         <input className="inputField" placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
                         <input className="inputField" placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
-                        <input className="inputField" placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} required="true" />
+                        <input className="inputField" placeholder="Telefone 1" value={Telefone1} onChange={e => setTelefone1(e.target.value)} required={true} />
                         <input className="inputField" placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                         <input className="inputField" placeholder="Telefone 2" value={Telefone2} onChange={e => setTelefone2(e.target.value)} />
                         <input className="inputField" placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
