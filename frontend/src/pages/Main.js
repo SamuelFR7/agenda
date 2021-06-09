@@ -12,18 +12,38 @@ import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
 
-export default function Table(){
+export default function Table({ history }){
   const [people, setPeople] = useState([])
   const [text, setText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPeople, setTotalPeople] = useState([])
   const [loading, setLoading] = useState(true)
+  const [logged, setLogged] = useState(true)
+
+  useEffect(() => {
+    async function Check(){
+      const token = localStorage.getItem('token')
+      try {
+        await api.get('/user/check', {
+          headers: {
+            authorization: token
+          }
+        })
+      } catch (error) {
+        setLogged(false)
+      }
+    }
+    Check()
+  }, [])
+
 
   useEffect(() => {
     async function search(){
+      const token = localStorage.getItem('token')
       if(text) {
         const response = await api.get('/filter', {
           headers: {
+            authorization: token,
             name: text.toUpperCase(),
             limit: 1
           }
@@ -35,6 +55,7 @@ export default function Table(){
         setCurrentPage(1)
         const response = await api.get('/', {
           headers: {
+            authorization: token,
             page: 1,
             limit: 1
           }
@@ -48,38 +69,49 @@ export default function Table(){
 
   useEffect(() => {
     async function loadAllPeople(){
-      const response = await api.get('/')
+      const token = localStorage.getItem('token')
+      const response = await api.get('/', {
+        headers: {
+          authorization: token
+        }
+      })
       const datares = response.data
       setTotalPeople(datares)
-      setLoading(false)
     }
     loadAllPeople()
   }, [])
 
   useEffect(() => {
     async function loadPeople(){
-    const data = await api.get('/', {
-      headers: {
-        page: currentPage,
-        limit: 1
-      }
+      const token = localStorage.getItem('token')
+      const data = await api.get('/', {
+        headers: {
+          authorization: token,
+          page: currentPage,
+          limit: 1
+        }
     })
     const response = data.data
-    setPeople(response)}
+    setPeople(response)
+    setLoading(false)
+  }
     loadPeople()
   }, [currentPage])
 
 
 
   async function handleDelete(id){
+    const token = localStorage.getItem('token')
     await api.delete('/delete', {
       headers: {
+        authorization: token,
         id: id
       }
     })
     if(text) {
       const response = await api.get('/filter', {
         headers: {
+          authorization: token,
           name: text.toUpperCase()
         }
       })
@@ -87,18 +119,26 @@ export default function Table(){
       setPeople(resdata)
     }
     else {
-      const response = await api.get('/')
+      const response = await api.get('/', {
+        headers: {
+          authorization: token
+        }
+      })
       const resdata = response.data
       setPeople(resdata)
     }
   }
 
-  if (loading) {
+  if (loading === true && logged === true) {
     return (
       <div className="loader-container">
         <div className="loader"></div>
       </div>
     )
+  }
+
+  if (!logged) {
+    history.push('/')
   }
 
 
@@ -119,9 +159,9 @@ export default function Table(){
           <th>Telefone</th>
           <th>Email</th>
           <th>Contato</th>
-          <th>Deletar</th>
-          <th>Editar</th>
           <th>Visualizar</th>
+          <th>Editar</th>
+          <th>Deletar</th>
           </tr>
           
         </thead>
@@ -134,9 +174,9 @@ export default function Table(){
         <td>{item.Telefone1}</td>
         <td>{item.Email}</td>
         <td>{item.Telefone1Contato}</td>
+        <td><a href={"/show/"+item._id}><button className="showButton"><img src={viewIcon} alt="view"></img></button></a></td>
+        <td><a href={"/edit/"+item._id}><button className="editButton"><img src={editIcon} alt="edit"></img></button></a></td>
         <td><button type="button" className="deleteButton" onClick={() => {if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id)}}><img src={deleteIcon} alt="delete"></img></button></td>
-        <td><a href={"/edit/"+item._id}><button className="editButton"><img src={editIcon} alt="delete"></img></button></a></td>
-        <td><a href={"/show/"+item._id}><button className="showButton"><img src={viewIcon} alt="delete"></img></button></a></td>
         </tr>))}
 
       </tbody>
