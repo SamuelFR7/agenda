@@ -6,7 +6,8 @@ import './Show.css'
 
 export default function Show({ match, history }){
     const [person, setPerson] = useState([])
-    
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         async function loadPerson(){
             const response = await api.get('/show', {
@@ -16,6 +17,7 @@ export default function Show({ match, history }){
             })
             const datares = response.data
             setPerson(datares)
+            setLoading(false)
         }
         loadPerson()
     }, [match.params.id])
@@ -24,6 +26,13 @@ export default function Show({ match, history }){
         history.push('/main')
     }
 
+    if (loading){
+        return (
+            <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        )
+    }
 
     return (
         <div className="list-container">
