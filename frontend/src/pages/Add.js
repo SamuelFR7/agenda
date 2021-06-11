@@ -92,8 +92,10 @@ export default function AddForm({ history }){
                         <input className="inputField" placeholder="Telefone 3" value={Telefone3} onChange={e => setTelefone3(e.target.value)} />
                         <input className="inputField" placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                         </div>
+                        <div className="inputBox">
                         <input className="inputField" placeholder="Telefone 4" value={Telefone4} onChange={e => setTelefone4(e.target.value)} />
                         <input className="inputField" placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
+                        </div>
                         <div className="inputBox">
                         <input className="inputField" placeholder="Telefone 5" value={Telefone5} onChange={e => setTelefone5(e.target.value)} />
                         <input className="inputField" placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
