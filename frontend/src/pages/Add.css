@@ -16,7 +16,7 @@
 .form-container form { 
     width: 100%;
     padding: 30px;
-    max-width: 400px;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
 }
@@ -27,6 +27,16 @@
     color: #0d47a1;
 }
 
+.inputBox {
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.inputBoxField {
+    margin-left: 10px;
+}
+
 .form-container form input {
     margin-top: 10px;
     border: 1px solid #ddd;
@@ -34,7 +44,7 @@
     height: 48px;
     padding: 0 20px;
     font-size: 16px;
-    color: #666
+    color: #666;
 }
 
 .form-container form button{
@@ -62,3 +72,7 @@
     color: #FFF;
     cursor: pointer;
 }
+
+
+
+

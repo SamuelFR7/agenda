@@ -3,6 +3,9 @@ import './Login.css'
 
 import api from '../services/api'
 
+
+import logo from '../assets/logo.svg'
+
 export default function Login({ history }){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -44,10 +47,12 @@ export default function Login({ history }){
         history.push('/main')
     }
 
+    
 
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit}>
+                <img src={logo} alt="acs"></img>
                 <input 
                 placeholder="Email"
                 type="text"
