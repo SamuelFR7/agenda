@@ -50,11 +50,11 @@ export default function EditForm({ match, history }){
             Observacoes
         })
 
-        history.push('/')
+        history.push('/main')
     }
 
     function handleReturn(){
-        history.push('/')
+        history.push('/main')
     }
 
     return (
