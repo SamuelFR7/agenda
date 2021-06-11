@@ -4,6 +4,7 @@ import api from '../services/api'
 
 export default function EditForm({ match, history }){
     const [person, setPerson] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function loadPerson(){
@@ -11,9 +12,12 @@ export default function EditForm({ match, history }){
                 headers: { id: match.params.id }
             })
             setPerson(response.data)
+            setLoading(false)
         }
         loadPerson()
     }, [match.params.id])
+
+
 
     const [RazaoSocial, setRazaoSocial] = useState()
     const [Telefone1, setTelefone1] = useState()
@@ -55,6 +59,14 @@ export default function EditForm({ match, history }){
 
     function handleReturn(){
         history.push('/main')
+    }
+
+    if (loading === true){
+        return (
+            <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        )
     }
 
     return (
