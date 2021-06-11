@@ -21,7 +21,7 @@ export default function Show({ match, history }){
     }, [match.params.id])
 
     function handleReturn(){
-        history.push('/')
+        history.push('/main')
     }
 
 
