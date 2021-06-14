@@ -10,7 +10,10 @@ html, body, #root {
 }
 
 body {
-    background-image: url('./assets/background.svg');
+    background: url('./assets/background.svg') no-repeat center center fixed;
     background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 }
