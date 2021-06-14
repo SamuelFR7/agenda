@@ -151,7 +151,7 @@ export default function Table({ history }){
   
       <SearchInput value={text} onChange={(search) => setText(search)}/>
 
-      <table className="table-content">
+      <table className="table-content" style={{overflowX: 'auto'}}>
         
         <thead className="table-header"> 
           <tr>
