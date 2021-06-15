@@ -52,10 +52,11 @@ export default function Table({ history }){
         setPeople(resdata)
       }
       else {
+        setCurrentPage(1)
         const response = await api.get('/', {
           headers: {
             authorization: token,
-            page: currentPage,
+            page: 1,
             limit: 1
           }
         })
