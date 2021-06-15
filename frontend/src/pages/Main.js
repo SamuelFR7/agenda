@@ -33,7 +33,18 @@ export default function Table({ history }){
         setLogged(false)
       }
     }
+    async function loadAllPeople(){
+      const token = localStorage.getItem('token')
+      const response = await api.get('/', {
+        headers: {
+          authorization: token
+        }
+      })
+      const datares = response.data
+      setTotalPeople(datares)
+    }
     Check()
+    loadAllPeople()
   }, [])
 
 
@@ -66,20 +77,6 @@ export default function Table({ history }){
   }
   search()
   }, [text])
-
-  useEffect(() => {
-    async function loadAllPeople(){
-      const token = localStorage.getItem('token')
-      const response = await api.get('/', {
-        headers: {
-          authorization: token
-        }
-      })
-      const datares = response.data
-      setTotalPeople(datares)
-    }
-    loadAllPeople()
-  }, [])
 
   useEffect(() => {
     async function loadPeople(){
