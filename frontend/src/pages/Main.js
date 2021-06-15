@@ -42,6 +42,7 @@ export default function Table({ history }){
       })
       const datares = response.data
       setTotalPeople(datares)
+      setLoading(false)
     }
     Check()
     loadAllPeople()
@@ -90,7 +91,6 @@ export default function Table({ history }){
     })
     const response = data.data
     setPeople(response)
-    setLoading(false)
   }
     loadPeople()
   }, [currentPage])
