@@ -159,7 +159,7 @@ export default function Table({ history }){
           <th>Email</th>
           <th>Contato</th>
           <th>Visualizar</th>
-          <th>Editar</th>
+          <th>Alterar</th>
           <th>Deletar</th>
           </tr>
           
@@ -169,10 +169,10 @@ export default function Table({ history }){
         
     
       {people.map(item => (<tr key={item._id}>
-        <td>{item.RazaoSocial}</td>
-        <td>{item.Telefone1}</td>
-        <td>{item.Email}</td>
-        <td>{item.Telefone1Contato}</td>
+        <td className="text-content">{item.RazaoSocial}</td>
+        <td className="text-content">{item.Telefone1}</td>
+        <td className="text-content">{item.Email}</td>
+        <td className="text-content">{item.Telefone1Contato}</td>
         <td><a href={"/show/"+item._id}><button className="showButton"><img src={viewIcon} alt="view"></img></button></a></td>
         <td><a href={"/edit/"+item._id}><button className="editButton"><img src={editIcon} alt="edit"></img></button></a></td>
         <td><button type="button" className="deleteButton" onClick={() => {if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id)}}><img src={deleteIcon} alt="delete"></img></button></td>
