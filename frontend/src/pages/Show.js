@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import Input from '../components/Input'
 import api from '../services/api'
 
 import './Show.css'
@@ -35,38 +35,36 @@ export default function Show({ match, history }){
     }
 
     return (
-        <div className="list-container">
-            <ul className="list-content" >
-                <div className="listBox">
-                <li className="list-item"><p>Nome:</p>{person.RazaoSocial}</li>
-                <li className="list-item"><p>Endereço:</p>{person.Endereco}</li>
-                </div>
-                <li className="list-item"><p>Email:</p>{person.Email}</li>
-                <div className="listBox">
-                <li className="list-item"><p>Telefone 1:</p>{person.Telefone1}</li>
-                <li className="list-item"><p>Contato 1:</p>{person.Telefone1Contato}</li>
-                </div>
-                <div className="listBox">
-                <li className="list-item"><p>Telefone 2:</p>{person.Telefone2}</li>
-                <li className="list-item"><p>Contato 2:</p>{person.Telefone2Contato}</li>
-                </div>
-                <div className="listBox">
-                <li className="list-item"><p>Telefone 3:</p>{person.Telefone3}</li>
-                <li className="list-item"><p>Contato 3:</p>{person.Telefone3Contato}</li>
-                </div>
-                <div className="listBox">
-                <li className="list-item"><p>Telefone 4:</p>{person.Telefone4}</li>
-                <li className="list-item"><p>Contato 4:</p>{person.Telefone4Contato}</li>
-                </div>
-                <div className="listBox">
-                <li className="list-item"><p>Telefone 5:</p>{person.Telefone5}</li>
-                <li className="list-item"><p>Contato 5:</p>{person.Telefone5Contato}</li>
-                </div>
-
-                <li className="list-item"><p>Observações:</p>{person.Observacoes}</li>
-               
-            </ul>
-            <button onClick={handleReturn}>Retornar</button>
+        <div className="form-container">
+            <div className="form-content">
+                    <form>
+                        <input className="inputField" placeholder="Nome" value={person.RazaoSocial} disabled={true} />
+                        <input className="inputField" placeholder="Endereço" value={person.Endereco} disabled={true} />
+                        <input className="inputField" placeholder="Email" value={person.Email} disabled={true} />
+                        <div className="inputBox">
+                        <Input placeholder="Telefone 4" name="number" value={person.Telefone1} disabled={true} />
+                        <input className="inputBoxField" placeholder="Contato 1" value={person.Telefone1Contato} disabled={true} />
+                        </div>
+                        <div className="inputBox">
+                        <Input placeholder="Telefone 4" name="number" value={person.Telefone2} disabled={true} />
+                        <input className="inputField" placeholder="Contato 2" value={person.Telefone2Contato} disabled={true} />
+                        </div>
+                        <div className="inputBox">
+                        <Input placeholder="Telefone 4" name="number" value={person.Telefone3} disabled={true} />
+                        <input className="inputField" placeholder="Contato 3" value={person.Telefone3Contato} disabled={true} />
+                        </div>
+                        <div className="inputBox">
+                        <Input placeholder="Telefone 4" name="number" value={person.Telefone4} disabled={true} />
+                        <input className="inputField" placeholder="Contato 4" value={person.Telefone4Contato} disabled={true} />
+                        </div>
+                        <div className="inputBox">
+                        <Input placeholder="Telefone 5" name="number" value={person.Telefone5} disabled={true} />
+                        <input className="inputField" placeholder="Contato 5" value={person.Telefone5Contato} disabled={true} />
+                        </div>
+                        <input className="inputField" placeholder="Observações" value={person.Observacoes} disabled={true}/>
+                        <button className="buttonReturn" onClick={handleReturn}>Retornar</button>
+                    </form>
+            </div>
         </div>
     )
 }
