@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import api from '../services/api'
-
+import Input from '../components/Input'
 
 export default function EditForm({ match, history }){
     const [person, setPerson] = useState('')
@@ -33,6 +33,11 @@ export default function EditForm({ match, history }){
     const [Email, setEmail] = useState()
     const [Observacoes, setObservacoes] = useState()
     const [Endereco, setEndereco] = useState()
+    const [number, setNumber] = useState('')
+
+    const handleChange = useCallback((e) => {
+        setNumber(e.currentTarget.value)
+    }, [])
 
     async function handleSubmit(){
         const id = match.params.id
@@ -53,7 +58,7 @@ export default function EditForm({ match, history }){
             Endereco,
             Observacoes
         })
-
+        console.log(number)
         history.push('/main')
     }
 
@@ -69,38 +74,38 @@ export default function EditForm({ match, history }){
         )
     }
 
+
+
     return (
         <div className="form-container">
             <button className="buttonReturn" onClick={handleReturn}>Retornar</button>
             <div className="form-content">
             <form>
-                <div className="inputBox">
                 <input className="inputField" placeholder="Nome" defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
-                <input className="inputBoxField" placeholder="Endereco" defaultValue={person.Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
-                </div>
-                <input className="inputField" placeholder="Email" defaultValue={person.Email} onChange={e => setEmail(e.target.value.toUpperCase())} />
+                <input className="inputField" placeholder="Endereco" defaultValue={person.Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
+                <input className="inputField" placeholder="Email" defaultValue={person.Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
                 <div className="inputBox">
-                <input className="inputField" placeholder="Telefone 1" defaultValue={person.Telefone1} onChange={e => setTelefone1(e.target.value)} />
-                <input className="inputField" placeholder="Contato 1" defaultValue={person.Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
+                <Input placeholder="Telefone 1" name="number" defaultValue={person.Telefone1} onChange={(e) => handleChange && setTelefone1(e.target.value)} />
+                <input className="inputBoxField" placeholder="Contato 1" defaultValue={person.Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                 </div>
                 <div className="inputBox">
-                <input className="inputField" placeholder="Telefone 2" defaultValue={person.Telefone2} onChange={e => setTelefone2(e.target.value)} />
+                <Input placeholder="Telefone 2" name="number" defaultValue={person.Telefone2} onChange={(e) => handleChange && setTelefone2(e.target.value)} />
                 <input className="inputField" placeholder="Contato 2" defaultValue={person.Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
                 </div>
                 <div className="inputBox">
-                <input className="inputField" placeholder="Telefone 3" defaultValue={person.Telefone3} onChange={e => setTelefone3(e.target.value)} />
+                <Input placeholder="Telefone 3" name="number" defaultValue={person.Telefone3} onChange={(e) => handleChange && setTelefone3(e.target.value)} />
                 <input className="inputField" placeholder="Contato 3" defaultValue={person.Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                 </div>
                 <div className="inputBox">
-                <input className="inputField" placeholder="Telefone 4" defaultValue={person.Telefone4} onChange={e => setTelefone4(e.target.value)} />
+                <Input placeholder="Telefone 4" name="number" defaultValue={person.Telefone4} onChange={(e) => handleChange && setTelefone4(e.target.value)} />
                 <input className="inputField" placeholder="Contato 4" defaultValue={person.Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
                 </div>
                 <div className="inputBox">
-                <input className="inputField" placeholder="Telefone 5" defaultValue={person.Telefone5} onChange={e => setTelefone5(e.target.value)} />
+                <Input placeholder="Telefone 5" name="number" defaultValue={person.Telefone5} onChange={(e) => handleChange && setTelefone5(e.target.value)} />
                 <input className="inputField" placeholder="Contato 5" defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                 </div>
                 <input className="inputField" placeholder="Observações" defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
-                <button type='button' onClick={() => handleSubmit()}>ENVIAR</button>
+                <button type='button' onClick={() => handleSubmit()}>Alterar</button>
             </form>
             </div>
             
