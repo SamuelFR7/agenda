@@ -16,7 +16,7 @@ export default function Table({ history }){
   const [people, setPeople] = useState([])
   const [text, setText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPeople, setTotalPeople] = useState([])
+  const [totalPeople, setTotalPeople] = useState(1)
   const [loading, setLoading] = useState(true)
   const [logged, setLogged] = useState(true)
 
@@ -34,14 +34,10 @@ export default function Table({ history }){
       }
     }
     async function loadAllPeople(){
-      const token = localStorage.getItem('token')
-      const response = await api.get('/', {
-        headers: {
-          authorization: token
-        }
-      })
+      const response = await api.get('/length')
       const datares = response.data
       setTotalPeople(datares)
+      console.log(datares)
     }
     Check()
     loadAllPeople()
@@ -119,7 +115,7 @@ export default function Table({ history }){
       const response = await api.get('/', {
         headers: {
           authorization: token,
-          page: 1,
+          page: currentPage,
           limit: 1
         }
       })
@@ -188,7 +184,7 @@ export default function Table({ history }){
         pageSize={10}
         onChange={setCurrentPage}
         current={currentPage}
-        total={totalPeople.length}
+        total={totalPeople}
       />
       </div>
 
