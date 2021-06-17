@@ -13,6 +13,11 @@ module.exports = {
 
     },
 
+    async indexLength(req, res){
+        const peopleLength = await Person.estimatedDocumentCount()
+        return res.json(peopleLength)
+    },
+
     async store(req, res){
         const { RazaoSocial, Telefone1, Telefone1Contato, Telefone2, Telefone2Contato, Telefone3, Telefone3Contato, Telefone4, Telefone4Contato, Telefone5, Telefone5Contato, Email, Endereco, Observacoes } = req.body
 

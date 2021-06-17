@@ -11,6 +11,7 @@ routes.get('/user/check', UserController.auth , UserController.check)
 // Pages Routes
 
 routes.get('/', UserController.auth, PersonController.index)
+routes.get('/length', PersonController.indexLength)
 routes.post('/add', PersonController.store)
 routes.get('/show', PersonController.show)
 routes.post('/update', PersonController.update)
