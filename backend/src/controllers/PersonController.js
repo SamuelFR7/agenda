@@ -44,26 +44,7 @@ module.exports = {
     },
 
     async update(req, res){
-        let person = {}
-        if (req.body.RazaoSocial) person.RazaoSocial = req.body.RazaoSocial
-        if (req.body.Telefone1) person.Telefone1 = req.body.Telefone1
-        if (req.body.Telefone2) person.Telefone2 = req.body.Telefone2
-        if (req.body.Telefone3) person.Telefone3 = req.body.Telefone3
-        if (req.body.Telefone4) person.Telefone4 = req.body.Telefone4
-        if (req.body.Telefone5) person.Telefone5 = req.body.Telefone5
-        if (req.body.Telefone1Contato) person.Telefone1Contato = req.body.Telefone1Contato
-        if (req.body.Telefone1Contato) person.Telefone2Contato = req.body.Telefone2Contato
-        if (req.body.Telefone1Contato) person.Telefone3Contato = req.body.Telefone3Contato
-        if (req.body.Telefone1Contato) person.Telefone4Contato = req.body.Telefone4Contato
-        if (req.body.Telefone1Contato) person.Telefone5Contato = req.body.Telefone5Contato
-        if (req.body.Email) person.Email = req.body.Email
-        if (req.body.Endereco) person.Endereco = req.body.Endereco
-        if (req.body.Observacoes) person.Observacoes = req.body.Observacoes
-
-        person = { $set: person }
-
-        const updatedPerson = await Person.findByIdAndUpdate(req.body.id, person)
-
+        const updatedPerson = await Person.findByIdAndUpdate(req.body.id, {$set: req.body}, {new: true})
         return res.json(updatedPerson)
     },
 
