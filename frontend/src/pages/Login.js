@@ -26,7 +26,7 @@ export default function Login({ history }){
             }
         }
         Check()
-    })
+    }, [])
 
 
     async function handleSubmit(e){
