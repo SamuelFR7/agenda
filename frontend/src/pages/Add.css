@@ -72,7 +72,16 @@
     color: #FFF;
     cursor: pointer;
 }
-
-
-
-
+@media (max-width: 584px) {
+    .form-container {
+        height: 150%;
+        width: 150%;
+    }
+    .form-content {
+        max-width: 150%;
+    }
+    form .user-details .input-box {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+}
