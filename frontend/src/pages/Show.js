@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Input from '../components/Input'
 import api from '../services/api'
 
-import '../styles/Show.css'
+import '../styles/Show.scss'
 
 export default function Show({ match, history }){
     const [person, setPerson] = useState([])
