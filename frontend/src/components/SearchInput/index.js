@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../pages/Main.css'
+import '../../App.css'
 
 export default function SearchInput({ value, onChange }){
     function handleChange(e){

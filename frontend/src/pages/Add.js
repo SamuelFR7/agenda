@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import Input from '../components/Input'
 import api from '../services/api'
 
-import './Add.css'
+import '../styles/Add.css'
 
 export default function AddForm({ history }){
     const [RazaoSocial, setRazaoSocial] = useState('')
