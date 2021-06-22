@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SearchInput from '../components/SearchInput'
-import './Main.css'
+import '../styles/Main.css'
 import Pagination from 'rc-pagination'
 
 import 'rc-pagination/assets/index.css'
