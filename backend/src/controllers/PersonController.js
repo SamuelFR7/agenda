@@ -10,7 +10,6 @@ module.exports = {
         const people = await Person.find({}).sort({RazaoSocial: 1}).skip(skip).limit(limitcount)
 
         return res.json(people)
-
     },
 
     async indexLength(req, res){
@@ -19,37 +18,18 @@ module.exports = {
     },
 
     async store(req, res){
-        const { RazaoSocial, Telefone1, Telefone1Contato, Telefone2, Telefone2Contato, Telefone3, Telefone3Contato, Telefone4, Telefone4Contato, Telefone5, Telefone5Contato, Email, Endereco, Observacoes } = req.body
-
-        const addPerson = await Person.create({
-            RazaoSocial: RazaoSocial,
-            Telefone1: Telefone1,
-            Telefone1Contato: Telefone1Contato,
-            Telefone2:  Telefone2,
-            Telefone2Contato: Telefone2Contato,
-            Telefone3: Telefone3,
-            Telefone3Contato: Telefone3Contato,
-            Telefone4: Telefone4,
-            Telefone4Contato: Telefone4Contato,
-            Telefone5: Telefone5,
-            Telefone5Contato: Telefone5Contato,
-            Email: Email,
-            Endereco: Endereco,
-            Observacoes: Observacoes
-        })
-
+        const addPerson = await Person.create(req.body)
         return res.json(addPerson)
     },
 
     async show(req, res){
         const { id } = req.headers
         const showPerson = await Person.findById(id)
-
         return res.json(showPerson)
     },
 
     async update(req, res){
-        const updatedPerson = await Person.findByIdAndUpdate(req.body.id, {$set: req.body}, {new: true})
+        const updatedPerson = await Person.findByIdAndUpdate(req.body.id, req.body)
         return res.json(updatedPerson)
     },
 
