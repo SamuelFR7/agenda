@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../styles/Login.scss'
 import { toast, Toaster } from 'react-hot-toast'
 import api from '../services/api'
-
+import {useCookies} from 'react-cookie'
 
 import logo from '../assets/logo.svg'
 
@@ -10,10 +10,11 @@ export default function Login({ history }){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [logged, setLogged] = useState(false)
+    const [cookies, setCookie] = useCookies(['cookie-name'])
 
+    const token = cookies.token
     useEffect(() => {
         async function Check(){
-            const token = localStorage.getItem('token')
             try {
                 await api.get('/user/check', {
                     headers: {
@@ -26,21 +27,20 @@ export default function Login({ history }){
             }
         }
         Check()
-    }, [])
+    }, [token])
 
 
     async function handleSubmit(e){
         e.preventDefault()
         try {
-            const response = await api.get('/user/login', {
+            const {data} = await api.get('/user/login', {
                 headers: {
                     email: email.toUpperCase(),
                     password: password
                 }
             })
-            const datares = response.data
-            const token = datares.token
-            localStorage.setItem('token', token)
+            const token = data.token
+            setCookie('token', token, {maxAge: 86400})
             history.push('/main')
         } catch (error) {
             toast.error('Usuário ou senha incorretos')

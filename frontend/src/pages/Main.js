@@ -11,6 +11,7 @@ import api from '../services/api'
 import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
+import { useCookies } from 'react-cookie'
 
 export default function Table({ history }){
   const [people, setPeople] = useState([])
@@ -19,10 +20,12 @@ export default function Table({ history }){
   const [totalPeople, setTotalPeople] = useState(1)
   const [loading, setLoading] = useState(true)
   const [logged, setLogged] = useState(true)
+  const [cookies] = useCookies(['cookie-name'])
+  
+  const token = cookies.token
 
   useEffect(() => {
     async function Check(){
-      const token = localStorage.getItem('token')
       try {
         await api.get('/user/check', {
           headers: {
@@ -39,16 +42,14 @@ export default function Table({ history }){
     }
     Check()
     loadAllPeople()
-  }, [])
+  }, [token])
 
 
   useEffect(() => {
     async function search(){
-      const token = localStorage.getItem('token')
       if(text) {
         const {data} = await api.get('/filter', {
           headers: {
-            authorization: token,
             name: text.toUpperCase(),
             limit: 1
           }
@@ -59,7 +60,6 @@ export default function Table({ history }){
         setCurrentPage(1)
         const {data} = await api.get('/', {
           headers: {
-            authorization: token,
             page: 1,
             limit: 1
           }
@@ -72,10 +72,8 @@ export default function Table({ history }){
 
   useEffect(() => {
     async function loadPeople(){
-      const token = localStorage.getItem('token')
       const {data} = await api.get('/', {
         headers: {
-          authorization: token,
           page: currentPage,
           limit: 1
         }
@@ -88,17 +86,14 @@ export default function Table({ history }){
 
 
   async function handleDelete(id){
-    const token = localStorage.getItem('token')
     await api.delete('/delete', {
       headers: {
-        authorization: token,
         id: id
       }
     })
     if(text) {
       const {data} = await api.get('/filter', {
         headers: {
-          authorization: token,
           name: text.toUpperCase()
         }
       })
@@ -107,7 +102,6 @@ export default function Table({ history }){
     else {
       const {data} = await api.get('/', {
         headers: {
-          authorization: token,
           page: currentPage,
           limit: 1
         }
