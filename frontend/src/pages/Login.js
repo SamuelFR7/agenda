@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/Login.scss'
-
+import { toast, Toaster } from 'react-hot-toast'
 import api from '../services/api'
 
 
 import logo from '../assets/logo.svg'
-import cancel from '../assets/cancel.png'
 
 export default function Login({ history }){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [logged, setLogged] = useState(false)
-    const [error, setError] = useState(false)
 
     useEffect(() => {
         async function Check(){
@@ -45,7 +43,7 @@ export default function Login({ history }){
             localStorage.setItem('token', token)
             history.push('/main')
         } catch (error) {
-            setError(true)
+            toast.error('Usuário ou senha incorretos')
         }
         
     }
@@ -54,16 +52,17 @@ export default function Login({ history }){
         history.push('/main')
     }
 
-    if (error){
-        console.log("Erou")
-    }
 
     return (
         <div className="login-container">
+            <Toaster
+            position="top-left"
+            reverseOrder={false}
+            />
             <form onSubmit={handleSubmit}>
                 <img src={logo} alt="acs"></img>
                 <input 
-                placeholder="Email"
+                placeholder="Usuário"
                 type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -75,14 +74,6 @@ export default function Login({ history }){
                 onChange={e => setPassword(e.target.value)}
                 />
                 <button type="submit">Entrar</button>
-                {error && (
-                <div className="error-container">
-                    <div className="error-content">
-                        <p>Usuário ou senha incorretos</p>
-                        <div onClick={() => setError(false)}><img src={cancel} alt="Cancel"></img></div>
-                    </div>
-                </div>
-            )}
             </form>
         </div>
     )

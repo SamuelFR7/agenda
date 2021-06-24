@@ -41,30 +41,3 @@
 .login-container form button:hover {
     filter: brightness(0.9);
 }
-
-.error-container {
-    margin-top: 10px;
-    background: #ef9a9a;
-    border: 1px solid #f44336;
-    border-radius: 5px;
-}
-
-.error-content {
-    padding: 8px;
-    display: flex;
-    flex-direction: row;
-}
-
-.error-content p{
-    text-align: center;
-    color: #263238;
-}
-
-.error-content div {
-    height: 2px;
-    margin-left: 15px;
-    color: #263238;
-    :hover {
-        cursor: pointer;
-    }
-}
