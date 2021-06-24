@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
+import { useCookies } from 'react-cookie'
 import Input from '../components/Input'
 import api from '../services/api'
 
@@ -21,11 +22,13 @@ export default function AddForm({ history }){
     const [Observacoes, setObservacoes] = useState('')
     const [logout, setLogout] = useState(false)
     const [number, setNumber] = useState('')
+    const [cookies] = useCookies(['cookie-name'])
+
+    const token = cookies.token
 
     useEffect(() => {
         async function Check(){
             try {
-                const token = localStorage.getItem('token')
                 const response = await api.get('/user/check', {
                     headers: {
                         authorization: token
@@ -37,7 +40,7 @@ export default function AddForm({ history }){
             }
         }
         Check()
-    }, [])
+    }, [token])
 
 
     async function handleSubmit(e){
@@ -68,7 +71,7 @@ export default function AddForm({ history }){
     }
 
     if (logout === true) {
-        history.push('/main')
+        history.push('/')
     }
 
     const handleChange = useCallback((e) => {

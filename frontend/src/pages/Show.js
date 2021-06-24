@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import Input from '../components/Input'
 import api from '../services/api'
 
@@ -7,6 +8,26 @@ import '../styles/Show.scss'
 export default function Show({ match, history }){
     const [person, setPerson] = useState([])
     const [loading, setLoading] = useState(true)
+    const [logout, setLogout] = useState(false)
+    const [cookies] = useCookies(['cookie-name'])
+
+    const token = cookies.token
+
+    useEffect(() => {
+        async function Check(){
+            try {
+                const response = await api.get('/user/check', {
+                    headers: {
+                        authorization: token
+                    }
+                })
+                console.log(response)
+            } catch (error) {
+                setLogout(true)
+            }
+        }
+        Check()
+    }, [token])
 
     useEffect(() => {
         async function loadPerson(){
@@ -24,6 +45,10 @@ export default function Show({ match, history }){
 
     function handleReturn(){
         history.push('/main')
+    }
+
+    if (logout) {
+        history.push('/')
     }
 
     if (loading){

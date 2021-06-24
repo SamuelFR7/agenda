@@ -1,10 +1,31 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import api from '../services/api'
 import Input from '../components/Input'
+import { useCookies } from 'react-cookie'
 
 export default function EditForm({ match, history }){
     const [person, setPerson] = useState('')
     const [loading, setLoading] = useState(true)
+    const [logged, setLogged] = useState(true)
+    const [cookies] = useCookies(['cookie-name'])
+  
+    const token = cookies.token
+
+    useEffect(() => {
+        async function Check(){
+            try {
+              await api.get('/user/check', {
+                headers: {
+                  authorization: token
+                }
+              })
+            } catch (error) {
+              setLogged(false)
+            }
+          }
+        Check()
+    }, [token])
+
 
     useEffect(() => {
         async function loadPerson(){
@@ -65,6 +86,12 @@ export default function EditForm({ match, history }){
     function handleReturn(){
         history.push('/main')
     }
+
+
+    if (!logged) {
+        history.push('/')
+    }
+
 
     if (loading === true){
         return (
