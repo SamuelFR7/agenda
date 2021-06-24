@@ -34,10 +34,8 @@ export default function Table({ history }){
       }
     }
     async function loadAllPeople(){
-      const response = await api.get('/length')
-      const datares = response.data
-      setTotalPeople(datares)
-      console.log(datares)
+      const {data} = await api.get('/length')
+      setTotalPeople(data)
     }
     Check()
     loadAllPeople()
@@ -48,27 +46,25 @@ export default function Table({ history }){
     async function search(){
       const token = localStorage.getItem('token')
       if(text) {
-        const response = await api.get('/filter', {
+        const {data} = await api.get('/filter', {
           headers: {
             authorization: token,
             name: text.toUpperCase(),
             limit: 1
           }
         })
-        const resdata = response.data
-        setPeople(resdata)
+        setPeople(data)
       }
       else {
         setCurrentPage(1)
-        const response = await api.get('/', {
+        const {data} = await api.get('/', {
           headers: {
             authorization: token,
             page: 1,
             limit: 1
           }
         })
-        const resdata = response.data
-        setPeople(resdata)
+        setPeople(data)
       }
   }
   search()
@@ -77,20 +73,18 @@ export default function Table({ history }){
   useEffect(() => {
     async function loadPeople(){
       const token = localStorage.getItem('token')
-      const data = await api.get('/', {
+      const {data} = await api.get('/', {
         headers: {
           authorization: token,
           page: currentPage,
           limit: 1
         }
     })
-    const response = data.data
-    setPeople(response)
+    setPeople(data)
     setLoading(false)
   }
     loadPeople()
   }, [currentPage])
-
 
 
   async function handleDelete(id){
@@ -102,25 +96,23 @@ export default function Table({ history }){
       }
     })
     if(text) {
-      const response = await api.get('/filter', {
+      const {data} = await api.get('/filter', {
         headers: {
           authorization: token,
           name: text.toUpperCase()
         }
       })
-      const resdata = response.data
-      setPeople(resdata)
+      setPeople(data)
     }
     else {
-      const response = await api.get('/', {
+      const {data} = await api.get('/', {
         headers: {
           authorization: token,
           page: currentPage,
           limit: 1
         }
       })
-      const resdata = response.data
-      setPeople(resdata)
+      setPeople(data)
     }
   }
 
@@ -173,20 +165,20 @@ export default function Table({ history }){
         <td><a href={"/edit/"+item._id}><button className="editButton"><img src={editIcon} alt="edit"></img></button></a></td>
         <td><button type="button" className="deleteButton" onClick={() => {if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id)}}><img src={deleteIcon} alt="delete"></img></button></td>
         </tr>))}
-
       </tbody>
       </table>
 
 
-
-      <div className="pagination-container">
-      <Pagination 
-        pageSize={10}
-        onChange={setCurrentPage}
-        current={currentPage}
-        total={totalPeople}
-      />
-      </div>
+      {!text && (
+        <div className="pagination-container">
+        <Pagination 
+          pageSize={10}
+          onChange={setCurrentPage}
+          current={currentPage}
+          total={totalPeople}
+        />
+        </div>
+      )}
 
     </div>
   )
