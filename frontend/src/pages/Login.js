@@ -34,7 +34,7 @@ export default function Login({ history }){
         try {
             const response = await api.get('/user/login', {
                 headers: {
-                    email: email,
+                    email: email.toUpperCase(),
                     password: password
                 }
             })
