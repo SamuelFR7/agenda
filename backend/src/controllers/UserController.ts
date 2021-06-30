@@ -27,9 +27,14 @@ export = {
     const userAndPasswordMatch = bcrypt.compareSync(password, selectedUser.password)
     if (!userAndPasswordMatch) return res.status(400).send('Email ou senha incorretos')
 
+    const adminToken = selectedUser.admin ? jwt.sign({ id: selectedUser._id, admin: selectedUser.admin }, process.env.TOKEN_SECRET_ADMIN) : null
     const token = jwt.sign({ id: selectedUser._id, admin: selectedUser }, process.env.TOKEN_SECRET)
 
-    return res.json({ token })
+    if (adminToken) {
+      return res.json({ token, adminToken })
+    } else {
+      return res.json({ token })
+    }
   },
 
   async auth (req: Request, res: Response, next: NextFunction) {
@@ -52,5 +57,22 @@ export = {
 
   async check (req: Request, res: Response) {
     return res.json('Logged')
+  },
+
+  async adminAuth (req: Request, res: Response, next: NextFunction) {
+    const { adminAuth } = req.body
+
+    if (!adminAuth) {
+      return res.sendStatus(401)
+    }
+
+    const token = adminAuth
+
+    try {
+      jwt.verify(token, process.env.TOKEN_SECRET_ADMIN)
+      return next()
+    } catch (error) {
+      return res.sendStatus(401)
+    }
   }
 };
