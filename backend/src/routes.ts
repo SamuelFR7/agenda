@@ -4,9 +4,10 @@ import UserController from './controllers/UserController'
 
 const routes = express.Router()
 // User Routes
-routes.post('/user/register', UserController.store)
+routes.post('/user/register', UserController.adminAuth, UserController.store)
 routes.post('/user/login', UserController.login)
 routes.get('/user/check', UserController.auth, UserController.check)
+routes.post('/user/admin/check', UserController.adminAuth, UserController.check)
 
 // Pages Routes
 
