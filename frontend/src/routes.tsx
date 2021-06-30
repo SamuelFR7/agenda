@@ -7,14 +7,14 @@ import Edit from './pages/Edit'
 import Show from './pages/Show'
 import Login from './pages/Login'
 
-export default function Routes(){
-    return (
-        <BrowserRouter>
+export default function Routes () {
+  return (
+         <BrowserRouter>
             <Route path="/main" component={Main} />
             <Route path="/add" component={Add} />
             <Route path="/edit/:id" component={Edit} />
             <Route path="/show/:id" component={Show}/>
             <Route path="/" exact component={Login} />
         </BrowserRouter>
-    )
+  )
 }
