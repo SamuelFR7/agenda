@@ -13,6 +13,7 @@ export default function Login () {
   const [password, setPassword] = useState('')
   const [logged, setLogged] = useState(false)
   const [cookies, setCookie] = useCookies(['cookie-name'])
+  const [loading, setLoading] = useState(true)
 
   const token = cookies.token
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function Login () {
         setLogged(true)
       } catch (error) {
         setLogged(false)
+        setLoading(false)
       }
     }
     Check()
@@ -48,6 +50,14 @@ export default function Login () {
 
   if (logged) {
     history.push('/main')
+  }
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    )
   }
 
   return (
