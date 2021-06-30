@@ -33,11 +33,9 @@ export default function Login({ history }){
     async function handleSubmit(e){
         e.preventDefault()
         try {
-            const {data} = await api.get('/user/login', {
-                headers: {
+            const {data} = await api.post('/user/login', {
                     email: email.toUpperCase(),
                     password: password
-                }
             })
             const token = data.token
             setCookie('token', token, {maxAge: 86400})
