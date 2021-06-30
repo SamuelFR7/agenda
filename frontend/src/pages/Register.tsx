@@ -1,89 +1,79 @@
 import React, { useEffect, useState, FormEvent } from 'react'
-import '../styles/Login.scss'
-import { toast, Toaster } from 'react-hot-toast'
-import api from '../services/api'
-import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
+import { toast, Toaster } from 'react-hot-toast'
+import { useCookies } from 'react-cookie'
+import api from '../services/api'
 
-import logo from '../assets/logo.svg'
-
-export default function Login () {
+export default function Register () {
   const history = useHistory()
+  const [cookies] = useCookies(['cookie-name'])
+  const adminAuth = cookies.adminToken
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [logged, setLogged] = useState(false)
-  const [cookies, setCookie] = useCookies(['cookie-name'])
   const [loading, setLoading] = useState(true)
 
-  const token = cookies.token
   useEffect(() => {
     async function Check () {
       try {
-        await api.get('/user/check', {
-          headers: {
-            authorization: token
-          }
+        await api.post('/user/admin/check', {
+          adminAuth
         })
-        setLogged(true)
-      } catch (error) {
-        setLogged(false)
         setLoading(false)
+      } catch (error) {
+        history.push('/')
       }
     }
     Check()
-  }, [token])
+  }, [adminAuth, history])
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
     try {
-      const { data } = await api.post('/user/login', {
+      await api.post('/user/register', {
+        adminAuth,
         email: email.toUpperCase(),
-        password: password
+        password
       })
-      if (data.adminToken) {
-        setCookie('adminToken', data.adminToken, { maxAge: 86400 })
-      }
-      const token = data.token
-      setCookie('token', token, { maxAge: 86400 })
-      history.push('/main')
+      toast.success('Usuário registrado com sucesso')
+      setEmail('')
+      setPassword('')
     } catch (error) {
-      toast.error('Usuário ou senha incorretos')
+      toast.error('Email ou usário já registrado')
+      setEmail('')
+      setPassword('')
     }
-  }
-
-  if (logged) {
-    history.push('/main')
   }
 
   if (loading) {
     return (
-      <div className="loader-container">
-        <div className="loader"></div>
-      </div>
+        <div className="loader-container">
+            <div className="loader"></div>
+        </div>
     )
   }
 
   return (
         <div className="login-container">
             <Toaster
-            position="top-left"
-            reverseOrder={false}
+                position="top-left"
+                reverseOrder={false}
             />
             <form onSubmit={handleSubmit}>
-                <img src={logo} alt="acs"></img>
                 <input
                 placeholder="Usuário"
                 type="text"
                 value={email}
+                required={true}
                 onChange={e => setEmail(e.target.value)}
                 />
                 <input
                 placeholder="Senha"
                 type="password"
                 value={password}
+                required={true}
                 onChange={e => setPassword(e.target.value)}
                 />
-                <button type="submit">Entrar</button>
+                <button type="submit">Registrar</button>
             </form>
         </div>
   )
