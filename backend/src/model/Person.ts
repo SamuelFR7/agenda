@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose'
+import { model, Schema } from 'mongoose'
 
 const PersonSchema = new Schema({
   RazaoSocial: { type: String, required: true },
@@ -14,7 +14,7 @@ const PersonSchema = new Schema({
   Telefone5Contato: { type: String, required: false },
   Email: { type: String, required: false },
   Endereco: { type: String, required: false },
-  Observacoes: { type: String, required: false },
-});
+  Observacoes: { type: String, required: false }
+})
 
-export default model('Person', PersonSchema);
+export default model('Person', PersonSchema)

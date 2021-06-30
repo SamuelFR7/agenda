@@ -5,15 +5,15 @@ import cors from 'cors'
 import routes from './routes'
 
 dotenv.config()
-const server = express();
+const server = express()
 
 mongoose.connect(process.env.MONGO_CONNECTION, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+  useUnifiedTopology: true
+})
 
-server.use(cors());
-server.use(express.json());
-server.use(routes);
+server.use(cors())
+server.use(express.json())
+server.use(routes)
 
-server.listen(process.env.PORT || 3333);
+server.listen(process.env.PORT || 3333)
