@@ -2,11 +2,10 @@ import React from 'react'
 import './App.scss'
 import Routes from './routes'
 
-function App() {
+function App () {
   return (
     <Routes />
-  );
+  )
 }
 
 export default App
-
