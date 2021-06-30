@@ -1,11 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, { useEffect, useState, FormEvent} from 'react'
 import { useCookies } from 'react-cookie'
 import Input from '../components/Input'
 import api from '../services/api'
-
+import {useHistory} from 'react-router-dom'
 import '../styles/Add.scss'
 
-export default function AddForm({ history }){
+export default function AddForm(){
+    const history = useHistory()
     const [RazaoSocial, setRazaoSocial] = useState('')
     const [Endereco, setEndereco] = useState('')
     const [Email, setEmail] = useState('')
@@ -21,7 +22,6 @@ export default function AddForm({ history }){
     const [Telefone5Contato, setTelefone5Contato] = useState('')
     const [Observacoes, setObservacoes] = useState('')
     const [logout, setLogout] = useState(false)
-    const [number, setNumber] = useState('')
     const [cookies] = useCookies(['cookie-name'])
 
     const token = cookies.token
@@ -43,7 +43,7 @@ export default function AddForm({ history }){
     }, [token])
 
 
-    async function handleSubmit(e){
+    async function handleSubmit(e: FormEvent){
         e.preventDefault()
 
         await api.post('/add',{
@@ -62,7 +62,6 @@ export default function AddForm({ history }){
             Telefone5Contato,
             Observacoes
         })
-        console.log(number)
         history.push('/main')
     }
 
@@ -74,9 +73,7 @@ export default function AddForm({ history }){
         history.push('/')
     }
 
-    const handleChange = useCallback((e) => {
-        setNumber(e.currentTarget.value)
-    }, [])
+
 
     return (
         <div className="form-container">
@@ -87,23 +84,23 @@ export default function AddForm({ history }){
                         <input className="inputField" placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
                         <input className="inputField" placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
                         <div className="inputBox">
-                        <Input placeholder="Telefone 1" name="number" onChange={(e) => handleChange && setTelefone1(e.target.value)} />
+                        <Input placeholder="Telefone 1" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone1(e.currentTarget.value)} />
                         <input className="inputBoxField" placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                         </div>
                         <div className="inputBox">
-                        <Input placeholder="Telefone 2" name="number" onChange={(e) => handleChange && setTelefone2(e.target.value)} />
+                        <Input placeholder="Telefone 2" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone2(e.currentTarget.value)} />
                         <input className="inputField" placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
                         </div>
                         <div className="inputBox">
-                        <Input placeholder="Telefone 3" name="number" onChange={(e) => handleChange && setTelefone3(e.target.value)} />
+                        <Input placeholder="Telefone 3" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone3(e.currentTarget.value)} />
                         <input className="inputField" placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                         </div>
                         <div className="inputBox">
-                        <Input placeholder="Telefone 4" name="number" onChange={(e) => handleChange && setTelefone4(e.target.value)} />
+                        <Input placeholder="Telefone 4" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone4(e.currentTarget.value)} />
                         <input className="inputField" placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
                         </div>
                         <div className="inputBox">
-                        <Input placeholder="Telefone 5" name="number" onChange={(e) => handleChange && setTelefone5(e.target.value)} />
+                        <Input placeholder="Telefone 5" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone5(e.currentTarget.value)} />
                         <input className="inputField" placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                         </div>
                         <input className="inputField" placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
