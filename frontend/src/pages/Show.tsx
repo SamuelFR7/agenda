@@ -2,11 +2,52 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import Input from '../components/Input'
 import api from '../services/api'
+import {useHistory, useParams} from 'react-router-dom'
 
 import '../styles/Show.scss'
 
-export default function Show({ match, history }){
-    const [person, setPerson] = useState([])
+type ShowParams = {
+    id: string
+}
+
+interface IPerson {
+    _id: string
+    RazaoSocial: string 
+    Email: string
+    Observacoes: string
+    Endereco: string
+    Telefone1: string
+    Telefone2: string
+    Telefone3: string
+    Telefone4: string
+    Telefone5: string
+    Telefone1Contato: string
+    Telefone2Contato: string
+    Telefone3Contato: string
+    Telefone4Contato: string
+    Telefone5Contato: string
+  }
+
+export default function Show(){
+    const history = useHistory()
+    const params = useParams<ShowParams>()
+    const [person, setPerson] = useState<IPerson>({
+        _id: "",
+        RazaoSocial: "",
+        Email: "",
+        Observacoes: "",
+        Endereco: "",
+        Telefone1: "",
+        Telefone2: "",
+        Telefone3: "",
+        Telefone4: "",
+        Telefone5: "",
+        Telefone1Contato: "",
+        Telefone2Contato: "",
+        Telefone3Contato: "",
+        Telefone4Contato: "",
+        Telefone5Contato: "",
+    })
     const [loading, setLoading] = useState(true)
     const [logout, setLogout] = useState(false)
     const [cookies] = useCookies(['cookie-name'])
@@ -33,7 +74,7 @@ export default function Show({ match, history }){
         async function loadPerson(){
             const response = await api.get('/show', {
                 headers: {
-                    id: match.params.id
+                    id: params.id
                 }
             })
             const datares = response.data
@@ -41,7 +82,7 @@ export default function Show({ match, history }){
             setLoading(false)
         }
         loadPerson()
-    }, [match.params.id])
+    }, [params.id])
 
     function handleReturn(){
         history.push('/main')

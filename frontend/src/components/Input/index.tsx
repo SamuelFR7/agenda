@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, FormEvent, InputHTMLAttributes } from 'react'
 
 
-export default function Input({ ...props }){
+const Input: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {
 
-    const handleKeyUp = useCallback((e) => {
+    const handleKeyUp = useCallback((e: FormEvent<HTMLInputElement>) => {
         e.currentTarget.maxLength = 15
             let value = e.currentTarget.value
             value = value.replace(/\D/g, "")
@@ -17,3 +17,5 @@ export default function Input({ ...props }){
         </div>
     )
 }
+
+export default Input

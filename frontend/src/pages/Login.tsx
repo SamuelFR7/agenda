@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, FormEvent } from 'react'
 import '../styles/Login.scss'
 import { toast, Toaster } from 'react-hot-toast'
 import api from '../services/api'
 import {useCookies} from 'react-cookie'
+import { useHistory } from 'react-router-dom'
 
 import logo from '../assets/logo.svg'
 
-export default function Login({ history }){
+export default function Login(){
+    const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [logged, setLogged] = useState(false)
@@ -30,7 +32,7 @@ export default function Login({ history }){
     }, [token])
 
 
-    async function handleSubmit(e){
+    async function handleSubmit(e: FormEvent){
         e.preventDefault()
         try {
             const {data} = await api.post('/user/login', {

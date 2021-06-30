@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SearchInput from '../components/SearchInput'
 import '../styles/Main.scss'
 import Pagination from 'rc-pagination'
+import { useHistory } from 'react-router-dom'
 
 import 'rc-pagination/assets/index.css'
 
@@ -13,8 +14,29 @@ import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
 import { useCookies } from 'react-cookie'
 
-export default function Table({ history }){
-  const [people, setPeople] = useState([])
+
+interface IPerson {
+  _id: string
+  RazaoSocial: string 
+  Email: string
+  Observacoes: string
+  Endereco: string
+  Telefone1: string
+  Telefone2: string
+  Telefone3: string
+  Telefone4: string
+  Telefone5: string
+  Telefone1Contato: string
+  Telefone2Contato: string
+  Telefone3Contato: string
+  Telefone4Contato: string
+  Telefone5Contato: string
+}
+
+
+export default function Table(){
+  const history = useHistory()
+  const [people, setPeople] = useState<IPerson[]>([])
   const [text, setText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPeople, setTotalPeople] = useState(1)
@@ -85,7 +107,7 @@ export default function Table({ history }){
   }, [currentPage])
 
 
-  async function handleDelete(id){
+  async function handleDelete(id: string){
     await api.delete('/delete', {
       headers: {
         id: id
@@ -130,7 +152,7 @@ export default function Table({ history }){
         <a href="/add"><button className="addButton">Novo Contato</button></a>
       </header>
   
-      <SearchInput value={text} onChange={(search) => setText(search)}/>
+      <SearchInput value={text} onChange={(search: string) => setText(search)}/>
 
       <table className="table-content" style={{overflowX: 'auto'}}>
         
