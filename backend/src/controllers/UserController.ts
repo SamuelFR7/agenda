@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import User from '../model/User'
 import { Request, Response, NextFunction } from 'express'
 
-export = {
+export default {
   async store (req: Request, res: Response) {
     const { email, password } = req.body
 
@@ -75,4 +75,4 @@ export = {
       return res.sendStatus(401)
     }
   }
-};
+}
