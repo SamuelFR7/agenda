@@ -1,7 +1,7 @@
 import Person from '../model/Person'
 import { Request, Response } from 'express'
 
-export = {
+export default {
   async index (req: Request, res: Response) {
     const { page, limit } = req.headers
     const pageNum = Number(page)
@@ -47,4 +47,4 @@ export = {
     const searchPerson = await Person.find({ RazaoSocial: { $regex: name } }).limit(limitcount)
     return res.json(searchPerson)
   }
-};
+}
