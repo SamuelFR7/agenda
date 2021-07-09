@@ -11,12 +11,12 @@ routes.post('/user/admin/check', UserController.adminAuth, UserController.check)
 
 // Pages Routes
 
-routes.get('/', PersonController.index)
+routes.post('/', PersonController.index)
 routes.get('/length', PersonController.indexLength)
 routes.post('/add', PersonController.store)
-routes.get('/show', PersonController.show)
+routes.post('/show', PersonController.show)
 routes.post('/update', PersonController.update)
 routes.delete('/delete', PersonController.delete)
-routes.get('/filter', PersonController.filter)
+routes.post('/filter', PersonController.filter)
 
 export default routes
