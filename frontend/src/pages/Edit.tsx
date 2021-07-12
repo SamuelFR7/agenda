@@ -83,8 +83,8 @@ export default function EditForm () {
 
   useEffect(() => {
     async function loadPerson () {
-      const { data } = await api.get<IPerson>('/show', {
-        headers: { id: params.id }
+      const { data } = await api.post<IPerson>('/show', {
+        id: params.id
       })
       setPerson(data)
       setRazaoSocial(data.RazaoSocial)

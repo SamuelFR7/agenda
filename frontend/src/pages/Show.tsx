@@ -72,10 +72,8 @@ export default function Show () {
 
   useEffect(() => {
     async function loadPerson () {
-      const response = await api.get('/show', {
-        headers: {
-          id: params.id
-        }
+      const response = await api.post('/show', {
+        id: params.id
       })
       const datares = response.data
       setPerson(datares)
