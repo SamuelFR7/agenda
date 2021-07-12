@@ -66,20 +66,14 @@ export default function Table () {
   useEffect(() => {
     async function search () {
       if (text) {
-        const { data } = await api.get('/filter', {
-          headers: {
-            name: text.toUpperCase(),
-            limit: 1
-          }
+        const { data } = await api.post('/filter', {
+          name: text.toUpperCase()
         })
         setPeople(data)
       } else {
         setCurrentPage(1)
-        const { data } = await api.get('/', {
-          headers: {
-            page: 1,
-            limit: 1
-          }
+        const { data } = await api.post('/', {
+          currentPage: 1
         })
         setPeople(data)
       }
@@ -89,11 +83,8 @@ export default function Table () {
 
   useEffect(() => {
     async function loadPeople () {
-      const { data } = await api.get('/', {
-        headers: {
-          page: currentPage,
-          limit: 1
-        }
+      const { data } = await api.post('/', {
+        currentPage
       })
       setPeople(data)
       setLoading(false)
@@ -108,18 +99,13 @@ export default function Table () {
       }
     })
     if (text) {
-      const { data } = await api.get('/filter', {
-        headers: {
-          name: text.toUpperCase()
-        }
+      const { data } = await api.post('/filter', {
+        name: text.toUpperCase()
       })
       setPeople(data)
     } else {
-      const { data } = await api.get('/', {
-        headers: {
-          page: currentPage,
-          limit: 1
-        }
+      const { data } = await api.post('/', {
+        currentPage: 1
       })
       setPeople(data)
     }

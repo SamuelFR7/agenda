@@ -3,12 +3,14 @@ import { Request, Response } from 'express'
 
 export default {
   async index (req: Request, res: Response) {
-    const { page, limit } = req.headers
-    const pageNum = Number(page)
-    const limitNum = Number(limit)
-    const skip = (pageNum * 10) - 10
-    const limitcount = limitNum * 10
-    const people = await Person.find({}).sort({ RazaoSocial: 1 }).skip(skip).limit(limitcount)
+    const { currentPage } = req.body
+    if (!currentPage) {
+      const people = await Person.find({}).sort({ RazaoSocial: 1 })
+      return res.json(people)
+    }
+    const skip = (currentPage - 1) * 10
+    const limit = (10 * currentPage)
+    const people = (await Person.find({}).sort({ RazaoSocial: 1 })).slice(skip, limit)
 
     return res.json(people)
   },
@@ -24,7 +26,7 @@ export default {
   },
 
   async show (req: Request, res: Response) {
-    const { id } = req.headers
+    const { id } = req.body
     const showPerson = await Person.findById(id)
     return res.json(showPerson)
   },
@@ -41,10 +43,8 @@ export default {
   },
 
   async filter (req: Request, res: Response) {
-    const { name, limit } = req.headers
-    const limitNum = Number(limit)
-    const limitcount = limitNum * 10
-    const searchPerson = await Person.find({ RazaoSocial: { $regex: name } }).limit(limitcount)
+    const { name } = req.body
+    const searchPerson = await Person.find({ RazaoSocial: { $regex: name } }).limit(10)
     return res.json(searchPerson)
   }
 }
