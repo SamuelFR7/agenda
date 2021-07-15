@@ -154,30 +154,30 @@ export default function EditForm () {
             <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
             <FormContent>
             <form>
-                <input className="inputField" placeholder="Nome" defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
-                <input className="inputField" placeholder="Endereco" defaultValue={person.Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
-                <input className="inputField" placeholder="Email" defaultValue={person.Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
+                <input placeholder="Nome" defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
+                <input placeholder="Endereco" defaultValue={person.Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
+                <input placeholder="Email" defaultValue={person.Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
                 <InputBox>
                 <Input placeholder="Telefone 1" name="number" defaultValue={person.Telefone1} onChange={e => setTelefone1(e.target.value)} />
                 <input className="inputBoxField" placeholder="Contato 1" defaultValue={person.Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                 </InputBox>
                 <InputBox>
                 <Input placeholder="Telefone 2" name="number" defaultValue={person.Telefone2} onChange={e => setTelefone2(e.target.value)} />
-                <input className="inputField" placeholder="Contato 2" defaultValue={person.Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
+                <input placeholder="Contato 2" defaultValue={person.Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
                 </InputBox>
                 <InputBox>
                 <Input placeholder="Telefone 3" name="number" defaultValue={person.Telefone3} onChange={e => setTelefone3(e.target.value)} />
-                <input className="inputField" placeholder="Contato 3" defaultValue={person.Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
+                <input placeholder="Contato 3" defaultValue={person.Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                 </InputBox>
                 <InputBox>
                 <Input placeholder="Telefone 4" name="number" defaultValue={person.Telefone4} onChange={e => setTelefone4(e.target.value)} />
-                <input className="inputField" placeholder="Contato 4" defaultValue={person.Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
+                <input placeholder="Contato 4" defaultValue={person.Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
                 </InputBox>
                 <InputBox>
                 <Input placeholder="Telefone 5" name="number" defaultValue={person.Telefone5} onChange={e => setTelefone5(e.target.value)} />
-                <input className="inputField" placeholder="Contato 5" defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
+                <input placeholder="Contato 5" defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                 </InputBox>
-                <input className="inputField" placeholder="Observações" defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
+                <input placeholder="Observações" defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
                 <button type='button' onClick={() => handleSubmit()}>Alterar</button>
             </form>
             </FormContent>

@@ -80,30 +80,30 @@ export default function AddForm () {
             <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
             <FormContent>
                     <form onSubmit={handleSubmit}>
-                        <input className="inputField" placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required={true} />
-                        <input className="inputField" placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
-                        <input className="inputField" placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
+                        <input placeholder="Nome" value={RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} required={true} />
+                        <input placeholder="Endereço" value={Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
+                        <input placeholder="Email" value={Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
                         <InputBox>
                         <Input placeholder="Telefone 1" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone1(e.currentTarget.value)} />
                         <input className="inputBoxField" placeholder="Contato 1" value={Telefone1Contato} onChange={e => setTelefone1Contato(e.target.value.toUpperCase())} />
                         </InputBox>
                         <InputBox>
                         <Input placeholder="Telefone 2" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone2(e.currentTarget.value)} />
-                        <input className="inputField" placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
+                        <input placeholder="Contato 2" value={Telefone2Contato} onChange={e => setTelefone2Contato(e.target.value.toUpperCase())} />
                         </InputBox>
                         <InputBox>
                         <Input placeholder="Telefone 3" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone3(e.currentTarget.value)} />
-                        <input className="inputField" placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
+                        <input placeholder="Contato 3" value={Telefone3Contato} onChange={e => setTelefone3Contato(e.target.value.toUpperCase())} />
                         </InputBox>
                         <InputBox>
                         <Input placeholder="Telefone 4" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone4(e.currentTarget.value)} />
-                        <input className="inputField" placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
+                        <input placeholder="Contato 4" value={Telefone4Contato} onChange={e => setTelefone4Contato(e.target.value.toUpperCase())} />
                         </InputBox>
                         <InputBox>
                         <Input placeholder="Telefone 5" name="number" onChange={(e: FormEvent<HTMLInputElement>) => setTelefone5(e.currentTarget.value)} />
-                        <input className="inputField" placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
+                        <input placeholder="Contato 5" value={Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                         </InputBox>
-                        <input className="inputField" placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
+                        <input placeholder="Observações" value={Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
                         <button type="submit">Adicionar</button>
                     </form>
             </FormContent>
