@@ -1,18 +1,19 @@
-.login-container {
+import styled from 'styled-components'
+
+export const LoginContainer = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.login-container form {
+`
+export const LoginForm = styled.form`
     width: 100%;
     max-width: 300px;
     display: flex;
     flex-direction: column;
-}
+`
 
-.login-container form input {
+export const LoginInput = styled.input`
     margin-top: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -20,13 +21,12 @@
     padding: 0 20px;
     font-size: 16px;
     color: #666;
-}
+    ::placeholder {
+        color: #999;
+    }
+`
 
-.login-container form input::placeholder {
-    color: #999;
-}
-
-.login-container form button {
+export const LoginButton = styled.button`
     margin-top: 10px;
     border: 0;
     border-radius: 4px;
@@ -36,8 +36,7 @@
     font-weight: bold;
     color: #FFF;
     cursor: pointer;
-}
-
-.login-container form button:hover {
-    filter: brightness(0.9);
-}
+    :hover{
+        filter: brightness(0.9);
+    }
+`
