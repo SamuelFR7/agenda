@@ -1,5 +1,6 @@
 import React, { FormEvent } from 'react'
-import '../../App.scss'
+
+import { InputSearch } from './style'
 
 export default function SearchInput ({ value, onChange }: {value: string, onChange: any}) {
   function handleChange (e: FormEvent<HTMLInputElement>) {
@@ -7,6 +8,6 @@ export default function SearchInput ({ value, onChange }: {value: string, onChan
   }
 
   return (
-        <input className="searchInput" placeholder="Pesquisar" type="search" value={value} onChange={handleChange}/>
+        <InputSearch placeholder="Pesquisar" type="search" value={value} onChange={handleChange}/>
   )
 }

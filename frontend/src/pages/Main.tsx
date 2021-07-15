@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import SearchInput from '../components/SearchInput'
-import '../styles/Main.scss'
-import Pagination from 'rc-pagination'
 import { useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
+import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
 
+import SearchInput from '../components/SearchInput'
+
 import api from '../services/api'
+
+import { MainContainer, AddButton, TableContent, TableButton, PaginationContainer } from '../styles/pages/Main'
+import { LoaderContainer, Loader } from '../styles/pages/Loader'
 
 import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
-import { useCookies } from 'react-cookie'
 
 interface IPerson {
   _id: string
@@ -113,9 +116,9 @@ export default function Table () {
 
   if (loading === true && logged === true) {
     return (
-      <div className="loader-container">
-        <div className="loader"></div>
-      </div>
+      <LoaderContainer>
+        <Loader></Loader>
+      </LoaderContainer>
     )
   }
 
@@ -124,15 +127,15 @@ export default function Table () {
   }
 
   return (
-    <div className="main-container">
+    <MainContainer>
 
       <header>
-        <a href="/add"><button className="addButton">Novo Contato</button></a>
+        <a href="/add"><AddButton>Novo Contato</AddButton></a>
       </header>
 
       <SearchInput value={text} onChange={(search: string) => setText(search)}/>
 
-      <table className="table-content" style={{ overflowX: 'auto' }}>
+      <TableContent>
 
         <thead className="table-header">
           <tr>
@@ -154,24 +157,24 @@ export default function Table () {
         <td className="text-content">{item.Telefone1}</td>
         <td className="text-content">{item.Email}</td>
         <td className="text-content">{item.Telefone1Contato}</td>
-        <td><a href={'/show/' + item._id}><button className="showButton"><img src={viewIcon} alt="view"></img></button></a></td>
-        <td><a href={'/edit/' + item._id}><button className="editButton"><img src={editIcon} alt="edit"></img></button></a></td>
-        <td><button type="button" className="deleteButton" onClick={() => { if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id) }}><img src={deleteIcon} alt="delete"></img></button></td>
+        <td><a href={'/show/' + item._id}><TableButton><img src={viewIcon} alt="view"></img></TableButton></a></td>
+        <td><a href={'/edit/' + item._id}><TableButton><img src={editIcon} alt="edit"></img></TableButton></a></td>
+        <td><TableButton onClick={() => { if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id) }}><img src={deleteIcon} alt="delete"></img></TableButton></td>
         </tr>))}
       </tbody>
-      </table>
+      </TableContent>
 
       {!text && (
-        <div className="pagination-container">
+        <PaginationContainer>
         <Pagination
           pageSize={10}
           onChange={setCurrentPage}
           current={currentPage}
           total={totalPeople}
         />
-        </div>
+        </PaginationContainer>
       )}
 
-    </div>
+    </MainContainer>
   )
 }
