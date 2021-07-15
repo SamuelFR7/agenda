@@ -105,30 +105,30 @@ export default function Show () {
         <FormContainer>
             <FormContent>
                     <form>
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Nome" value={person.RazaoSocial} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Endereço" value={person.Endereco} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Email" value={person.Email} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Nome" value={person.RazaoSocial} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Endereço" value={person.Endereco} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Email" value={person.Email} disabled={true} />
                         <InputBox>
                         <Input style={{ color: 'black' }} placeholder="Telefone 4" name="number" value={person.Telefone1} disabled={true} />
                         <input style={{ color: 'black' }} className="inputBoxField" placeholder="Contato 1" value={person.Telefone1Contato} disabled={true} />
                         </InputBox>
                         <InputBox>
                         <Input style={{ color: 'black' }} placeholder="Telefone 4" name="number" value={person.Telefone2} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Contato 2" value={person.Telefone2Contato} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Contato 2" value={person.Telefone2Contato} disabled={true} />
                         </InputBox>
                         <InputBox>
                         <Input style={{ color: 'black' }} placeholder="Telefone 4" name="number" value={person.Telefone3} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Contato 3" value={person.Telefone3Contato} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Contato 3" value={person.Telefone3Contato} disabled={true} />
                         </InputBox>
                         <InputBox>
                         <Input style={{ color: 'black' }} placeholder="Telefone 4" name="number" value={person.Telefone4} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Contato 4" value={person.Telefone4Contato} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Contato 4" value={person.Telefone4Contato} disabled={true} />
                         </InputBox>
                         <InputBox>
                         <Input style={{ color: 'black' }} placeholder="Telefone 5" name="number" value={person.Telefone5} disabled={true} />
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Contato 5" value={person.Telefone5Contato} disabled={true} />
+                        <input style={{ color: 'black' }} placeholder="Contato 5" value={person.Telefone5Contato} disabled={true} />
                         </InputBox>
-                        <input style={{ color: 'black' }} className="inputField" placeholder="Observações" value={person.Observacoes} disabled={true}/>
+                        <input style={{ color: 'black' }} placeholder="Observações" value={person.Observacoes} disabled={true}/>
                         <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
                     </form>
             </FormContent>
