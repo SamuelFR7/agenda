@@ -21,6 +21,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    font: 400 16px Roboto, sans-serif
 }
 `
 
