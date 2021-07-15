@@ -1,11 +1,14 @@
 import React, { useEffect, useState, FormEvent } from 'react'
-import '../styles/Login.scss'
+
 import { toast, Toaster } from 'react-hot-toast'
-import api from '../services/api'
 import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 
+import api from '../services/api'
+
 import logo from '../assets/logo.svg'
+import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
+import { LoaderContainer, Loader } from '../styles/pages/Loader'
 
 export default function Login () {
   const history = useHistory()
@@ -57,34 +60,34 @@ export default function Login () {
 
   if (loading) {
     return (
-      <div className="loader-container">
-        <div className="loader"></div>
-      </div>
+      <LoaderContainer>
+        <Loader></Loader>
+      </LoaderContainer>
     )
   }
 
   return (
-        <div className="login-container">
+        <LoginContainer>
             <Toaster
             position="top-left"
             reverseOrder={false}
             />
-            <form onSubmit={handleSubmit}>
+            <LoginForm onSubmit={handleSubmit}>
                 <img src={logo} alt="acs"></img>
-                <input
+                <LoginInput
                 placeholder="Usuário"
                 type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 />
-                <input
+                <LoginInput
                 placeholder="Senha"
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 />
-                <button type="submit">Entrar</button>
-            </form>
-        </div>
+                <LoginButton type="submit">Entrar</LoginButton>
+            </LoginForm>
+        </LoginContainer>
   )
 }

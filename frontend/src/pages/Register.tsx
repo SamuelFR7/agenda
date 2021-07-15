@@ -2,7 +2,11 @@ import React, { useEffect, useState, FormEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
 import { useCookies } from 'react-cookie'
+
 import api from '../services/api'
+
+import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
+import { LoaderContainer, Loader } from '../styles/pages/Loader'
 
 export default function Register () {
   const history = useHistory()
@@ -46,35 +50,35 @@ export default function Register () {
 
   if (loading) {
     return (
-        <div className="loader-container">
-            <div className="loader"></div>
-        </div>
+        <LoaderContainer>
+            <Loader></Loader>
+        </LoaderContainer>
     )
   }
 
   return (
-        <div className="login-container">
+        <LoginContainer>
             <Toaster
                 position="top-left"
                 reverseOrder={false}
             />
-            <form onSubmit={handleSubmit}>
-                <input
+            <LoginForm onSubmit={handleSubmit}>
+                <LoginInput
                 placeholder="Usuário"
                 type="text"
                 value={email}
                 required={true}
                 onChange={e => setEmail(e.target.value)}
                 />
-                <input
+                <LoginInput
                 placeholder="Senha"
                 type="password"
                 value={password}
                 required={true}
                 onChange={e => setPassword(e.target.value)}
                 />
-                <button type="submit">Registrar</button>
-            </form>
-        </div>
+                <LoginButton type="submit">Registrar</LoginButton>
+            </LoginForm>
+        </LoginContainer>
   )
 }
