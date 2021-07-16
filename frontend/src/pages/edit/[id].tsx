@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
+import Head from 'next/head'
 
 import Input from '../../components/Input'
 
@@ -146,6 +147,9 @@ const Edit: React.FC = () => {
 
   return (
         <FormContainer>
+          <Head>
+            <title>Editar</title>
+          </Head>
             <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
             <FormContent>
             <form onSubmit={handleSubmit}>

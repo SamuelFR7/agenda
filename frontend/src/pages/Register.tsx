@@ -2,6 +2,7 @@ import React, { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { toast, Toaster } from 'react-hot-toast'
 import { useCookies } from 'react-cookie'
+import Head from 'next/head'
 
 import api from '../services/api'
 
@@ -58,6 +59,9 @@ const Register: React.FC = () => {
 
   return (
           <LoginContainer>
+            <Head>
+              <title>Registrar</title>
+            </Head>
               <Toaster
                   position="top-left"
                   reverseOrder={false}
