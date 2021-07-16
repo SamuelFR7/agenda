@@ -1,17 +1,17 @@
-import React, { useEffect, useState, FormEvent } from 'react'
+import React, { FormEvent, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import { toast, Toaster } from 'react-hot-toast'
 import { useCookies } from 'react-cookie'
-import { useHistory } from 'react-router-dom'
 
 import api from '../services/api'
 
-import logo from '../assets/logo.svg'
-import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
-import { LoaderContainer, Loader } from '../styles/pages/Loader'
+import { LoaderContainer, Loader } from '../styles/Loader'
+import { LoginContainer, LoginForm, LoginButton, LoginInput } from '../styles/pages/Login'
+import Logo from '../assets/logo.svg'
 
-export default function Login () {
-  const history = useHistory()
+const Home: React.FC = () => {
+  const history = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [logged, setLogged] = useState(false)
@@ -48,14 +48,14 @@ export default function Login () {
       }
       const token = data.token
       setCookie('token', token, { maxAge: 86400 })
-      history.push('/main')
+      history.push('/')
     } catch (error) {
       toast.error('Usuário ou senha incorretos')
     }
   }
 
   if (logged) {
-    history.push('/main')
+    history.push('/')
   }
 
   if (loading) {
@@ -73,7 +73,7 @@ export default function Login () {
             reverseOrder={false}
             />
             <LoginForm onSubmit={handleSubmit}>
-                <img src={logo} alt="acs"></img>
+                <Logo></Logo>
                 <LoginInput
                 placeholder="Usuário"
                 type="text"
@@ -91,3 +91,5 @@ export default function Login () {
         </LoginContainer>
   )
 }
+
+export default Home
