@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect, FormEvent } from 'react'
+import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
+import Head from 'next/head'
+import Image from 'next/image'
 
 import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
@@ -10,7 +12,7 @@ import SearchInput from '../components/SearchInput'
 import api from '../services/api'
 
 import { MainContainer, AddButton, TableContent, TableButton, PaginationContainer } from '../styles/pages/Main'
-import { LoaderContainer, Loader } from '../styles/pages/Loader'
+import { LoaderContainer, Loader } from '../styles/Loader'
 
 import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
@@ -34,8 +36,8 @@ interface IPerson {
   Telefone5Contato: string
 }
 
-export default function Table () {
-  const history = useHistory()
+const Home: React.FC = () => {
+  const history = useRouter()
   const [people, setPeople] = useState<IPerson[]>([])
   const [text, setText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -114,6 +116,11 @@ export default function Table () {
     }
   }
 
+  function handleAdd (e: FormEvent) {
+    e.preventDefault()
+    history.push('/Add')
+  }
+
   if (loading === true && logged === true) {
     return (
       <LoaderContainer>
@@ -123,14 +130,17 @@ export default function Table () {
   }
 
   if (!logged) {
-    history.push('/')
+    history.push('/Login')
   }
 
   return (
     <MainContainer>
+      <Head>
+        <title>Agenda</title>
+      </Head>
 
       <header>
-        <a href="/add"><AddButton>Novo Contato</AddButton></a>
+        <AddButton onClick={handleAdd}>Novo Contato</AddButton>
       </header>
 
       <SearchInput value={text} onChange={(search: string) => setText(search)}/>
@@ -157,9 +167,9 @@ export default function Table () {
         <td className="text-content">{item.Telefone1}</td>
         <td className="text-content">{item.Email}</td>
         <td className="text-content">{item.Telefone1Contato}</td>
-        <td><a href={'/show/' + item._id}><TableButton><img src={viewIcon} alt="view"></img></TableButton></a></td>
-        <td><a href={'/edit/' + item._id}><TableButton><img src={editIcon} alt="edit"></img></TableButton></a></td>
-        <td><TableButton onClick={() => { if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id) }}><img src={deleteIcon} alt="delete"></img></TableButton></td>
+        <td><a href={'/show/' + item._id}><TableButton><Image src={viewIcon} alt="view"></Image></TableButton></a></td>
+        <td><a href={'/edit/' + item._id}><TableButton><Image src={editIcon} alt="edit"></Image></TableButton></a></td>
+        <td><TableButton onClick={() => { if (window.confirm('Certeza de que você quer deletar este item?')) handleDelete(item._id) }}><Image src={deleteIcon} alt="delete"></Image></TableButton></td>
         </tr>))}
       </tbody>
       </TableContent>
@@ -178,3 +188,5 @@ export default function Table () {
     </MainContainer>
   )
 }
+
+export default Home

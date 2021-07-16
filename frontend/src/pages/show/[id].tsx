@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, FormEvent } from 'react'
 import { useCookies } from 'react-cookie'
-import { useHistory, useParams } from 'react-router-dom'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
 
-import Input from '../components/Input'
+import Input from '../../components/Input'
 
-import api from '../services/api'
+import api from '../../services/api'
 
-import { FormContainer, FormContent, InputBox, ButtonReturn } from '../styles/pages/Add'
-import { LoaderContainer, Loader } from '../styles/pages/Loader'
-
-type ShowParams = {
-    id: string
-}
+import { FormContainer, FormContent, InputBox, ButtonReturn } from '../../styles/pages/Add'
+import { LoaderContainer, Loader } from '../../styles/Loader'
 
 interface IPerson {
     _id: string
@@ -31,9 +28,9 @@ interface IPerson {
     Telefone5Contato: string
   }
 
-export default function Show () {
-  const history = useHistory()
-  const params = useParams<ShowParams>()
+const Show: React.FC = () => {
+  const history = useRouter()
+  const { id } = history.query
   const [person, setPerson] = useState<IPerson>({
     _id: '',
     RazaoSocial: '',
@@ -75,20 +72,22 @@ export default function Show () {
 
   useEffect(() => {
     async function loadPerson () {
-      const response = await api.get(`/show/${params.id}`)
+      const response = await api.get(`/show/${id}`)
+      console.log(response)
       const datares = response.data
       setPerson(datares)
       setLoading(false)
     }
     loadPerson()
-  }, [params.id])
+  }, [id])
 
-  function handleReturn () {
-    history.push('/main')
+  function handleReturn (e: FormEvent) {
+    e.preventDefault()
+    history.push('/')
   }
 
   if (logout) {
-    history.push('/')
+    history.push('/Login')
   }
 
   if (loading) {
@@ -101,6 +100,9 @@ export default function Show () {
 
   return (
         <FormContainer>
+          <Head>
+            <title>Visualizar</title>
+          </Head>
             <FormContent>
                     <form>
                         <input style={{ color: 'black' }} placeholder="Nome" value={person.RazaoSocial} disabled={true} />
@@ -133,3 +135,5 @@ export default function Show () {
         </FormContainer>
   )
 }
+
+export default Show

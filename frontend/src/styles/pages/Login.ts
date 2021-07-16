@@ -6,6 +6,7 @@ export const LoginContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
+
 export const LoginForm = styled.form`
     width: 100%;
     max-width: 300px;

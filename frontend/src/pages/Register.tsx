@@ -1,15 +1,16 @@
-import React, { useEffect, useState, FormEvent } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect, FormEvent } from 'react'
+import { useRouter } from 'next/router'
 import { toast, Toaster } from 'react-hot-toast'
 import { useCookies } from 'react-cookie'
+import Head from 'next/head'
 
 import api from '../services/api'
 
 import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
-import { LoaderContainer, Loader } from '../styles/pages/Loader'
+import { LoaderContainer, Loader } from '../styles/Loader'
 
-export default function Register () {
-  const history = useHistory()
+const Register: React.FC = () => {
+  const history = useRouter()
   const [cookies] = useCookies(['cookie-name'])
   const adminAuth = cookies.adminToken
   const [email, setEmail] = useState('')
@@ -50,35 +51,40 @@ export default function Register () {
 
   if (loading) {
     return (
-        <LoaderContainer>
-            <Loader></Loader>
-        </LoaderContainer>
+          <LoaderContainer>
+              <Loader></Loader>
+          </LoaderContainer>
     )
   }
 
   return (
-        <LoginContainer>
-            <Toaster
-                position="top-left"
-                reverseOrder={false}
-            />
-            <LoginForm onSubmit={handleSubmit}>
-                <LoginInput
-                placeholder="Usuário"
-                type="text"
-                value={email}
-                required={true}
-                onChange={e => setEmail(e.target.value)}
-                />
-                <LoginInput
-                placeholder="Senha"
-                type="password"
-                value={password}
-                required={true}
-                onChange={e => setPassword(e.target.value)}
-                />
-                <LoginButton type="submit">Registrar</LoginButton>
-            </LoginForm>
-        </LoginContainer>
+          <LoginContainer>
+            <Head>
+              <title>Registrar</title>
+            </Head>
+              <Toaster
+                  position="top-left"
+                  reverseOrder={false}
+              />
+              <LoginForm onSubmit={handleSubmit}>
+                  <LoginInput
+                  placeholder="Usuário"
+                  type="text"
+                  value={email}
+                  required={true}
+                  onChange={e => setEmail(e.target.value)}
+                  />
+                  <LoginInput
+                  placeholder="Senha"
+                  type="password"
+                  value={password}
+                  required={true}
+                  onChange={e => setPassword(e.target.value)}
+                  />
+                  <LoginButton type="submit">Registrar</LoginButton>
+              </LoginForm>
+          </LoginContainer>
   )
 }
+
+export default Register
