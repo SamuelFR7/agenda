@@ -1,4 +1,22 @@
-import { model, Schema } from 'mongoose'
+import { model, Model, Schema, Document } from 'mongoose'
+
+interface IPerson extends Document {
+  _id: string,
+  RazaoSocial: string,
+  Telefone1: string,
+  Telefone1Contato: string,
+  Telefone2: string,
+  Telefone2Contato: string,
+  Telefone3: string,
+  Telefone3Contato: string,
+  Telefone4: string,
+  Telefone4Contato: string,
+  Telefone5: string,
+  Telefone5Contato: string,
+  Email: string,
+  Endereco: string,
+  Observacoes: string
+}
 
 const PersonSchema = new Schema({
   RazaoSocial: { type: String, required: true },
@@ -17,4 +35,6 @@ const PersonSchema = new Schema({
   Observacoes: { type: String, required: false }
 })
 
-export default model('Person', PersonSchema)
+const Person: Model<IPerson> = model('Person', PersonSchema)
+
+export default Person
