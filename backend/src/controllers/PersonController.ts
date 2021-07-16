@@ -26,7 +26,7 @@ export default {
   },
 
   async show (req: Request, res: Response) {
-    const { id } = req.body
+    const { id } = req.params
     const showPerson = await Person.findById(id)
     return res.json(showPerson)
   },
