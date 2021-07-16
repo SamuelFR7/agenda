@@ -1,5 +1,6 @@
 import React, { FormEvent, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import { toast, Toaster } from 'react-hot-toast'
 import { useCookies } from 'react-cookie'
@@ -68,6 +69,9 @@ const Home: React.FC = () => {
 
   return (
         <LoginContainer>
+          <Head>
+            <title>Login</title>
+          </Head>
             <Toaster
             position="top-left"
             reverseOrder={false}

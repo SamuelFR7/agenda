@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react'
 import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import Input from '../components/Input'
 
@@ -78,6 +79,9 @@ const Add: React.FC = () => {
 
   return (
           <FormContainer>
+            <Head>
+              <title>Adicionar</title>
+            </Head>
               <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
               <FormContent>
                       <form onSubmit={handleSubmit}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
+import Head from 'next/head'
 import Image from 'next/image'
 
 import Pagination from 'rc-pagination'
@@ -134,6 +135,9 @@ const Home: React.FC = () => {
 
   return (
     <MainContainer>
+      <Head>
+        <title>Agenda</title>
+      </Head>
 
       <header>
         <AddButton onClick={handleAdd}>Novo Contato</AddButton>

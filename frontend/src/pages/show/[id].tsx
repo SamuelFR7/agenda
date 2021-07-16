@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react'
 import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import Input from '../../components/Input'
 
@@ -99,6 +100,9 @@ const Show: React.FC = () => {
 
   return (
         <FormContainer>
+          <Head>
+            <title>Visualizar</title>
+          </Head>
             <FormContent>
                     <form>
                         <input style={{ color: 'black' }} placeholder="Nome" value={person.RazaoSocial} disabled={true} />
