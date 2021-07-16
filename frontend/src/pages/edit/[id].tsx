@@ -31,6 +31,11 @@ interface IPerson {
 const Edit: React.FC = () => {
   const history = useRouter()
   const { id } = history.query
+
+  if (!id) {
+    return null
+  }
+
   const [person, setPerson] = useState<IPerson>({
     _id: '',
     RazaoSocial: '',
@@ -108,7 +113,7 @@ const Edit: React.FC = () => {
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
-    await api.post('/update', {
+    await api.patch('/update', {
       id,
       RazaoSocial,
       Telefone1,

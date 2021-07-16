@@ -71,15 +71,11 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function search () {
       if (text) {
-        const { data } = await api.post('/filter', {
-          name: text.toUpperCase()
-        })
+        const { data } = await api.get(`/filter/${text.toUpperCase()}`)
         setPeople(data)
       } else {
         setCurrentPage(1)
-        const { data } = await api.post('/', {
-          currentPage: 1
-        })
+        const { data } = await api.get(`/index/${currentPage}`)
         setPeople(data)
       }
     }
@@ -88,9 +84,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     async function loadPeople () {
-      const { data } = await api.post('/', {
-        currentPage
-      })
+      const { data } = await api.get(`/index/${currentPage}`)
       setPeople(data)
       setLoading(false)
     }
@@ -98,20 +92,12 @@ const Home: React.FC = () => {
   }, [currentPage])
 
   async function handleDelete (id: string) {
-    await api.delete('/delete', {
-      headers: {
-        id: id
-      }
-    })
+    await api.delete(`/delete/${id}`)
     if (text) {
-      const { data } = await api.post('/filter', {
-        name: text.toUpperCase()
-      })
+      const { data } = await api.get(`/filter/${text.toUpperCase()}`)
       setPeople(data)
     } else {
-      const { data } = await api.post('/', {
-        currentPage: 1
-      })
+      const { data } = await api.get(`/index/${currentPage}`)
       setPeople(data)
     }
   }
