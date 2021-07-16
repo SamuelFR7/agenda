@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import React, { useEffect, useState, FormEvent } from 'react'
+import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
 
-import Input from '../components/Input'
+import Input from '../../components/Input'
 
-import api from '../services/api'
+import api from '../../services/api'
 
-import { FormContainer, ButtonReturn, FormContent, InputBox } from '../styles/pages/Add'
-import { LoaderContainer, Loader } from '../styles/pages/Loader'
-
-type EditParams = {
-    id: string
-}
+import { FormContainer, FormContent, InputBox, ButtonReturn } from '../../styles/pages/Add'
+import { LoaderContainer, Loader } from '../../styles/Loader'
 
 interface IPerson {
     _id: string
@@ -31,9 +27,9 @@ interface IPerson {
     Telefone5Contato: string
   }
 
-export default function EditForm () {
-  const params = useParams<EditParams>()
-  const history = useHistory()
+const Edit: React.FC = () => {
+  const history = useRouter()
+  const { id } = history.query
   const [person, setPerson] = useState<IPerson>({
     _id: '',
     RazaoSocial: '',
@@ -88,7 +84,7 @@ export default function EditForm () {
 
   useEffect(() => {
     async function loadPerson () {
-      const { data } = await api.get<IPerson>(`/show/${params.id}`)
+      const { data } = await api.get<IPerson>(`/show/${id}`)
       setPerson(data)
       setRazaoSocial(data.RazaoSocial)
       setEmail(data.Email)
@@ -107,10 +103,10 @@ export default function EditForm () {
       setLoading(false)
     }
     loadPerson()
-  }, [params.id])
+  }, [id])
 
-  async function handleSubmit () {
-    const id = params.id
+  async function handleSubmit (e: FormEvent) {
+    e.preventDefault()
     await api.post('/update', {
       id,
       RazaoSocial,
@@ -128,15 +124,16 @@ export default function EditForm () {
       Endereco,
       Observacoes
     })
-    history.push('/main')
+    history.push('/')
   }
 
-  function handleReturn () {
-    history.push('/main')
+  function handleReturn (e: FormEvent) {
+    e.preventDefault()
+    history.push('/')
   }
 
   if (!logged) {
-    history.push('/')
+    history.push('/Login')
   }
 
   if (loading === true) {
@@ -151,7 +148,7 @@ export default function EditForm () {
         <FormContainer>
             <ButtonReturn onClick={handleReturn}>Retornar</ButtonReturn>
             <FormContent>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input placeholder="Nome" defaultValue={person.RazaoSocial} onChange={e => setRazaoSocial(e.target.value.toUpperCase())} />
                 <input placeholder="Endereco" defaultValue={person.Endereco} onChange={e => setEndereco(e.target.value.toUpperCase())} />
                 <input placeholder="Email" defaultValue={person.Email} onChange={e => setEmail(e.target.value.toLowerCase())} />
@@ -176,10 +173,12 @@ export default function EditForm () {
                 <input placeholder="Contato 5" defaultValue={person.Telefone5Contato} onChange={e => setTelefone5Contato(e.target.value.toUpperCase())} />
                 </InputBox>
                 <input placeholder="Observações" defaultValue={person.Observacoes} onChange={e => setObservacoes(e.target.value.toUpperCase())} />
-                <button type='button' onClick={() => handleSubmit()}>Alterar</button>
+                <button type="submit">Alterar</button>
             </form>
             </FormContent>
 
         </FormContainer>
   )
 }
+
+export default Edit
