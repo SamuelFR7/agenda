@@ -3,11 +3,8 @@ import { Request, Response } from 'express'
 
 export default {
   async index (req: Request, res: Response) {
-    const { currentPage } = req.body
-    if (!currentPage) {
-      const people = await Person.find({}).sort({ RazaoSocial: 1 })
-      return res.json(people)
-    }
+    const { page } = req.params
+    const currentPage = Number(page)
     const skip = (currentPage - 1) * 10
     const limit = (10 * currentPage)
     const people = (await Person.find({}).sort({ RazaoSocial: 1 })).slice(skip, limit)
@@ -37,13 +34,13 @@ export default {
   },
 
   async delete (req: Request, res: Response) {
-    const { id } = req.headers
+    const { id } = req.params
     const deletePerson = await Person.findByIdAndDelete(id)
     return res.json(deletePerson)
   },
 
   async filter (req: Request, res: Response) {
-    const { name } = req.body
+    const { name } = req.params
     const searchPerson = await Person.find({ RazaoSocial: { $regex: name } }).limit(10)
     return res.json(searchPerson)
   }
