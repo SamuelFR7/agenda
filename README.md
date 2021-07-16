@@ -16,7 +16,7 @@ O projeto foi desenvolvido usando as seguintes tecnologias:
 
 - [Node](https://nodejs.org)
 - [Mongo](https://www.mongodb.com/)
-- [React](https://reactjs.org)
+- [NextJS](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 
 ## 🚀 Como executar
@@ -43,7 +43,7 @@ $ yarn dev
 # Frontend:
 $ cd frontend
 $ yarn 
-$ yarn start
+$ yarn dev
 ```
 O backend estará disponível em http://localhost:3333, enquanto você pode acessar o frontend pelo browser no endereço: http://localhost:3000
 
