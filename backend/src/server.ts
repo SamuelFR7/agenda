@@ -1,17 +1,13 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose'
 import cors from 'cors'
 import routes from './routes'
+import { databaseConnection } from './database/databaseConnection'
 
 dotenv.config()
 const server = express()
 
-mongoose.connect(process.env.MONGO_CONNECTION, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-})
+databaseConnection.start()
 
 server.use(cors())
 server.use(express.json())

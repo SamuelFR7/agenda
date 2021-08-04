@@ -1,4 +1,4 @@
-import Person from '../model/Person'
+import Person from '../database/model/Person'
 import { Request, Response } from 'express'
 
 export default {
