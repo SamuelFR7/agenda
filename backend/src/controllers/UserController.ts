@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import User from '../model/User'
+import User from '../database/model/User'
 import { Request, Response, NextFunction } from 'express'
 
 export default {
