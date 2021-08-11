@@ -78,19 +78,24 @@ const Edit: React.FC = () => {
       try {
         await api.get('/user/check', {
           headers: {
-            authorization: token
+            authorization: `Bearer ${token}`
           }
         })
       } catch (error) {
-        setLogged(false)
+        return setLogged(false)
       }
+      return setLogged(true)
     }
     Check()
   }, [token])
 
   useEffect(() => {
     async function loadPerson () {
-      const { data } = await api.get<IPerson>(`/show/${id}`)
+      const { data } = await api.get<IPerson>(`/show/${id}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
       setPerson(data)
       setRazaoSocial(data.RazaoSocial)
       setEmail(data.Email)
@@ -129,6 +134,10 @@ const Edit: React.FC = () => {
       Email,
       Endereco,
       Observacoes
+    }, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
     })
     history.push('/')
   }

@@ -12,32 +12,38 @@ import { LoaderContainer, Loader } from '../styles/Loader'
 const Register: React.FC = () => {
   const history = useRouter()
   const [cookies] = useCookies(['cookie-name'])
-  const adminAuth = cookies.adminToken
+  const token = cookies.token
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(true)
+  const [admin, setAdmin] = useState(true)
 
   useEffect(() => {
     async function Check () {
       try {
-        await api.post('/user/admin/check', {
-          adminAuth
+        await api.get('/user/check/admin', {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
         })
-        setLoading(false)
       } catch (error) {
-        history.push('/')
+        return setAdmin(false)
       }
+      return setLoading(false)
     }
     Check()
-  }, [adminAuth, history])
+  }, [token])
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
     try {
       await api.post('/user/register', {
-        adminAuth,
         email: email.toUpperCase(),
         password
+      }, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
       })
       toast.success('Usuário registrado com sucesso')
       setEmail('')
@@ -47,6 +53,10 @@ const Register: React.FC = () => {
       setEmail('')
       setPassword('')
     }
+  }
+
+  if (!admin) {
+    history.push('/')
   }
 
   if (loading) {

@@ -7,7 +7,6 @@ import { useCookies } from 'react-cookie'
 
 import api from '../services/api'
 
-import { LoaderContainer, Loader } from '../styles/Loader'
 import { LoginContainer, LoginForm, LoginButton, LoginInput } from '../styles/pages/Login'
 import Logo from '../assets/logo.svg'
 
@@ -15,24 +14,23 @@ const Home: React.FC = () => {
   const history = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [logged, setLogged] = useState(false)
   const [cookies, setCookie] = useCookies(['cookie-name'])
-  const [loading, setLoading] = useState(true)
+  const [logged, setLogged] = useState(false)
 
   const token = cookies.token
+
   useEffect(() => {
     async function Check () {
       try {
         await api.get('/user/check', {
           headers: {
-            authorization: token
+            authorization: `Bearer ${token}`
           }
         })
-        setLogged(true)
       } catch (error) {
-        setLogged(false)
-        setLoading(false)
+        return setLogged(false)
       }
+      return setLogged(true)
     }
     Check()
   }, [token])
@@ -44,10 +42,7 @@ const Home: React.FC = () => {
         email: email.toUpperCase(),
         password: password
       })
-      if (data.adminToken) {
-        setCookie('adminToken', data.adminToken, { maxAge: 86400 })
-      }
-      const token = data.token
+      const token = data
       setCookie('token', token, { maxAge: 86400 })
       history.push('/')
     } catch (error) {
@@ -57,14 +52,6 @@ const Home: React.FC = () => {
 
   if (logged) {
     history.push('/')
-  }
-
-  if (loading) {
-    return (
-      <LoaderContainer>
-        <Loader></Loader>
-      </LoaderContainer>
-    )
   }
 
   return (

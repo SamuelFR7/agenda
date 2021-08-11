@@ -53,16 +53,25 @@ const Home: React.FC = () => {
       try {
         await api.get('/user/check', {
           headers: {
-            authorization: token
+            authorization: `Bearer ${token}`
           }
         })
       } catch (error) {
-        setLogged(false)
+        console.log(error)
+        return setLogged(false)
       }
     }
     async function loadAllPeople () {
-      const { data } = await api.get('/length')
-      setTotalPeople(data)
+      try {
+        const { data } = await api.get('/length', {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        setTotalPeople(data)
+      } catch (error) {
+        return setLogged(false)
+      }
     }
     Check()
     loadAllPeople()
@@ -71,12 +80,24 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function search () {
       if (text) {
-        const { data } = await api.get(`/filter/${text.toUpperCase()}`)
+        const { data } = await api.get(`/filter/${text.toUpperCase()}`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
         setPeople(data)
       } else {
         setCurrentPage(1)
-        const { data } = await api.get(`/index/${currentPage}`)
-        setPeople(data)
+        try {
+          const { data } = await api.get(`/index/${currentPage}`, {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          })
+          setPeople(data)
+        } catch (error) {
+          return setLogged(false)
+        }
       }
     }
     search()
@@ -84,20 +105,40 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     async function loadPeople () {
-      const { data } = await api.get(`/index/${currentPage}`)
-      setPeople(data)
-      setLoading(false)
+      try {
+        const { data } = await api.get(`/index/${currentPage}`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        setPeople(data)
+        setLoading(false)
+      } catch (error) {
+        return setLogged(false)
+      }
     }
     loadPeople()
   }, [currentPage])
 
   async function handleDelete (id: string) {
-    await api.delete(`/delete/${id}`)
+    await api.delete(`/delete/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
     if (text) {
-      const { data } = await api.get(`/filter/${text.toUpperCase()}`)
+      const { data } = await api.get(`/filter/${text.toUpperCase()}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
       setPeople(data)
     } else {
-      const { data } = await api.get(`/index/${currentPage}`)
+      const { data } = await api.get(`/index/${currentPage}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
       setPeople(data)
     }
   }
@@ -107,16 +148,16 @@ const Home: React.FC = () => {
     history.push('/Add')
   }
 
+  if (!logged) {
+    history.push('/Login')
+  }
+
   if (loading === true && logged === true) {
     return (
       <LoaderContainer>
         <Loader></Loader>
       </LoaderContainer>
     )
-  }
-
-  if (!logged) {
-    history.push('/Login')
   }
 
   return (
