@@ -25,7 +25,7 @@ const Add: React.FC = () => {
   const [Telefone5, setTelefone5] = useState('')
   const [Telefone5Contato, setTelefone5Contato] = useState('')
   const [Observacoes, setObservacoes] = useState('')
-  const [logout, setLogout] = useState(false)
+  const [logged, setLogged] = useState(true)
   const [cookies] = useCookies(['cookie-name'])
 
   const token = cookies.token
@@ -33,15 +33,15 @@ const Add: React.FC = () => {
   useEffect(() => {
     async function Check () {
       try {
-        const response = await api.get('/user/check', {
+        await api.get('/user/check', {
           headers: {
-            authorization: token
+            authorization: `Bearer ${token}`
           }
         })
-        console.log(response)
       } catch (error) {
-        setLogout(true)
+        return setLogged(false)
       }
+      return setLogged(true)
     }
     Check()
   }, [token])
@@ -64,6 +64,10 @@ const Add: React.FC = () => {
       Telefone5,
       Telefone5Contato,
       Observacoes
+    }, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
     })
     history.push('/')
   }
@@ -73,7 +77,7 @@ const Add: React.FC = () => {
     history.push('/')
   }
 
-  if (logout === true) {
+  if (!logged) {
     history.push('/')
   }
 

@@ -1,22 +1,31 @@
 import express from 'express'
-import PersonController from './controllers/PersonController'
-import UserController from './controllers/UserController'
+
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated'
+import { ensureAdmin } from './middlewares/ensureAdmin'
+
+import { PersonController } from './controllers/PersonController'
+import { UserController } from './controllers/UserController'
 
 const routes = express.Router()
+
+// Objects
+const personController = new PersonController()
+const userController = new UserController()
+
 // User Routes
-routes.post('/user/register', UserController.adminAuth, UserController.store)
-routes.post('/user/login', UserController.login)
-routes.get('/user/check', UserController.auth, UserController.check)
-routes.post('/user/admin/check', UserController.adminAuth, UserController.check)
+routes.post('/user/register', ensureAuthenticated, ensureAdmin, userController.store)
+routes.post('/user/login', userController.login)
+routes.get('/user/check', ensureAuthenticated, userController.Check)
+routes.get('/user/check/admin', ensureAuthenticated, ensureAdmin, userController.Check)
 
 // Pages Routes
 
-routes.get('/index/:page', PersonController.index)
-routes.get('/length', PersonController.indexLength)
-routes.post('/add', PersonController.store)
-routes.get('/show/:id', PersonController.show)
-routes.patch('/update', PersonController.update)
-routes.delete('/delete/:id', PersonController.delete)
-routes.get('/filter/:name', PersonController.filter)
+routes.get('/index/:page', ensureAuthenticated, personController.index)
+routes.get('/length', ensureAuthenticated, personController.indexLength)
+routes.post('/add', ensureAuthenticated, personController.store)
+routes.get('/show/:id', ensureAuthenticated, personController.show)
+routes.patch('/update', ensureAuthenticated, personController.update)
+routes.delete('/delete/:id', ensureAuthenticated, personController.delete)
+routes.get('/filter/:name', ensureAuthenticated, personController.filter)
 
 export default routes

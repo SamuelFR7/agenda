@@ -1,6 +1,6 @@
 import { model, Model, Schema, Document } from 'mongoose'
 
-interface IPerson extends Document {
+export interface IPerson extends Document {
   _id: string,
   RazaoSocial: string,
   Telefone1: string,
@@ -37,4 +37,4 @@ const PersonSchema = new Schema({
 
 const Person: Model<IPerson> = model('Person', PersonSchema)
 
-export default Person
+export { Person }
