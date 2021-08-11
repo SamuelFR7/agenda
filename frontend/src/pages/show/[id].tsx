@@ -54,7 +54,7 @@ const Show: React.FC = () => {
     Telefone5Contato: ''
   })
   const [loading, setLoading] = useState(true)
-  const [logout, setLogout] = useState(false)
+  const [logged, setLogged] = useState(true)
   const [cookies] = useCookies(['cookie-name'])
 
   const token = cookies.token
@@ -62,26 +62,34 @@ const Show: React.FC = () => {
   useEffect(() => {
     async function Check () {
       try {
-        const response = await api.get('/user/check', {
+        await api.get('/user/check', {
           headers: {
-            authorization: token
+            authorization: `Bearer ${token}`
           }
         })
-        console.log(response)
       } catch (error) {
-        setLogout(true)
+        return setLogged(false)
       }
+      return setLogged(true)
     }
     Check()
   }, [token])
 
   useEffect(() => {
     async function loadPerson () {
-      const response = await api.get(`/show/${id}`)
-      console.log(response)
-      const datares = response.data
-      setPerson(datares)
-      setLoading(false)
+      try {
+        const response = await api.get(`/show/${id}`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        console.log(response)
+        const datares = response.data
+        setPerson(datares)
+        setLoading(false)
+      } catch (error) {
+        setLogged(false)
+      }
     }
     loadPerson()
   }, [id])
@@ -91,7 +99,7 @@ const Show: React.FC = () => {
     history.push('/')
   }
 
-  if (logout) {
+  if (!logged) {
     history.push('/Login')
   }
 
