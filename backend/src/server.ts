@@ -1,16 +1,26 @@
 import express from 'express'
-import dotenv from 'dotenv'
+import 'express-async-errors'
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+import { connect } from 'mongoose'
+
+import { errorCatch } from './middlewares/errorCatch'
+
 import routes from './routes'
-import { databaseConnection } from './database/databaseConnection'
 
 dotenv.config()
-const server = express()
+connect(process.env.MONGO_CONNECTION, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+})
 
-databaseConnection.start()
+const app = express()
 
-server.use(cors())
-server.use(express.json())
-server.use(routes)
+app.use(cors())
+app.use(express.json())
+app.use(routes)
+app.use(errorCatch)
 
-server.listen(process.env.PORT || 3333)
+app.listen(process.env.PORT || 3333)
