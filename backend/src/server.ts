@@ -7,7 +7,7 @@ import { connect } from 'mongoose'
 
 import { errorCatch } from './middlewares/errorCatch'
 
-import routes from './routes'
+import { routes } from './routes'
 
 dotenv.config()
 connect(process.env.MONGO_CONNECTION, {

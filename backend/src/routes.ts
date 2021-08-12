@@ -28,4 +28,4 @@ routes.patch('/update', ensureAuthenticated, personController.update)
 routes.delete('/delete/:id', ensureAuthenticated, personController.delete)
 routes.get('/filter/:name', ensureAuthenticated, personController.filter)
 
-export default routes
+export { routes }
