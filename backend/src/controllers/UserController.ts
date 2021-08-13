@@ -21,10 +21,6 @@ class UserController {
 
     return res.json(token)
   }
-
-  async Check (req: Request, res: Response) {
-    return res.status(200).json('Ok')
-  }
 }
 
 export { UserController }

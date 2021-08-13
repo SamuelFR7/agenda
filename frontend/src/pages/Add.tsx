@@ -1,5 +1,5 @@
-import React, { useEffect, useState, FormEvent } from 'react'
-import { useCookies } from 'react-cookie'
+import React, { useState, FormEvent } from 'react'
+
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -8,6 +8,8 @@ import Input from '../components/Input'
 import api from '../services/api'
 
 import { FormContainer, FormContent, InputBox, ButtonReturn } from '../styles/pages/Add'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
 const Add: React.FC = () => {
   const history = useRouter()
@@ -25,26 +27,6 @@ const Add: React.FC = () => {
   const [Telefone5, setTelefone5] = useState('')
   const [Telefone5Contato, setTelefone5Contato] = useState('')
   const [Observacoes, setObservacoes] = useState('')
-  const [logged, setLogged] = useState(true)
-  const [cookies] = useCookies(['cookie-name'])
-
-  const token = cookies.token
-
-  useEffect(() => {
-    async function Check () {
-      try {
-        await api.get('/user/check', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error) {
-        return setLogged(false)
-      }
-      return setLogged(true)
-    }
-    Check()
-  }, [token])
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
@@ -64,20 +46,12 @@ const Add: React.FC = () => {
       Telefone5,
       Telefone5Contato,
       Observacoes
-    }, {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
     })
     history.push('/')
   }
 
   function handleReturn (e: FormEvent) {
     e.preventDefault()
-    history.push('/')
-  }
-
-  if (!logged) {
     history.push('/')
   }
 
@@ -121,3 +95,20 @@ const Add: React.FC = () => {
 }
 
 export default Add
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}

@@ -1,38 +1,16 @@
-import React, { useState, useEffect, FormEvent } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState, FormEvent } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
-import { useCookies } from 'react-cookie'
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 
 import api from '../services/api'
 
 import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
-import { LoaderContainer, Loader } from '../styles/Loader'
 
 const Register: React.FC = () => {
-  const history = useRouter()
-  const [cookies] = useCookies(['cookie-name'])
-  const token = cookies.token
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [admin, setAdmin] = useState(true)
-
-  useEffect(() => {
-    async function Check () {
-      try {
-        await api.get('/user/check/admin', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error) {
-        return setAdmin(false)
-      }
-      return setLoading(false)
-    }
-    Check()
-  }, [token])
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
@@ -40,10 +18,6 @@ const Register: React.FC = () => {
       await api.post('/user/register', {
         email: email.toUpperCase(),
         password
-      }, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
       })
       toast.success('Usuário registrado com sucesso')
       setEmail('')
@@ -53,18 +27,6 @@ const Register: React.FC = () => {
       setEmail('')
       setPassword('')
     }
-  }
-
-  if (!admin) {
-    history.push('/')
-  }
-
-  if (loading) {
-    return (
-          <LoaderContainer>
-              <Loader></Loader>
-          </LoaderContainer>
-    )
   }
 
   return (
@@ -98,3 +60,20 @@ const Register: React.FC = () => {
 }
 
 export default Register
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
