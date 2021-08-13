@@ -20,20 +20,20 @@ const Add: React.FC = () => {
 
   async function handleAdd ({ RazaoSocial, Endereco, Email, Telefone1, Telefone1Contato, Telefone2, Telefone2Contato, Telefone3, Telefone3Contato, Telefone4, Telefone4Contato, Telefone5, Telefone5Contato, Observacoes }: IPerson) {
     await api.post('/add', {
-      RazaoSocial,
-      Endereco,
-      Email,
+      RazaoSocial: RazaoSocial.toUpperCase(),
+      Endereco: Endereco.toUpperCase(),
+      Email: Email.toLowerCase(),
       Telefone1,
-      Telefone1Contato,
+      Telefone1Contato: Telefone1Contato.toUpperCase(),
       Telefone2,
-      Telefone2Contato,
+      Telefone2Contato: Telefone2Contato.toUpperCase(),
       Telefone3,
-      Telefone3Contato,
+      Telefone3Contato: Telefone3Contato.toUpperCase(),
       Telefone4,
-      Telefone4Contato,
+      Telefone4Contato: Telefone4Contato.toUpperCase(),
       Telefone5,
-      Telefone5Contato,
-      Observacoes
+      Telefone5Contato: Telefone5Contato.toUpperCase(),
+      Observacoes: Observacoes.toLowerCase()
     })
     history.push('/')
   }
