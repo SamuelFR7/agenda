@@ -15,8 +15,6 @@ const userController = new UserController()
 // User Routes
 routes.post('/user/register', ensureAuthenticated, ensureAdmin, userController.store)
 routes.post('/user/login', userController.login)
-routes.get('/user/check', ensureAuthenticated, userController.Check)
-routes.get('/user/check/admin', ensureAuthenticated, ensureAdmin, userController.Check)
 
 // Pages Routes
 

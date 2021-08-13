@@ -1,6 +1,5 @@
 import React, { useEffect, useState, FormEvent } from 'react'
 import { useRouter } from 'next/router'
-import { useCookies } from 'react-cookie'
 import Head from 'next/head'
 
 import Input from '../../components/Input'
@@ -9,6 +8,8 @@ import api from '../../services/api'
 
 import { FormContainer, FormContent, InputBox, ButtonReturn } from '../../styles/pages/Add'
 import { LoaderContainer, Loader } from '../../styles/Loader'
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 
 interface IPerson {
     _id: string
@@ -54,8 +55,6 @@ const Edit: React.FC = () => {
     Telefone5Contato: ''
   })
   const [loading, setLoading] = useState(true)
-  const [logged, setLogged] = useState(true)
-  const [cookies] = useCookies(['cookie-name'])
   const [RazaoSocial, setRazaoSocial] = useState('')
   const [Telefone1, setTelefone1] = useState('')
   const [Telefone2, setTelefone2] = useState('')
@@ -71,31 +70,9 @@ const Edit: React.FC = () => {
   const [Observacoes, setObservacoes] = useState('')
   const [Endereco, setEndereco] = useState('')
 
-  const token = cookies.token
-
-  useEffect(() => {
-    async function Check () {
-      try {
-        await api.get('/user/check', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error) {
-        return setLogged(false)
-      }
-      return setLogged(true)
-    }
-    Check()
-  }, [token])
-
   useEffect(() => {
     async function loadPerson () {
-      const { data } = await api.get<IPerson>(`/show/${id}`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
+      const { data } = await api.get<IPerson>(`/show/${id}`)
       setPerson(data)
       setRazaoSocial(data.RazaoSocial)
       setEmail(data.Email)
@@ -134,10 +111,6 @@ const Edit: React.FC = () => {
       Email,
       Endereco,
       Observacoes
-    }, {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
     })
     history.push('/')
   }
@@ -147,11 +120,7 @@ const Edit: React.FC = () => {
     history.push('/')
   }
 
-  if (!logged) {
-    history.push('/Login')
-  }
-
-  if (loading === true) {
+  if (loading) {
     return (
             <LoaderContainer>
             <Loader></Loader>
@@ -200,3 +169,20 @@ const Edit: React.FC = () => {
 }
 
 export default Edit
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}

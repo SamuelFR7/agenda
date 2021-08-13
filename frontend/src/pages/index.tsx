@@ -1,8 +1,8 @@
 import React, { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
-import { useCookies } from 'react-cookie'
 import Head from 'next/head'
 import Image from 'next/image'
+import { parseCookies } from 'nookies'
 
 import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
@@ -17,6 +17,7 @@ import { LoaderContainer, Loader } from '../styles/Loader'
 import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
+import { GetServerSideProps } from 'next'
 
 interface IPerson {
   _id: string
@@ -43,60 +44,31 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPeople, setTotalPeople] = useState(1)
   const [loading, setLoading] = useState(true)
-  const [logged, setLogged] = useState(true)
-  const [cookies] = useCookies(['cookie-name'])
-
-  const token = cookies.token
 
   useEffect(() => {
-    async function Check () {
-      try {
-        await api.get('/user/check', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error) {
-        console.log(error)
-        return setLogged(false)
-      }
-    }
     async function loadAllPeople () {
       try {
-        const { data } = await api.get('/length', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
+        const { data } = await api.get('/length')
         setTotalPeople(data)
       } catch (error) {
-        return setLogged(false)
+        console.log(error)
       }
     }
-    Check()
     loadAllPeople()
-  }, [token])
+  }, [])
 
   useEffect(() => {
     async function search () {
       if (text) {
-        const { data } = await api.get(`/filter/${text.toUpperCase()}`, {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
+        const { data } = await api.get(`/filter/${text.toUpperCase()}`)
         setPeople(data)
       } else {
         setCurrentPage(1)
         try {
-          const { data } = await api.get(`/index/${currentPage}`, {
-            headers: {
-              authorization: `Bearer ${token}`
-            }
-          })
+          const { data } = await api.get(`/index/${currentPage}`)
           setPeople(data)
         } catch (error) {
-          return setLogged(false)
+          console.log(error)
         }
       }
     }
@@ -106,39 +78,23 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function loadPeople () {
       try {
-        const { data } = await api.get(`/index/${currentPage}`, {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
+        const { data } = await api.get(`/index/${currentPage}`)
         setPeople(data)
         setLoading(false)
       } catch (error) {
-        return setLogged(false)
+        console.log(error)
       }
     }
     loadPeople()
   }, [currentPage])
 
   async function handleDelete (id: string) {
-    await api.delete(`/delete/${id}`, {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
-    })
+    await api.delete(`/delete/${id}`)
     if (text) {
-      const { data } = await api.get(`/filter/${text.toUpperCase()}`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
+      const { data } = await api.get(`/filter/${text.toUpperCase()}`)
       setPeople(data)
     } else {
-      const { data } = await api.get(`/index/${currentPage}`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
+      const { data } = await api.get(`/index/${currentPage}`)
       setPeople(data)
     }
   }
@@ -148,11 +104,7 @@ const Home: React.FC = () => {
     history.push('/Add')
   }
 
-  if (!logged) {
-    history.push('/Login')
-  }
-
-  if (loading === true && logged === true) {
+  if (loading) {
     return (
       <LoaderContainer>
         <Loader></Loader>
@@ -217,3 +169,20 @@ const Home: React.FC = () => {
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
