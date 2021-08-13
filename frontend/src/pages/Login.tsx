@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Head from 'next/head'
 import { AuthContext } from '../contexts/AuthContext'
 import { GetServerSideProps } from 'next'
+import Router from 'next/router'
 
 import { toast, Toaster } from 'react-hot-toast'
 import { parseCookies } from 'nookies'
@@ -20,11 +21,15 @@ const Home: React.FC = () => {
   const { SignIn } = useContext(AuthContext)
 
   async function handleSignIn (data: IUser) {
-    try {
-      await SignIn(data.email.toUpperCase(), data.password)
-    } catch (error) {
-      toast.error('Usuário ou senha incorretos')
-    }
+    toast.promise(
+      SignIn(data.email.toUpperCase(), data.password),
+      {
+        loading: 'Entrando...',
+        success: <b>Sucesso</b>,
+        error: <b>Usuário ou senha incorretos!</b>
+      }
+    )
+    Router.push('/')
   }
 
   return (
