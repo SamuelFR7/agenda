@@ -9,11 +9,7 @@ const Input: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) =>
     e.currentTarget.value = value
   }, [])
 
-  return (
-        <div>
-            <input {...props} onKeyUp={handleKeyUp} />
-        </div>
-  )
+  return <input {...props} onKeyUp={handleKeyUp} />
 }
 
 export default Input
