@@ -5,7 +5,7 @@ import Head from 'next/head'
 
 import { useForm } from 'react-hook-form'
 
-import Input from '../components/Input'
+import InputMask from 'react-input-mask'
 
 import api from '../services/api'
 
@@ -23,17 +23,17 @@ const Add: React.FC = () => {
       RazaoSocial: RazaoSocial.toUpperCase(),
       Endereco: Endereco.toUpperCase(),
       Email: Email.toLowerCase(),
-      Telefone1,
+      Telefone1: Telefone1.replace('_', ''),
       Telefone1Contato: Telefone1Contato.toUpperCase(),
-      Telefone2,
+      Telefone2: Telefone2.replace('_', ''),
       Telefone2Contato: Telefone2Contato.toUpperCase(),
-      Telefone3,
+      Telefone3: Telefone3.replace('_', ''),
       Telefone3Contato: Telefone3Contato.toUpperCase(),
-      Telefone4,
+      Telefone4: Telefone4.replace('_', ''),
       Telefone4Contato: Telefone4Contato.toUpperCase(),
-      Telefone5,
+      Telefone5: Telefone5.replace('_', ''),
       Telefone5Contato: Telefone5Contato.toUpperCase(),
-      Observacoes: Observacoes.toLowerCase()
+      Observacoes: Observacoes.toUpperCase()
     })
     history.push('/')
   }
@@ -55,23 +55,23 @@ const Add: React.FC = () => {
                           <input {...register('Endereco')} placeholder="Endereço" />
                           <input {...register('Email')} placeholder="Email" />
                           <InputBox>
-                          <Input {...register('Telefone1')} placeholder="Telefone 1" required={true} />
+                          <InputMask {...register('Telefone1')} mask="(99) 99999-9999" placeholder="Telefone 1" required={true} />
                           <input {...register('Telefone1Contato')} className="inputBoxField" placeholder="Contato 1" />
                           </InputBox>
                           <InputBox>
-                          <Input {...register('Telefone2')} placeholder="Telefone 2" />
+                          <InputMask {...register('Telefone2')} mask="(99) 99999-9999" placeholder="Telefone 2" />
                           <input {...register('Telefone2Contato')} placeholder="Contato 2" />
                           </InputBox>
                           <InputBox>
-                          <Input {...register('Telefone3')} placeholder="Telefone 3" />
+                          <InputMask {...register('Telefone3')} mask="(99) 99999-9999" placeholder="Telefone 3" />
                           <input {...register('Telefone3Contato')} placeholder="Contato 3" />
                           </InputBox>
                           <InputBox>
-                          <Input {...register('Telefone4')} placeholder="Telefone 4" />
+                          <InputMask {...register('Telefone4')} mask="(99) 99999-9999" placeholder="Telefone 4" />
                           <input {...register('Telefone4Contato')} placeholder="Contato 4" />
                           </InputBox>
                           <InputBox>
-                          <Input {...register('Telefone5')} placeholder="Telefone 5" />
+                          <InputMask {...register('Telefone5')} mask="(99) 99999-9999" placeholder="Telefone 5" />
                           <input {...register('Telefone5Contato')} placeholder="Contato 5" />
                           </InputBox>
                           <input {...register('Observacoes')} placeholder="Observações" />
