@@ -19,7 +19,7 @@ import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
 import { GetServerSideProps } from 'next'
 
-interface IPerson {
+export interface IPerson {
   _id: string
   RazaoSocial: string
   Email: string

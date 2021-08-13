@@ -1,31 +1,28 @@
-import React, { useState, FormEvent } from 'react'
+import React from 'react'
+import Head from 'next/head'
+import { GetServerSideProps } from 'next'
+
 import { toast, Toaster } from 'react-hot-toast'
 import { parseCookies } from 'nookies'
-import { GetServerSideProps } from 'next'
-import Head from 'next/head'
+import { useForm } from 'react-hook-form'
 
 import api from '../services/api'
 
 import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../styles/pages/Login'
+import { IUser } from './Login'
 
 const Register: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, handleSubmit } = useForm()
 
-  async function handleSubmit (e: FormEvent) {
-    e.preventDefault()
+  async function handleRegister (data: IUser) {
     try {
       await api.post('/user/register', {
-        email: email.toUpperCase(),
-        password
+        email: data.email.toUpperCase(),
+        password: data.password
       })
       toast.success('Usuário registrado com sucesso')
-      setEmail('')
-      setPassword('')
     } catch (error) {
       toast.error('Email ou usuário já registrado')
-      setEmail('')
-      setPassword('')
     }
   }
 
@@ -38,20 +35,18 @@ const Register: React.FC = () => {
                   position="top-left"
                   reverseOrder={false}
               />
-              <LoginForm onSubmit={handleSubmit}>
+              <LoginForm onSubmit={handleSubmit(handleRegister)}>
                   <LoginInput
+                  {...register('email')}
                   placeholder="Usuário"
                   type="text"
-                  value={email}
                   required={true}
-                  onChange={e => setEmail(e.target.value)}
                   />
                   <LoginInput
+                  {...register('password')}
                   placeholder="Senha"
                   type="password"
-                  value={password}
                   required={true}
-                  onChange={e => setPassword(e.target.value)}
                   />
                   <LoginButton type="submit">Registrar</LoginButton>
               </LoginForm>

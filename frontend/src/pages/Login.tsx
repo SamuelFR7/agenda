@@ -1,25 +1,27 @@
-import React, { FormEvent, useState, useContext } from 'react'
-
+import React, { useContext } from 'react'
 import Head from 'next/head'
-
-import { toast, Toaster } from 'react-hot-toast'
-
-import { parseCookies } from 'nookies'
-
-import { LoginContainer, LoginForm, LoginButton, LoginInput } from '../styles/pages/Login'
-import Logo from '../assets/logo.svg'
 import { AuthContext } from '../contexts/AuthContext'
 import { GetServerSideProps } from 'next'
 
+import { toast, Toaster } from 'react-hot-toast'
+import { parseCookies } from 'nookies'
+import { useForm } from 'react-hook-form'
+
+import { LoginContainer, LoginForm, LoginButton, LoginInput } from '../styles/pages/Login'
+import Logo from '../assets/logo.svg'
+
+export interface IUser {
+  email: string,
+  password: string
+}
+
 const Home: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, handleSubmit } = useForm()
   const { SignIn } = useContext(AuthContext)
 
-  async function handleSubmit (e: FormEvent) {
-    e.preventDefault()
+  async function handleSignIn (data: IUser) {
     try {
-      await SignIn(email.toUpperCase(), password)
+      await SignIn(data.email.toUpperCase(), data.password)
     } catch (error) {
       toast.error('Usuário ou senha incorretos')
     }
@@ -34,19 +36,17 @@ const Home: React.FC = () => {
             position="top-left"
             reverseOrder={false}
             />
-            <LoginForm onSubmit={handleSubmit}>
+            <LoginForm onSubmit={handleSubmit(handleSignIn)}>
                 <Logo></Logo>
                 <LoginInput
+                {...register('email')}
                 placeholder="Usuário"
                 type="text"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
                 />
                 <LoginInput
+                {...register('password')}
                 placeholder="Senha"
                 type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
                 />
                 <LoginButton type="submit">Entrar</LoginButton>
             </LoginForm>
