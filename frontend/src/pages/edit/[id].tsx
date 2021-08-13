@@ -1,6 +1,8 @@
 import React, { useEffect, useState, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 
 import Input from '../../components/Input'
 
@@ -8,26 +10,8 @@ import api from '../../services/api'
 
 import { FormContainer, FormContent, InputBox, ButtonReturn } from '../../styles/pages/Add'
 import { LoaderContainer, Loader } from '../../styles/Loader'
-import { parseCookies } from 'nookies'
-import { GetServerSideProps } from 'next'
 
-interface IPerson {
-    _id: string
-    RazaoSocial: string
-    Email: string
-    Observacoes: string
-    Endereco: string
-    Telefone1: string
-    Telefone2: string
-    Telefone3: string
-    Telefone4: string
-    Telefone5: string
-    Telefone1Contato: string
-    Telefone2Contato: string
-    Telefone3Contato: string
-    Telefone4Contato: string
-    Telefone5Contato: string
-  }
+import { IPerson } from '../'
 
 const Edit: React.FC = () => {
   const history = useRouter()
