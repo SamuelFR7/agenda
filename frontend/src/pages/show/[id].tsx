@@ -1,5 +1,4 @@
 import React, { useState, useEffect, FormEvent } from 'react'
-import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -9,6 +8,8 @@ import api from '../../services/api'
 
 import { FormContainer, FormContent, InputBox, ButtonReturn } from '../../styles/pages/Add'
 import { LoaderContainer, Loader } from '../../styles/Loader'
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 
 interface IPerson {
     _id: string
@@ -54,41 +55,17 @@ const Show: React.FC = () => {
     Telefone5Contato: ''
   })
   const [loading, setLoading] = useState(true)
-  const [logged, setLogged] = useState(true)
-  const [cookies] = useCookies(['cookie-name'])
-
-  const token = cookies.token
-
-  useEffect(() => {
-    async function Check () {
-      try {
-        await api.get('/user/check', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-      } catch (error) {
-        return setLogged(false)
-      }
-      return setLogged(true)
-    }
-    Check()
-  }, [token])
 
   useEffect(() => {
     async function loadPerson () {
       try {
-        const response = await api.get(`/show/${id}`, {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
+        const response = await api.get(`/show/${id}`)
         console.log(response)
         const datares = response.data
         setPerson(datares)
         setLoading(false)
       } catch (error) {
-        setLogged(false)
+        console.log(error)
       }
     }
     loadPerson()
@@ -97,10 +74,6 @@ const Show: React.FC = () => {
   function handleReturn (e: FormEvent) {
     e.preventDefault()
     history.push('/')
-  }
-
-  if (!logged) {
-    history.push('/Login')
   }
 
   if (loading) {
@@ -150,3 +123,20 @@ const Show: React.FC = () => {
 }
 
 export default Show
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
