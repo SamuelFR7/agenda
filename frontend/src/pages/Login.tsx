@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import Head from 'next/head'
 import { AuthContext } from '../contexts/AuthContext'
 import { GetServerSideProps } from 'next'
-import Router from 'next/router'
 
 import { toast, Toaster } from 'react-hot-toast'
 import { parseCookies } from 'nookies'
@@ -29,7 +28,6 @@ const Home: React.FC = () => {
         error: <b>Usuário ou senha incorretos!</b>
       }
     )
-    Router.push('/')
   }
 
   return (
