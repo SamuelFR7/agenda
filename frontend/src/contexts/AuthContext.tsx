@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react'
 import api from '../services/api'
-import Router from 'next/router'
 import { setCookie } from 'nookies'
 
 interface IAuthContext {
@@ -28,7 +27,6 @@ function AuthProvider ({ children }) {
     api.defaults.headers.authorization = `Bearer ${data}`
 
     setToken(data)
-    Router.push('/')
   }
 
   return (
