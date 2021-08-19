@@ -8,7 +8,7 @@ import { UserController } from './controllers/UserController'
 
 const routes = express.Router()
 
-// Objects
+// Controllers
 const personController = new PersonController()
 const userController = new UserController()
 
