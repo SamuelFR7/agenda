@@ -10,11 +10,7 @@ import { errorCatch } from './middlewares/errorCatch'
 import { routes } from './routes'
 
 dotenv.config()
-connect(process.env.MONGO_CONNECTION, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-})
+connect(process.env.MONGO_CONNECTION)
 
 const app = express()
 
