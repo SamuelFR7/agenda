@@ -39,8 +39,7 @@ jobs:
       working-directory: ${{env.working-directory}}
     
     - name: Stop pm2
-      run: pm2 delete agenda-server -f
-      if: ${{failure()}}
+      run: pm2 stop agenda-server
       working-directory: ${{env.working-directory}}
       
     - name: Start pm2
