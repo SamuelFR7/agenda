@@ -39,10 +39,14 @@ jobs:
       working-directory: ${{env.working-directory}}
     
     - name: Stop pm2
-      run: pm2 stop agenda-server
+      run: pm2 stop agenda-server -f
       if: ${{failure()}}
       working-directory: ${{env.working-directory}}
       
     - name: Start pm2
-      run: pm2 start dist/server.js --name agenda-server
+      run: pm2 start dist/server.js --name agenda-server -f
       working-directory: ${{env.working-directory}}
+      
+    - name: Save pm2
+      run: pm2 save -f
+    
