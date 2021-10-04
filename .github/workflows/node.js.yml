@@ -40,8 +40,8 @@ jobs:
     
     - name: Stop pm2
       run: pm2 stop agenda-server
-      working-directory: ${{env.working-directory}}
       if: ${{failure()}}
+      working-directory: ${{env.working-directory}}
       
     - name: Start pm2
       run: pm2 start dist/server.js --name agenda-server
