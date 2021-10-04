@@ -37,7 +37,15 @@ jobs:
     - name: Build application
       run: yarn build
       working-directory: ${{env.working-directory}}
-    
+      
+    - name: Create env file
+      run:  |
+          touch .env
+          echo MONGO_CONNECTION=${{ secrets.MONGO_CONNECTION }} >> .env
+          echo TOKEN_SECRET=${{ secrets.TOKEN_SECRET }} >> .env
+          cat .env
+      working-directory: ${{env.working-directory}}
+      
     - name: Stop pm2
       run: pm2 stop agenda-server
       working-directory: ${{env.working-directory}}
