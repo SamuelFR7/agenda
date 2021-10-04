@@ -40,10 +40,10 @@ jobs:
       
     - name: Create env file
       run:  |
-          touch .env
-          echo MONGO_CONNECTION=${{ secrets.MONGO_CONNECTION }} >> .env
-          echo TOKEN_SECRET=${{ secrets.TOKEN_SECRET }} >> .env
-          cat .env
+          cat << EOF > .env
+          MONGO_CONNECTION=${{ secrets.MONGO_CONNECTION }}
+          TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}
+          EOF
       working-directory: ${{env.working-directory}}
       
     - name: Stop pm2
