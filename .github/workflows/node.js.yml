@@ -37,10 +37,17 @@ jobs:
     - name: Build application
       run: yarn build
       working-directory: ${{env.working-directory}}
-    
+      
+    - name: Create env file
+      run:  |
+          cat << EOF > .env
+          MONGO_CONNECTION=${{ secrets.MONGO_CONNECTION }}
+          TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}
+          EOF
+      working-directory: ${{env.working-directory}}
+      
     - name: Stop pm2
-      run: pm2 delete agenda-server -f
-      if: ${{failure()}}
+      run: pm2 stop agenda-server
       working-directory: ${{env.working-directory}}
       
     - name: Start pm2
