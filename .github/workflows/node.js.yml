@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: self-hosted
+    env:
+      working-directory: ./backend
 
     strategy:
       matrix:
@@ -28,18 +30,19 @@ jobs:
         cache: 'yarn'
         cache-dependency-path: ./backend/yarn.lock
         
-    - name: Navigate to api folder
-      run: cd backend
-    
     - name: Install dependencies
       run: yarn
+      working-directory: ${{env.working-directory}}
     
     - name: Build application
       run: yarn build
+      working-directory: ${{env.working-directory}}
     
     - name: Stop pm2
       run: pm2 stop agenda-server
+      working-directory: ${{env.working-directory}}
       if: ${{failure()}}
       
     - name: Start pm2
       run: pm2 start dist/server.js --name agenda-server
+      working-directory: ${{env.working-directory}}
