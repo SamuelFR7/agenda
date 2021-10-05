@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Letmeask" src=".github/assets/cover.svg" />
+    <img alt="Letmeask" src=".github/readme/assets/cover.svg" />
 </h1>
 
 <p align="center">
