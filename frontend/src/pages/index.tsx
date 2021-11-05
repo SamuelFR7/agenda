@@ -18,6 +18,8 @@ import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/pen.png'
 import viewIcon from '../assets/view.png'
 import { GetServerSideProps } from 'next'
+import { Header } from '../components/Header'
+import { Dashboard } from '../components/Dashboard'
 
 export interface IPerson {
   _id: string
@@ -113,16 +115,16 @@ const Home: React.FC = () => {
   }
 
   return (
-    <MainContainer>
+    <>
       <Head>
         <title>Agenda</title>
       </Head>
 
-      <header>
-        <AddButton onClick={handleAdd}>Novo Contato</AddButton>
-      </header>
+      <Header />
 
-      <SearchInput value={text} onChange={(search: string) => setText(search)}/>
+      <Dashboard />
+
+      {/* <SearchInput value={text} onChange={(search: string) => setText(search)}/>
 
       <TableContent>
 
@@ -162,9 +164,9 @@ const Home: React.FC = () => {
           total={totalPeople}
         />
         </PaginationContainer>
-      )}
+      )} */}
 
-    </MainContainer>
+    </>
   )
 }
 

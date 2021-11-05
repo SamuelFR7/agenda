@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const InputSearch = styled.input`
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    height: 28px;
-    padding: 0 5px;
-    font-size: 16px;
-    color: #666;
+export const Container = styled.div`
+    margin-top: -4rem;
+
+    input {
+    padding: 1rem 2rem;
+    width: 100%;
+    border: 0;
+    border-radius: 0.25rem;
+    }
 `
