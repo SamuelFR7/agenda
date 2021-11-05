@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react'
 
-import { InputSearch } from './style'
+import { Container } from './style'
 
 export default function SearchInput ({ value, onChange }: {value: string, onChange: any}) {
   function handleChange (e: FormEvent<HTMLInputElement>) {
@@ -8,6 +8,8 @@ export default function SearchInput ({ value, onChange }: {value: string, onChan
   }
 
   return (
-        <InputSearch placeholder="Pesquisar" type="search" value={value} onChange={handleChange}/>
+        <Container>
+          <input placeholder="Pesquisar" type="search" value={value} onChange={handleChange}/>
+        </Container>
   )
 }
