@@ -1,16 +1,21 @@
 import React from 'react'
 
-import LogoImg from '../../assets/logo.svg'
+import Logo from '../../assets/logo.svg'
 
 import { Container, Content } from './styles'
 
-export function Header () {
+interface HeaderProps {
+    onOpenNewPersonModal: () => void
+}
+
+export function Header ({ onOpenNewPersonModal }: HeaderProps) {
   return (
         <Container>
             <Content>
-                <LogoImg/>
+                <Logo/>
                 <button
                     type="button"
+                    onClick={onOpenNewPersonModal}
                 >
                     Adicionar Contato
                 </button>
