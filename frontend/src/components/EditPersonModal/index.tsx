@@ -10,6 +10,8 @@ import { IPerson } from '../PeopleTable'
 import { Container } from './styles'
 import { usePeople } from '../../hooks/usePeople'
 
+import InputMask from 'react-input-mask'
+
 interface IEditPersonModal {
     isOpen: boolean;
     onRequestClose: () => void;
@@ -92,11 +94,11 @@ export function EditPersonModal ({ isOpen, onRequestClose, personToEdit, setPers
     await api.patch('/update', {
       id: personToEdit,
       RazaoSocial: RazaoSocial.toUpperCase(),
-      Telefone1: Telefone1,
-      Telefone2: Telefone2,
-      Telefone3: Telefone3,
-      Telefone4: Telefone4,
-      Telefone5: Telefone5,
+      Telefone1: Telefone1.replace('_', ''),
+      Telefone2: Telefone2.replace('_', ''),
+      Telefone3: Telefone3.replace('_', ''),
+      Telefone4: Telefone4.replace('_', ''),
+      Telefone5: Telefone5.replace('_', ''),
       Telefone1Contato: Telefone1Contato.toUpperCase(),
       Telefone2Contato: Telefone2Contato.toUpperCase(),
       Telefone3Contato: Telefone3Contato.toUpperCase(),
@@ -129,74 +131,79 @@ export function EditPersonModal ({ isOpen, onRequestClose, personToEdit, setPers
                 </h2>
                 <input
                         placeholder="Nome"
-                        defaultValue={RazaoSocial}
+                        value={RazaoSocial}
                         onChange={e => setRazaoSocial(e.target.value)}
                         required={true}
                     />
                     <input
                         placeholder="Endereço"
-                        defaultValue={Endereco}
+                        value={Endereco}
                         onChange={e => setEndereco(e.target.value)}
                     />
                     <input
                         placeholder="Email"
-                        defaultValue={Email}
+                        value={Email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <input
+                    <InputMask
                         placeholder="Telefone"
-                        defaultValue={Telefone1}
+                        value={Telefone1}
                         onChange={e => setTelefone1(e.target.value)}
                         required={true}
+                        mask="(99) 99999-9999"
                     />
                     <input
                         placeholder="Contato 1"
-                        defaultValue={Telefone1Contato}
+                        value={Telefone1Contato}
                         onChange={e => setTelefone1Contato(e.target.value)}
                     />
-                    <input
+                    <InputMask
                         placeholder="Telefone 2"
-                        defaultValue={Telefone2}
+                        value={Telefone2}
                         onChange={e => setTelefone2(e.target.value)}
+                        mask="(99) 99999-9999"
                     />
                     <input
                         placeholder="Contato 2"
-                        defaultValue={Telefone2Contato}
+                        value={Telefone2Contato}
                         onChange={e => setTelefone2Contato(e.target.value)}
                     />
-                    <input
+                    <InputMask
                         placeholder="Telefone 3"
-                        defaultValue={Telefone3}
+                        value={Telefone3}
                         onChange={e => setTelefone3(e.target.value)}
+                        mask="(99) 99999-9999"
                     />
                     <input
                         placeholder="Contato 3"
-                        defaultValue={Telefone3Contato}
+                        value={Telefone3Contato}
                         onChange={e => setTelefone3Contato(e.target.value)}
                     />
-                    <input
+                    <InputMask
                         placeholder="Telefone 4"
-                        defaultValue={Telefone4}
+                        value={Telefone4}
                         onChange={e => setTelefone4(e.target.value)}
+                        mask="(99) 99999-9999"
                     />
                     <input
                         placeholder="Contato 4"
-                        defaultValue={Telefone4Contato}
+                        value={Telefone4Contato}
                         onChange={e => setTelefone4Contato(e.target.value)}
                     />
-                    <input
+                    <InputMask
                         placeholder="Telefone 5"
-                        defaultValue={Telefone5}
+                        value={Telefone5}
                         onChange={e => setTelefone5(e.target.value)}
+                        mask="(99) 99999-9999"
                     />
                     <input
                         placeholder="Contato 5"
-                        defaultValue={Telefone5Contato}
+                        value={Telefone5Contato}
                         onChange={e => setTelefone5Contato(e.target.value)}
                     />
                     <input
                         placeholder="Observações"
-                        defaultValue={Observacoes}
+                        value={Observacoes}
                         onChange={e => setObservacoes(e.target.value)}
                     />
 
