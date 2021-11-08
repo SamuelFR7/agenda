@@ -1,60 +1,76 @@
 <h1 align="center">
-    <img alt="Letmeask" src=".github/readme/assets/logo.svg" />
+    <img alt="Agenda" src=".github/readme/assets/logo.png" width="300" />
 </h1>
 
 <p align="center">
-  <a href="/LICENSE">
-      <img alt="GitHub" src="https://img.shields.io/github/license/devicons/devicon?color=%2360be86&style=for-the-badge">
-  </a>  
+   <a href="https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/">
+      <img alt="SamuelFR7" src="https://img.shields.io/badge/-SamuelFR7-27AE60?style=flat&logo=Linkedin&logoColor=white" />
+   </a>
+  <img alt="Languages" src="https://img.shields.io/github/languages/count/SamuelFR7/agenda-react?color=%23527AE60" />
+  <img alt="lastcommit" src="https://img.shields.io/github/last-commit/SamuelFR7/agenda-react?color=%23527AE60" />
+  <img alt="License" src="https://img.shields.io/github/license/SamuelFR7/agenda-react?color=%23527AE60" />
+  <img alt="Issues" src="https://img.shields.io/github/issues/SamuelFR7/agenda-react?color=%23527AE60">
+  <a href="mailto:samuelferreirarezende@gmail.com">
+   <img alt="Email" src="https://img.shields.io/badge/-samuelferreirarezende%40gmail.com-%23527AE60" />
+  </a>
 </p>
 
-<br>
+<p align="center">
+  📗 Manage people info
+</p>
 
-## 🧪 Tecnologias
-
-O projeto foi desenvolvido usando as seguintes tecnologias: 
-
-- [Node](https://nodejs.org)
-- [Mongo](https://www.mongodb.com/)
-- [NextJS](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-
-## 🚀 Como executar
-Requisitos: 
-- [Node](https://nodejs.org)
-- [MongoDB](https://www.mongodb.com/)
+<div align="center">
+  <sub> Made by
+    <a href="https://github.com/SamuelFR7">Samuel Rezende.
+  </sub>
+</div>
 
 
-Clone o projeto e acesse a pasta dele.
+# 📌 Contents
+
+* [Screenshots](#camera-screenshot) 
+* [Technologies](#rocket-technologies) 
+* [How to Run](#computer-how-to-run)
+* [Issues](#bug-issues)
+* [Contributing](#sparkles-issues)
+* [License](#page_facing_up-license)
+
+# :camera: Screenshots
+<div align="center">
+   <img src="./.github/readme/assets/screen1.png" width="400px">
+   <img src="./.github/readme/assets/screen2.png" width="400px">
+   <img src="./.github/readme/assets/screen3.png" width="400px">
+   <img src="./.github/readme/assets/screen4.png" width="400px">
+</div>
+
+# :rocket: Technologies
+This project was made using the follow technologies:
+
+* [Typescript](https://www.typescriptlang.org/)      
+* [React](https://reactjs.org/)      
+* [Styled Components](https://styled-components.com/)
+* [ExpressJS](https://expressjs.com/)
+* [MongoDB](https://www.mongodb.com)
+
+# :computer: How to run
 
 ```bash
+# Clone Repository
 $ git clone https://github.com/SamuelFR7/agenda-react.git
-$ cd agenda-react
 ```
 
-Para iniciá-lo, siga os passos abaixo:
 ```bash
-# Backend:
-$ cd backend
+# Install Dependencies in backend and frontend
 $ yarn
-$ yarn dev
+
+# Run Aplication in backend in frontend
+$ yarn start
 ```
-```bash
-# Frontend:
-$ cd frontend
-$ yarn 
-$ yarn dev
-```
-O backend estará disponível em http://localhost:3333, enquanto você pode acessar o frontend pelo browser no endereço: http://localhost:3000
+Go to http://localhost:3000/ to see the result.
 
-## 💻 Projeto
+# :page_facing_up: License
 
-Essa agenda é feita para empresas armazenarem as informações de contato de seus funcionários e contatos constantemente utilizados, de forma organizada, com autenticação de usuários para o seu acesso.
+This project is under the [MIT license](./LICENSE).
+Made with 💖 by [Samuel Rezende](https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/). 
 
-## 📝 License
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-Feito por Samuel Rezende [Linkedin](https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/)
+Thank You! 🚀
