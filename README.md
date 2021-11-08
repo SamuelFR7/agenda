@@ -31,7 +31,6 @@
 * [Screenshots](#camera-screenshot) 
 * [Technologies](#rocket-technologies) 
 * [How to Run](#computer-how-to-run)
-* [Issues](#bug-issues)
 * [License](#page_facing_up-license)
 
 # :camera: Screenshots
@@ -47,9 +46,11 @@ This project was made using the follow technologies:
 
 * [Typescript](https://www.typescriptlang.org/)      
 * [React](https://reactjs.org/)      
+* [NextJS](https://nextjs.org)
 * [Styled Components](https://styled-components.com/)
 * [ExpressJS](https://expressjs.com/)
 * [MongoDB](https://www.mongodb.com)
+
 
 # :computer: How to run
 
