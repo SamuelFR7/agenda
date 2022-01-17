@@ -25,7 +25,7 @@ function AuthProvider ({ children }) {
       maxAge: 86400 // 1 Day
     })
 
-    api.defaults.headers.authorization = `Bearer ${data}`
+    api.defaults.headers.common.authorization = `Bearer ${data}`
 
     setToken(data)
 
