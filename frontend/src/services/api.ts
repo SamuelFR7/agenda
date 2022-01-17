@@ -8,7 +8,7 @@ const api = axios.create({
 })
 
 if (token) {
-  api.defaults.headers.authorization = `Bearer ${token}`
+  api.defaults.headers.common.authorization = `Bearer ${token}`
 }
 
 export default api
