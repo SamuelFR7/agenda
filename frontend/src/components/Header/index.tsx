@@ -8,18 +8,15 @@ interface HeaderProps {
     onOpenNewPersonModal: () => void
 }
 
-export function Header ({ onOpenNewPersonModal }: HeaderProps) {
-  return (
+export function Header({ onOpenNewPersonModal }: HeaderProps) {
+    return (
         <Container>
             <Content>
-                <Logo/>
-                <button
-                    type="button"
-                    onClick={onOpenNewPersonModal}
-                >
+                <Logo />
+                <button type="button" onClick={onOpenNewPersonModal}>
                     Adicionar Contato
                 </button>
             </Content>
         </Container>
-  )
+    )
 }

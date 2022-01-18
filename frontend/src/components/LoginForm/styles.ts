@@ -37,24 +37,23 @@ export const Content = styled.div`
             }
         }
 
-        button[type="submit"] {
-        width: 100%;
-        padding: 0 1.5rem;
-        height: 4rem;
-        background: ${theme.colors.lightGreen};
-        color: #fff;
-        border-radius: 0.25rem;
-        border: 0;
-        font-size: 1rem;
-        margin-top: 1.5rem;
-        font-weight: 600;
+        button[type='submit'] {
+            width: 100%;
+            padding: 0 1.5rem;
+            height: 4rem;
+            background: ${theme.colors.lightGreen};
+            color: #fff;
+            border-radius: 0.25rem;
+            border: 0;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            font-weight: 600;
 
-        transition: filter 0.2s;
+            transition: filter 0.2s;
 
-        &:hover {
-            filter: brightness(0.9);
-        }
-
+            &:hover {
+                filter: brightness(0.9);
+            }
         }
     }
 `
