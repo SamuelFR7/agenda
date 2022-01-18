@@ -1,50 +1,55 @@
 import { Person, IPerson } from '../entities/Person'
 
 class PersonService {
-  async indexPerPage (page: number) {
-    const skip = (page - 1) * 10
-    const limit = (page * 10)
+    async indexPerPage(page: number) {
+        const skip = (page - 1) * 10
+        const limit = page * 10
 
-    const people = (await Person.find({}).sort({ RazaoSocial: 1 })).slice(skip, limit)
+        const people = (await Person.find({}).sort({ RazaoSocial: 1 })).slice(
+            skip,
+            limit
+        )
 
-    return people
-  }
+        return people
+    }
 
-  async indexLength () {
-    const length = await Person.estimatedDocumentCount()
+    async indexLength() {
+        const length = await Person.estimatedDocumentCount()
 
-    return length
-  }
+        return length
+    }
 
-  async create (info: IPerson) {
-    const newPerson = await Person.create(info)
+    async create(info: IPerson) {
+        const newPerson = await Person.create(info)
 
-    return newPerson
-  }
+        return newPerson
+    }
 
-  async showOne (id: string) {
-    const person = await Person.findById(id)
+    async showOne(id: string) {
+        const person = await Person.findById(id)
 
-    return person
-  }
+        return person
+    }
 
-  async update (id: string, info: IPerson) {
-    const updatedPerson = await Person.findByIdAndUpdate(id, info)
+    async update(id: string, info: IPerson) {
+        const updatedPerson = await Person.findByIdAndUpdate(id, info)
 
-    return updatedPerson
-  }
+        return updatedPerson
+    }
 
-  async delete (id: string) {
-    const deletedPerson = await Person.findByIdAndDelete(id)
+    async delete(id: string) {
+        const deletedPerson = await Person.findByIdAndDelete(id)
 
-    return deletedPerson
-  }
+        return deletedPerson
+    }
 
-  async filter (name: string) {
-    const searchedPeople = await Person.find({ RazaoSocial: { $regex: name } }).limit(10)
+    async filter(name: string) {
+        const searchedPeople = await Person.find({
+            RazaoSocial: { $regex: name },
+        }).limit(10)
 
-    return searchedPeople
-  }
+        return searchedPeople
+    }
 }
 
 export { PersonService }
