@@ -7,26 +7,26 @@ import 'rc-pagination/assets/index.css'
 import { usePeople } from '../../hooks/usePeople'
 import api from '../../services/api'
 
-export function PaginationContainer () {
-  const { currentPage, setCurrentPage } = usePeople()
-  const [peopleLength, setPeopleLength] = useState(0)
+export function PaginationContainer() {
+    const { currentPage, setCurrentPage } = usePeople()
+    const [peopleLength, setPeopleLength] = useState(0)
 
-  useEffect(() => {
-    async function getPageLength () {
-      const { data } = await api.get('/length')
-      setPeopleLength(data)
-    }
-    getPageLength()
-  }, [])
+    useEffect(() => {
+        async function getPageLength() {
+            const { data } = await api.get('/length')
+            setPeopleLength(data)
+        }
+        getPageLength()
+    }, [])
 
-  return (
+    return (
         <Container>
-          <Pagination
-              pageSize={10}
-              current={currentPage}
-              total={peopleLength}
-              onChange={setCurrentPage}
+            <Pagination
+                pageSize={10}
+                current={currentPage}
+                total={peopleLength}
+                onChange={setCurrentPage}
             />
         </Container>
-  )
+    )
 }

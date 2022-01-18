@@ -32,7 +32,7 @@ export const Container = styled.form`
         }
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
         width: 100%;
         padding: 0 1.5rem;
         height: 4rem;
@@ -49,5 +49,5 @@ export const Container = styled.form`
         &:hover {
             filter: brightness(0.9);
         }
-    }    
+    }
 `
