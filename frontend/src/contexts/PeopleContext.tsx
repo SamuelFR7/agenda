@@ -31,16 +31,27 @@ interface IPeopleContextData {
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const PeopleContext = createContext<IPeopleContextData>({} as IPeopleContextData)
+export const PeopleContext = createContext<IPeopleContextData>(
+    {} as IPeopleContextData
+)
 
-export function PeopleProvider ({ children }: IPeopleProviderProps) {
-  const [people, setPeople] = useState<IPerson[]>([])
-  const [search, setSearch] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+export function PeopleProvider({ children }: IPeopleProviderProps) {
+    const [people, setPeople] = useState<IPerson[]>([])
+    const [search, setSearch] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
 
-  return (
-        <PeopleContext.Provider value={{ people, setPeople, search, setSearch, currentPage, setCurrentPage }}>
+    return (
+        <PeopleContext.Provider
+            value={{
+                people,
+                setPeople,
+                search,
+                setSearch,
+                currentPage,
+                setCurrentPage,
+            }}
+        >
             {children}
         </PeopleContext.Provider>
-  )
+    )
 }

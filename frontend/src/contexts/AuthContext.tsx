@@ -10,33 +10,33 @@ interface IAuthContext {
 
 const AuthContext = createContext({} as IAuthContext)
 
-function AuthProvider ({ children }) {
-  const [token, setToken] = useState('')
+function AuthProvider({ children }) {
+    const [token, setToken] = useState('')
 
-  const isAuthenticated = !!token
+    const isAuthenticated = !!token
 
-  async function SignIn (email: string, password: string) {
-    const { data } = await api.post('/user/login', {
-      email,
-      password
-    })
+    async function SignIn(email: string, password: string) {
+        const { data } = await api.post('/user/login', {
+            email,
+            password,
+        })
 
-    setCookie(undefined, 'token', data, {
-      maxAge: 86400 // 1 Day
-    })
+        setCookie(undefined, 'token', data, {
+            maxAge: 86400, // 1 Day
+        })
 
-    api.defaults.headers.common.authorization = `Bearer ${data}`
+        api.defaults.headers.common.authorization = `Bearer ${data}`
 
-    setToken(data)
+        setToken(data)
 
-    Router.push('/')
-  }
+        Router.push('/')
+    }
 
-  return (
+    return (
         <AuthContext.Provider value={{ isAuthenticated, SignIn }}>
             {children}
         </AuthContext.Provider>
-  )
+    )
 }
 
 export { AuthProvider, AuthContext }

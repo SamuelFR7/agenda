@@ -30,10 +30,10 @@ export const Container = styled.div`
             div {
                 padding-top: 6px;
                 &.imgButton {
-                &:hover {
-                    cursor: pointer;
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
-            }
             }
         }
     }
