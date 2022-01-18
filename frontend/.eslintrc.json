@@ -8,7 +8,9 @@
     "extends": [
       "plugin:react/recommended",
       "standard",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "plugin:prettier/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -20,12 +22,20 @@
     },
     "plugins": [
       "react",
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "eslint-plugin-import-helpers",
+      "prettier"
     ],
     "rules": {
       "react/prop-types": "off",
       "no-use-before-define": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "prettier/prettier": "error"
+    },
+    "settings": {
+      "import/resolver": {
+        "typescript": {}
+      }
     }
   }

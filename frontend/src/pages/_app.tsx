@@ -6,16 +6,16 @@ import { AuthProvider } from '../contexts/AuthContext'
 import { PeopleProvider } from '../contexts/PeopleContext'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  return (
-      <>
-        <AuthProvider>
-          <PeopleProvider>
-            <Component {...pageProps} />
-            <GlobalStyle />
-          </PeopleProvider>
-        </AuthProvider>
-      </>
-  )
+    return (
+        <>
+            <AuthProvider>
+                <PeopleProvider>
+                    <Component {...pageProps} />
+                    <GlobalStyle />
+                </PeopleProvider>
+            </AuthProvider>
+        </>
+    )
 }
 
 export default MyApp

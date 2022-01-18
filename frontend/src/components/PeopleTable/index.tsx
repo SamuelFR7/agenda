@@ -27,53 +27,55 @@ export interface IPerson {
     Telefone3Contato: string
     Telefone4Contato: string
     Telefone5Contato: string
-  }
+}
 
-export function PeopleTable () {
-  const { people, setPeople, search, currentPage } = usePeople()
-  const [isEditPersonModalOpen, setIsEditPersonModalOpen] = useState(false)
-  const [isViewPersonModalOpen, setIsViewPersonModalOpen] = useState(false)
-  const [personToEdit, setPersonToEdit] = useState('')
-  const [personToView, setPersonToView] = useState('')
+export function PeopleTable() {
+    const { people, setPeople, search, currentPage } = usePeople()
+    const [isEditPersonModalOpen, setIsEditPersonModalOpen] = useState(false)
+    const [isViewPersonModalOpen, setIsViewPersonModalOpen] = useState(false)
+    const [personToEdit, setPersonToEdit] = useState('')
+    const [personToView, setPersonToView] = useState('')
 
-  function handleOpenEditPersonModal (_id: string) {
-    setPersonToEdit(_id)
-    setIsEditPersonModalOpen(true)
-  }
-
-  function handleCloseEditPersonModal () {
-    setIsEditPersonModalOpen(false)
-  }
-
-  function handleOpenViewPersonModal (_id: string) {
-    setPersonToView(_id)
-    setIsViewPersonModalOpen(true)
-  }
-
-  function handleCloseViewPersonModal () {
-    setIsViewPersonModalOpen(false)
-  }
-
-  async function handleDeletePerson (_id: string) {
-    await api.delete(`/delete/${_id}`)
-    if (search) {
-      const { data } = await api.get<IPerson[]>(`filter/${search.toUpperCase()}`)
-      setPeople(data)
-    } else {
-      const { data } = await api.get<IPerson[]>(`/index/${currentPage}`)
-      setPeople(data)
+    function handleOpenEditPersonModal(_id: string) {
+        setPersonToEdit(_id)
+        setIsEditPersonModalOpen(true)
     }
-  }
 
-  useEffect(() => {
-    async function getPeopleData () {
-      const response = await api.get(`/index/${currentPage}`)
-      setPeople(response.data)
+    function handleCloseEditPersonModal() {
+        setIsEditPersonModalOpen(false)
     }
-    getPeopleData()
-  }, [currentPage])
 
-  return (
+    function handleOpenViewPersonModal(_id: string) {
+        setPersonToView(_id)
+        setIsViewPersonModalOpen(true)
+    }
+
+    function handleCloseViewPersonModal() {
+        setIsViewPersonModalOpen(false)
+    }
+
+    async function handleDeletePerson(_id: string) {
+        await api.delete(`/delete/${_id}`)
+        if (search) {
+            const { data } = await api.get<IPerson[]>(
+                `filter/${search.toUpperCase()}`
+            )
+            setPeople(data)
+        } else {
+            const { data } = await api.get<IPerson[]>(`/index/${currentPage}`)
+            setPeople(data)
+        }
+    }
+
+    useEffect(() => {
+        async function getPeopleData() {
+            const response = await api.get(`/index/${currentPage}`)
+            setPeople(response.data)
+        }
+        getPeopleData()
+    }, [currentPage])
+
+    return (
         <Container>
             <table>
                 <thead>
@@ -88,30 +90,62 @@ export function PeopleTable () {
                 </thead>
 
                 <tbody>
-                    {people.map(item => (
+                    {people.map((item) => (
                         <tr key={item._id}>
                             <td>{item.RazaoSocial}</td>
                             <td>{item.Telefone1}</td>
                             <td>{item.Telefone1Contato}</td>
-                            <td><div className="imgButton" onClick={() => handleOpenViewPersonModal(item._id)}><View /></div></td>
-                            <td><div className="imgButton" onClick={() => handleOpenEditPersonModal(item._id)}><Edit /></div></td>
-                            <td><div className="imgButton" onClick={() => { if (window.confirm('Certeza de que você quer deletar este item?')) handleDeletePerson(item._id) }}><Delete /></div></td>
+                            <td>
+                                <div
+                                    className="imgButton"
+                                    onClick={() =>
+                                        handleOpenViewPersonModal(item._id)
+                                    }
+                                >
+                                    <View />
+                                </div>
+                            </td>
+                            <td>
+                                <div
+                                    className="imgButton"
+                                    onClick={() =>
+                                        handleOpenEditPersonModal(item._id)
+                                    }
+                                >
+                                    <Edit />
+                                </div>
+                            </td>
+                            <td>
+                                <div
+                                    className="imgButton"
+                                    onClick={() => {
+                                        if (
+                                            window.confirm(
+                                                'Certeza de que você quer deletar este item?'
+                                            )
+                                        )
+                                            handleDeletePerson(item._id)
+                                    }}
+                                >
+                                    <Delete />
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <EditPersonModal
-              isOpen={isEditPersonModalOpen}
-              onRequestClose={handleCloseEditPersonModal}
-              personToEdit={personToEdit}
-              setPersonToEdit={setPersonToEdit}
+                isOpen={isEditPersonModalOpen}
+                onRequestClose={handleCloseEditPersonModal}
+                personToEdit={personToEdit}
+                setPersonToEdit={setPersonToEdit}
             />
             <ViewPersonModal
-              isOpen={isViewPersonModalOpen}
-              onRequestClose={handleCloseViewPersonModal}
-              personToView={personToView}
-              setPersonToView={setPersonToView}
+                isOpen={isViewPersonModalOpen}
+                onRequestClose={handleCloseViewPersonModal}
+                personToView={personToView}
+                setPersonToView={setPersonToView}
             />
         </Container>
-  )
+    )
 }
