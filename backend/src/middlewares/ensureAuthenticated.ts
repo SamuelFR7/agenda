@@ -5,22 +5,22 @@ interface IPayload {
     sub: string
 }
 
-function ensureAuthenticated (req: Request, res: Response, next: NextFunction) {
-  const authToken = req.headers.authorization
-  if (!authToken) {
-    return res.status(401).end()
-  }
+function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
+    const authToken = req.headers.authorization
+    if (!authToken) {
+        return res.status(401).end()
+    }
 
-  const [, token] = authToken.split(' ')
-  try {
-    const { sub } = verify(token, process.env.TOKEN_SECRET) as IPayload
+    const [, token] = authToken.split(' ')
+    try {
+        const { sub } = verify(token, process.env.TOKEN_SECRET) as IPayload
 
-    req.userId = sub
-  } catch (error) {
-    return res.status(401).end()
-  }
+        req.userId = sub
+    } catch (error) {
+        return res.status(401).end()
+    }
 
-  return next()
+    return next()
 }
 
 export { ensureAuthenticated }
