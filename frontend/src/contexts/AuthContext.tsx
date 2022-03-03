@@ -1,7 +1,11 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, ReactNode, useState } from 'react'
 import api from '../services/api'
 import { setCookie } from 'nookies'
 import Router from 'next/router'
+
+interface IAuthProviderProps {
+    children: ReactNode
+}
 
 interface IAuthContext {
     isAuthenticated: boolean
@@ -10,7 +14,7 @@ interface IAuthContext {
 
 const AuthContext = createContext({} as IAuthContext)
 
-function AuthProvider({ children }) {
+function AuthProvider({ children }: IAuthProviderProps) {
     const [token, setToken] = useState('')
 
     const isAuthenticated = !!token
