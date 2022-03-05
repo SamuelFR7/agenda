@@ -55,21 +55,21 @@ export function PeopleTable() {
     }
 
     async function handleDeletePerson(id: string) {
-        await api.delete(`/delete/${id}`)
+        await api.delete(`/people/delete/${id}`)
         if (search) {
             const { data } = await api.get<IPerson[]>(
-                `filter/${search.toUpperCase()}`
+                `/people/list/${currentPage}?name=${search.toUpperCase()}`
             )
             setPeople(data)
         } else {
-            const { data } = await api.get<IPerson[]>(`/index/${currentPage}`)
+            const { data } = await api.get<IPerson[]>(`/people/list/${currentPage}`)
             setPeople(data)
         }
     }
 
     useEffect(() => {
         async function getPeopleData() {
-            const response = await api.get(`/index/${currentPage}`)
+            const response = await api.get(`/people/list/${currentPage}`)
             setPeople(response.data)
         }
         getPeopleData()

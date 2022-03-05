@@ -12,11 +12,11 @@ export default function SearchInput() {
         setSearch(value)
         if (value) {
             const { data } = await api.get<IPerson[]>(
-                `filter/${value.toUpperCase()}`
+                `/people/list/${currentPage}?name=${value.toUpperCase()}`
             )
             setPeople(data)
         } else {
-            const { data } = await api.get<IPerson[]>(`/index/${currentPage}`)
+            const { data } = await api.get<IPerson[]>(`/people/list/${currentPage}`)
             setPeople(data)
         }
     }

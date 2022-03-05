@@ -13,7 +13,7 @@ export function PaginationContainer() {
 
     useEffect(() => {
         async function getPageLength() {
-            const { data } = await api.get('/length')
+            const { data } = await api.get('/people/length')
             setPeopleLength(data)
         }
         getPageLength()
