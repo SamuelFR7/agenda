@@ -20,5 +20,5 @@ app.use(router)
 app.use(errorCatch)
 
 app.listen(process.env.PORT || 3333, () =>
-    console.log('🚀 Server started and running at port 3333!')
+    console.log('🚀 Server started and running at port 3333')
 )
