@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "./backend, !node_modules"
+          source: "./backend/, !node_modules"
           target: "~/apps/agenda-api"
       
       - name: Update APi
