@@ -20,7 +20,7 @@ function AuthProvider({ children }: IAuthProviderProps) {
     const isAuthenticated = !!token
 
     async function SignIn(email: string, password: string) {
-        const { data } = await api.post('/user/login', {
+        const { data } = await api.post('/users/session', {
             email,
             password,
         })

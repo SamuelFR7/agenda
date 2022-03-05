@@ -44,7 +44,7 @@ export function EditPersonModal({
     useEffect(() => {
         async function getPersonToEditData() {
             if (personToEdit) {
-                const { data } = await api.get<IPerson>(`/show/${personToEdit}`)
+                const { data } = await api.get<IPerson>(`/people/show/${personToEdit}`)
                 setRazaoSocial(data.RazaoSocial)
                 setEndereco(data.Endereco)
                 setEmail(data.Email)
@@ -66,10 +66,10 @@ export function EditPersonModal({
 
     async function handleSetPeople() {
         if (search) {
-            const { data } = await api.get(`/filter/${search.toUpperCase()}`)
+            const { data } = await api.get(`/people/list/${currentPage}?name=${search.toUpperCase()}`)
             setPeople(data)
         } else {
-            const { data } = await api.get(`/index/${currentPage}`)
+            const { data } = await api.get(`/people/list/${currentPage}`)
             setPeople(data)
         }
     }
@@ -95,7 +95,7 @@ export function EditPersonModal({
 
     async function handleEditPerson(e: FormEvent) {
         e.preventDefault()
-        await api.patch('/update', {
+        await api.patch('/people/update', {
             id: personToEdit,
             RazaoSocial: RazaoSocial.toUpperCase(),
             Telefone1: Telefone1.replace('_', ''),

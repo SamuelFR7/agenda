@@ -40,7 +40,7 @@ export function ViewPersonModal({
     useEffect(() => {
         async function getPersonToViewData() {
             if (personToView) {
-                const { data } = await api.get<IPerson>(`/show/${personToView}`)
+                const { data } = await api.get<IPerson>(`/people/show/${personToView}`)
                 setRazaoSocial(data.RazaoSocial)
                 setEndereco(data.Endereco)
                 setEmail(data.Email)

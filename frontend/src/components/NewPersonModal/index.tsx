@@ -52,7 +52,7 @@ export function NewPersonModal({
 
     async function handleAddPerson(e: FormEvent) {
         e.preventDefault()
-        await api.post('/add', {
+        await api.post('/people/', {
             RazaoSocial: RazaoSocial.toUpperCase(),
             Endereco: Endereco.toUpperCase(),
             Email: Email.toLowerCase(),
@@ -69,10 +69,10 @@ export function NewPersonModal({
             Observacoes: Observacoes.toUpperCase(),
         })
         if (search) {
-            const { data } = await api.get(`/filter/${search.toUpperCase()}`)
+            const { data } = await api.get(`/people/list/${currentPage}?name=${search.toUpperCase()}`)
             setPeople(data)
         } else {
-            const { data } = await api.get(`/index/${currentPage}`)
+            const { data } = await api.get(`/people/list/${currentPage}`)
             setPeople(data)
         }
         handleResetPersonAndClose()
