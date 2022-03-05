@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode } from 'react'
 
 interface IPerson {
-    _id: string
+    id: string
     RazaoSocial: string
     Email: string
     Observacoes: string

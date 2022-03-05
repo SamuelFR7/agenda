@@ -12,7 +12,7 @@ import { ViewPersonModal } from '../ViewPersonModal'
 import { usePeople } from '../../hooks/usePeople'
 
 export interface IPerson {
-    _id: string
+    id: string
     RazaoSocial: string
     Email: string
     Observacoes: string
@@ -36,8 +36,8 @@ export function PeopleTable() {
     const [personToEdit, setPersonToEdit] = useState('')
     const [personToView, setPersonToView] = useState('')
 
-    function handleOpenEditPersonModal(_id: string) {
-        setPersonToEdit(_id)
+    function handleOpenEditPersonModal(id: string) {
+        setPersonToEdit(id)
         setIsEditPersonModalOpen(true)
     }
 
@@ -45,8 +45,8 @@ export function PeopleTable() {
         setIsEditPersonModalOpen(false)
     }
 
-    function handleOpenViewPersonModal(_id: string) {
-        setPersonToView(_id)
+    function handleOpenViewPersonModal(id: string) {
+        setPersonToView(id)
         setIsViewPersonModalOpen(true)
     }
 
@@ -54,8 +54,8 @@ export function PeopleTable() {
         setIsViewPersonModalOpen(false)
     }
 
-    async function handleDeletePerson(_id: string) {
-        await api.delete(`/delete/${_id}`)
+    async function handleDeletePerson(id: string) {
+        await api.delete(`/delete/${id}`)
         if (search) {
             const { data } = await api.get<IPerson[]>(
                 `filter/${search.toUpperCase()}`
@@ -91,7 +91,7 @@ export function PeopleTable() {
 
                 <tbody>
                     {people.map((item) => (
-                        <tr key={item._id}>
+                        <tr key={item.id}>
                             <td>{item.RazaoSocial}</td>
                             <td>{item.Telefone1}</td>
                             <td>{item.Telefone1Contato}</td>
@@ -99,7 +99,7 @@ export function PeopleTable() {
                                 <div
                                     className="imgButton"
                                     onClick={() =>
-                                        handleOpenViewPersonModal(item._id)
+                                        handleOpenViewPersonModal(item.id)
                                     }
                                 >
                                     <View />
@@ -109,7 +109,7 @@ export function PeopleTable() {
                                 <div
                                     className="imgButton"
                                     onClick={() =>
-                                        handleOpenEditPersonModal(item._id)
+                                        handleOpenEditPersonModal(item.id)
                                     }
                                 >
                                     <Edit />
@@ -124,7 +124,7 @@ export function PeopleTable() {
                                                 'Certeza de que você quer deletar este item?'
                                             )
                                         )
-                                            handleDeletePerson(item._id)
+                                            handleDeletePerson(item.id)
                                     }}
                                 >
                                     <Delete />
