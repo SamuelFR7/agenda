@@ -37,6 +37,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
+          working-directory: ${{env.working-directory}}
           source: "., !node_modules"
           target: "~/apps/agenda-api"
       
