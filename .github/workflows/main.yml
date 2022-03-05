@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "backend/*, !backend/node_modules"
+          source: "backend, !backend/node_modules"
           target: "~/apps/agenda-api"
       
       - name: Update APi
@@ -48,7 +48,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/apps/agenda-api
+            cd ~/apps/agenda-api/backend
             yarn
             yarn prisma migrate dev
             pm2 restart agenda_api
