@@ -14,10 +14,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "typeRoots": [
-        "./node_modules/@types",
-        "./src/@types"
-    ]
+    "experimentalDecorators": true
   }
 }
