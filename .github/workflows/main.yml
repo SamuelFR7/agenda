@@ -48,8 +48,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/apps/carmbi-api
+            cd ~/apps/agenda-api
             yarn
             yarn prisma migrate dev
-            pm2 restart carmbi_api
+            pm2 restart agenda_api
         
