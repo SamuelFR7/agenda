@@ -1,3 +1,4 @@
+import { AppError } from '@shared/errors/AppError'
 import { Request, Response, NextFunction } from 'express'
 import { verify } from 'jsonwebtoken'
 
@@ -8,7 +9,7 @@ interface IPayload {
 function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
     const authToken = req.headers.authorization
     if (!authToken) {
-        return res.status(401).end()
+        throw new AppError('Token missing', 401)
     }
 
     const [, token] = authToken.split(' ')
@@ -17,7 +18,7 @@ function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
 
         req.userId = sub
     } catch (error) {
-        return res.status(401).end()
+        throw new AppError('Invalid token', 401)
     }
 
     return next()
