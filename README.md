@@ -49,7 +49,8 @@ This project was made using the follow technologies:
 * [NextJS](https://nextjs.org)
 * [Styled Components](https://styled-components.com/)
 * [ExpressJS](https://expressjs.com/)
-* [MongoDB](https://www.mongodb.com)
+* [Prisma](https://www.prisma.io)
+* [Postgres](https://www.postgresql.org)
 
 
 # :computer: How to run
@@ -62,6 +63,9 @@ $ git clone https://github.com/SamuelFR7/agenda-react.git
 ```bash
 # Install Dependencies in backend and frontend
 $ yarn
+
+# Create a .env with .env.example schema and run migrations in backend
+$ yarn prisma migrate dev
 
 # Run Aplication in backend in frontend
 $ yarn start
