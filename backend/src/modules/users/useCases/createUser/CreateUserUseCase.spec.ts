@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { CreateUserUseCase } from './CreateUserUseCase'
 import { UserRepositoryInMemory } from '@modules/users/repositories/in-memory/UserRepositoryInMemory'
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
+import { AppError } from '@shared/errors/AppError'
 let userRepositoryInMemory: UserRepositoryInMemory
 let createUserUseCase: CreateUserUseCase
 
@@ -31,7 +32,7 @@ describe('Create user use case', () => {
         await createUserUseCase.execute(newUser)
 
         await expect(createUserUseCase.execute(newUser)).rejects.toEqual(
-            new Error('User already exists')
+            new AppError('User already exists', 401)
         )
     })
 })

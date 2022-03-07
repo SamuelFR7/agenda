@@ -1,4 +1,5 @@
 import { IUserRepository } from '@modules/users/repositories/IUserRepository'
+import { AppError } from '@shared/errors/AppError'
 import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
@@ -19,13 +20,13 @@ class AuthenticateUserUseCase {
         const user = await this.usersRepository.findByEmail(email)
 
         if (!user) {
-            throw new Error('User or password incorrect!')
+            throw new AppError('User or password incorrect!', 401)
         }
 
         const passwordMatch = await compare(password, user.password)
 
         if (!passwordMatch) {
-            throw new Error('User or password incorrect!')
+            throw new AppError('User or password incorrect!', 401)
         }
 
         const token = sign(

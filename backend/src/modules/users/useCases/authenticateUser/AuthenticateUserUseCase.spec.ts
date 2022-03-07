@@ -4,6 +4,7 @@ import { UserRepositoryInMemory } from '@modules/users/repositories/in-memory/Us
 import { CreateUserUseCase } from '../createUser/CreateUserUseCase'
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { config } from 'dotenv'
+import { AppError } from '@shared/errors/AppError'
 let userRepositoryInMemory: UserRepositoryInMemory
 let authenticateUserUseCase: AuthenticateUserUseCase
 let createUserUseCase: CreateUserUseCase
@@ -42,7 +43,7 @@ describe('Authenticate user use case', () => {
                 email: 'EDUARDO',
                 password: '123',
             })
-        ).rejects.toEqual(new Error('User or password incorrect!'))
+        ).rejects.toEqual(new AppError('User or password incorrect!', 401))
     })
 
     it('should not be able to authenticate a user with wrong password', async () => {
@@ -56,6 +57,6 @@ describe('Authenticate user use case', () => {
                 email: 'SAMUEL',
                 password: '1234',
             })
-        ).rejects.toEqual(new Error('User or password incorrect!'))
+        ).rejects.toEqual(new AppError('User or password incorrect!', 401))
     })
 })
