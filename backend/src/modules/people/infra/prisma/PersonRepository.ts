@@ -1,3 +1,4 @@
+import { IUpdatePersonDTO } from '@modules/people/dtos/IUpdatePersonDTO'
 import { Person } from '@modules/people/entities/Person'
 import { IPersonRepository } from '@modules/people/repositories/IPersonRepository'
 import { prisma } from '@shared/infra/database/prisma/client'
@@ -23,7 +24,7 @@ class PersonRepository implements IPersonRepository {
         return person
     }
 
-    async update(id: string, person: Person): Promise<Person> {
+    async update(id: string, person: IUpdatePersonDTO): Promise<Person> {
         const personUpdated = await prisma.person.update({
             where: {
                 id,
