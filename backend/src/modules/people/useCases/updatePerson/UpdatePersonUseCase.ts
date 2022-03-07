@@ -1,4 +1,4 @@
-import { ICreatePersonDTO } from '@modules/people/dtos/ICreatePersonDTO'
+import { IUpdatePersonDTO } from '@modules/people/dtos/IUpdatePersonDTO'
 import { IPersonRepository } from '@modules/people/repositories/IPersonRepository'
 import { inject, injectable } from 'tsyringe'
 
@@ -9,7 +9,7 @@ class UpdatePersonUseCase {
         private peopleRepository: IPersonRepository
     ) {}
 
-    async execute(id: string, person: ICreatePersonDTO) {
+    async execute(id: string, person: IUpdatePersonDTO) {
         const personUpdated = await this.peopleRepository.update(id, person)
 
         return personUpdated

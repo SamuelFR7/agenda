@@ -1,6 +1,6 @@
-interface ICreatePersonDTO {
-    RazaoSocial: string
-    Telefone1: string
+interface IUpdatePersonDTO {
+    RazaoSocial?: string
+    Telefone1?: string
     Telefone1Contato?: string
     Telefone2?: string
     Telefone2Contato?: string
@@ -15,4 +15,4 @@ interface ICreatePersonDTO {
     Observacoes?: string
 }
 
-export { ICreatePersonDTO }
+export { IUpdatePersonDTO }

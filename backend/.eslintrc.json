@@ -21,7 +21,8 @@
     ],
     "rules": {
         "prettier/prettier": ["error"],
-        "no-useless-constructor": "off"
+        "no-useless-constructor": "off",
+        "array-callback-return": "off"
     },
     "settings": {
         "import/resolver": {
