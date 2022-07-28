@@ -13,9 +13,10 @@ import {
 } from '@chakra-ui/react'
 import React, { FormEvent, useEffect, useState } from 'react'
 import { usePeople } from '../../hooks/usePeople'
-import { IPerson } from '../../pages/home'
+import { IPerson } from '../../dtos/IPerson'
 import api from '../../services/api'
 import { Input } from '../Form/input'
+import InputMask from 'react-input-mask'
 
 interface IEditPerson {
   isOpen: boolean
@@ -163,6 +164,8 @@ function EditPerson({
                 <Input
                   name="Telefone1"
                   value={Telefone1}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone1(e.target.value)}
                   label="Telefone"
                   isRequired
@@ -178,6 +181,8 @@ function EditPerson({
                 <Input
                   name="Telefone2"
                   value={Telefone2}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone2(e.target.value)}
                   label="Telefone 2"
                 />
@@ -192,6 +197,8 @@ function EditPerson({
                 <Input
                   name="Telefone3"
                   value={Telefone3}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone3(e.target.value)}
                   label="Telefone 3"
                 />
@@ -206,6 +213,8 @@ function EditPerson({
                 <Input
                   name="Telefone4"
                   value={Telefone4}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone4(e.target.value)}
                   label="Telefone 4"
                 />
@@ -220,6 +229,8 @@ function EditPerson({
                 <Input
                   name="Telefone5"
                   value={Telefone5}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone5(e.target.value)}
                   label="Telefone 5"
                 />

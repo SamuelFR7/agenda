@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { IPerson } from '../../pages/home'
+import { IPerson } from '../../dtos/IPerson'
 import api from '../../services/api'
 import { Input } from '../Form/input'
 
