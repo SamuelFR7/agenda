@@ -9,6 +9,7 @@ import React from 'react'
 interface IInputProps extends ChakraInputProps {
   name: string
   label?: string
+  mask?: string
 }
 
 function Input({ name, label, ...rest }: IInputProps) {

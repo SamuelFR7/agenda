@@ -15,6 +15,7 @@ import React, { FormEvent, useState } from 'react'
 import { usePeople } from '../../hooks/usePeople'
 import api from '../../services/api'
 import { Input } from '../Form/input'
+import InputMask from 'react-input-mask'
 
 interface IAddPersonProps {
   isOpen: boolean
@@ -125,6 +126,8 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone1"
                   value={Telefone1}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone1(e.target.value)}
                   label="Telefone"
                   isRequired
@@ -140,6 +143,8 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone2"
                   value={Telefone2}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone2(e.target.value)}
                   label="Telefone 2"
                 />
@@ -154,6 +159,8 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone3"
                   value={Telefone3}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone3(e.target.value)}
                   label="Telefone 3"
                 />
@@ -168,6 +175,8 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone4"
                   value={Telefone4}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone4(e.target.value)}
                   label="Telefone 4"
                 />
@@ -182,6 +191,8 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone5"
                   value={Telefone5}
+                  as={InputMask}
+                  mask="(**) *****-****"
                   onChange={(e) => setTelefone5(e.target.value)}
                   label="Telefone 5"
                 />
