@@ -214,7 +214,11 @@ function ViewPerson({
         </ModalBody>
 
         <ModalFooter>
-          <Button w="100%" colorScheme="green" onClick={onClose}>
+          <Button
+            w="100%"
+            colorScheme="green"
+            onClick={handleCloseAndResetPerson}
+          >
             Fechar
           </Button>
         </ModalFooter>
