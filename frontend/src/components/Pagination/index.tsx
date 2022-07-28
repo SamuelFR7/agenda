@@ -48,8 +48,12 @@ function Pagination({
     >
       <Box>
         <strong>{(currentPage - 1) * 10 + 1}</strong> -{' '}
-        <strong>{registersPerPage * currentPage}</strong> de{' '}
-        <strong>{totalCountOfRegisters}</strong>
+        <strong>
+          {currentPage === lastPage
+            ? totalCountOfRegisters
+            : registersPerPage * currentPage}
+        </strong>{' '}
+        de <strong>{totalCountOfRegisters}</strong>
       </Box>
       <Stack direction="row" spacing="2">
         {currentPage > 1 + siblingsCount && (
