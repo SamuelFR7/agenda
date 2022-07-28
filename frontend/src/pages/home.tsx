@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Flex,
-  Heading,
   Icon,
   Table,
   Tbody,
@@ -11,6 +10,7 @@ import {
   Thead,
   Tr,
   Input as ChakraInput,
+  useDisclosure,
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import React, { useEffect } from 'react'
@@ -19,9 +19,45 @@ import { Header } from '../components/Header/chakra'
 import { usePeople } from '../hooks/usePeople'
 import api from '../services/api'
 import NextLink from 'next/link'
+import { AddPerson } from '../components/AddPerson'
+
+export interface IPerson {
+  id: string
+  RazaoSocial: string
+  Email: string
+  Observacoes: string
+  Endereco: string
+  Telefone1: string
+  Telefone2: string
+  Telefone3: string
+  Telefone4: string
+  Telefone5: string
+  Telefone1Contato: string
+  Telefone2Contato: string
+  Telefone3Contato: string
+  Telefone4Contato: string
+  Telefone5Contato: string
+}
 
 function Home() {
-  const { people, setPeople, search, currentPage } = usePeople()
+  const {
+    isOpen: isAddOpen,
+    onOpen: onAddOpen,
+    onClose: onAddClose,
+  } = useDisclosure()
+  const { people, setPeople, currentPage } = usePeople()
+
+  async function handleChange(value: string) {
+    if (value) {
+      const { data } = await api.get<IPerson[]>(
+        `/people/list/${currentPage}?name=${value.toUpperCase()}`
+      )
+      setPeople(data)
+    } else {
+      const { data } = await api.get<IPerson[]>(`/people/list/${currentPage}`)
+      setPeople(data)
+    }
+  }
 
   useEffect(() => {
     async function getPeopleData() {
@@ -36,7 +72,8 @@ function Home() {
       <Head>
         <title>Agenda</title>
       </Head>
-      <Header />
+      <Header onOpen={onAddOpen} />
+      <AddPerson isOpen={isAddOpen} onClose={onAddClose} />
       <Flex
         w="100%"
         my="16"
@@ -52,6 +89,8 @@ function Home() {
               focusBorderColor="green.500"
               _hover={{ bgColor: 'gray.50' }}
               placeholder="Pesquisar"
+              type="search"
+              onChange={(e) => handleChange(e.target.value)}
             />
           </Flex>
           <Table colorScheme="blackAlpha">
