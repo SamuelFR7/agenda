@@ -13,13 +13,14 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import Head from 'next/head'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiDeleteBinLine, RiEyeLine, RiPencilLine } from 'react-icons/ri'
 import { Header } from '../components/Header/chakra'
 import { usePeople } from '../hooks/usePeople'
 import api from '../services/api'
 import NextLink from 'next/link'
 import { AddPerson } from '../components/AddPerson'
+import { ViewPerson } from '../components/ViewPerson'
 
 export interface IPerson {
   id: string
@@ -45,7 +46,13 @@ function Home() {
     onOpen: onAddOpen,
     onClose: onAddClose,
   } = useDisclosure()
+  const {
+    isOpen: isViewOpen,
+    onOpen: onViewOpen,
+    onClose: onViewClose,
+  } = useDisclosure()
   const { people, setPeople, currentPage } = usePeople()
+  const [personToView, setPersonToView] = useState('')
 
   async function handleChange(value: string) {
     if (value) {
@@ -67,6 +74,11 @@ function Home() {
     getPeopleData()
   }, [currentPage])
 
+  function handleOpenView(id: string) {
+    setPersonToView(id)
+    onViewOpen()
+  }
+
   return (
     <>
       <Head>
@@ -74,6 +86,12 @@ function Home() {
       </Head>
       <Header onOpen={onAddOpen} />
       <AddPerson isOpen={isAddOpen} onClose={onAddClose} />
+      <ViewPerson
+        isOpen={isViewOpen}
+        onClose={onViewClose}
+        personToView={personToView}
+        setPersonToView={setPersonToView}
+      />
       <Flex
         w="100%"
         my="16"
@@ -112,16 +130,14 @@ function Home() {
                     <Td>{person.Telefone1}</Td>
                     <Td>{person.Telefone1Contato}</Td>
                     <Td>
-                      <NextLink href={`/person/view/${person.id}`} passHref>
-                        <Button
-                          as="a"
-                          size="sm"
-                          fontSize="sm"
-                          colorScheme="green"
-                        >
-                          <Icon as={RiEyeLine} />
-                        </Button>
-                      </NextLink>
+                      <Button
+                        size="sm"
+                        fontSize="sm"
+                        colorScheme="green"
+                        onClick={() => handleOpenView(person.id)}
+                      >
+                        <Icon as={RiEyeLine} />
+                      </Button>
                     </Td>
                     <Td>
                       <NextLink href={`/person/edit/${person.id}`} passHref>

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Head from 'next/head'
 
-import Modal from 'react-modal'
 import { parseCookies } from 'nookies'
 
 import { GetServerSideProps } from 'next'

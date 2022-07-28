@@ -7,7 +7,6 @@ import Delete from '../../assets/delete.svg'
 import { Container } from './styles'
 import api from '../../services/api'
 import { EditPersonModal } from '../EditPersonModal'
-import { ViewPersonModal } from '../ViewPersonModal'
 
 import { usePeople } from '../../hooks/usePeople'
 
@@ -32,9 +31,7 @@ export interface IPerson {
 export function PeopleTable() {
   const { people, setPeople, search, currentPage } = usePeople()
   const [isEditPersonModalOpen, setIsEditPersonModalOpen] = useState(false)
-  const [isViewPersonModalOpen, setIsViewPersonModalOpen] = useState(false)
   const [personToEdit, setPersonToEdit] = useState('')
-  const [personToView, setPersonToView] = useState('')
 
   function handleOpenEditPersonModal(id: string) {
     setPersonToEdit(id)
@@ -43,15 +40,6 @@ export function PeopleTable() {
 
   function handleCloseEditPersonModal() {
     setIsEditPersonModalOpen(false)
-  }
-
-  function handleOpenViewPersonModal(id: string) {
-    setPersonToView(id)
-    setIsViewPersonModalOpen(true)
-  }
-
-  function handleCloseViewPersonModal() {
-    setIsViewPersonModalOpen(false)
   }
 
   async function handleDeletePerson(id: string) {
@@ -96,10 +84,7 @@ export function PeopleTable() {
               <td>{item.Telefone1}</td>
               <td>{item.Telefone1Contato}</td>
               <td>
-                <div
-                  className="imgButton"
-                  onClick={() => handleOpenViewPersonModal(item.id)}
-                >
+                <div className="imgButton">
                   <View />
                 </div>
               </td>
@@ -135,12 +120,6 @@ export function PeopleTable() {
         onRequestClose={handleCloseEditPersonModal}
         personToEdit={personToEdit}
         setPersonToEdit={setPersonToEdit}
-      />
-      <ViewPersonModal
-        isOpen={isViewPersonModalOpen}
-        onRequestClose={handleCloseViewPersonModal}
-        personToView={personToView}
-        setPersonToView={setPersonToView}
       />
     </Container>
   )
