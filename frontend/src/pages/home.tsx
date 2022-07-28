@@ -56,7 +56,7 @@ function Home() {
     onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure()
-  const { people, setPeople, currentPage, setSearch } = usePeople()
+  const { people, setPeople, currentPage, setSearch, search } = usePeople()
   const [personToView, setPersonToView] = useState('')
   const [personToEdit, setPersonToEdit] = useState('')
 
@@ -89,6 +89,19 @@ function Home() {
   function handleOpenEdit(id: string) {
     setPersonToEdit(id)
     onEditOpen()
+  }
+
+  async function handleDelete(id: string) {
+    await api.delete(`/people/delete/${id}`)
+    if (search) {
+      const { data } = await api.get<IPerson[]>(
+        `/people/list/${currentPage}?name=${search.toUpperCase()}`
+      )
+      setPeople(data)
+    } else {
+      const { data } = await api.get<IPerson[]>(`/people/list/${currentPage}`)
+      setPeople(data)
+    }
   }
 
   return (
@@ -168,7 +181,19 @@ function Home() {
                       </Button>
                     </Td>
                     <Td>
-                      <Button size="sm" fontSize="sm" colorScheme="green">
+                      <Button
+                        size="sm"
+                        fontSize="sm"
+                        colorScheme="green"
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              'Certeza de que você quer deletar este contato?'
+                            )
+                          )
+                            handleDelete(person.id)
+                        }}
+                      >
                         <Icon as={RiDeleteBinLine} />
                       </Button>
                     </Td>
