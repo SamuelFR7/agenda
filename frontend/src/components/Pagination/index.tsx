@@ -8,25 +8,25 @@ import { usePeople } from '../../hooks/usePeople'
 import api from '../../services/api'
 
 export function PaginationContainer() {
-    const { currentPage, setCurrentPage } = usePeople()
-    const [peopleLength, setPeopleLength] = useState(0)
+  const { currentPage, setCurrentPage } = usePeople()
+  const [peopleLength, setPeopleLength] = useState(0)
 
-    useEffect(() => {
-        async function getPageLength() {
-            const { data } = await api.get('/people/length')
-            setPeopleLength(data)
-        }
-        getPageLength()
-    }, [])
+  useEffect(() => {
+    async function getPageLength() {
+      const { data } = await api.get('/people/length')
+      setPeopleLength(data)
+    }
+    getPageLength()
+  }, [])
 
-    return (
-        <Container>
-            <Pagination
-                pageSize={10}
-                current={currentPage}
-                total={peopleLength}
-                onChange={setCurrentPage}
-            />
-        </Container>
-    )
+  return (
+    <Container>
+      <Pagination
+        pageSize={10}
+        current={currentPage}
+        total={peopleLength}
+        onChange={setCurrentPage}
+      />
+    </Container>
+  )
 }
