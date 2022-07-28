@@ -5,9 +5,7 @@ import { GetServerSideProps } from 'next'
 
 import { parseCookies } from 'nookies'
 
-import { LoginForm } from '../components/LoginForm'
-import { LoginHeader } from '../components/LoginHeader'
-import { Button, Flex, Image, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import toast, { Toaster } from 'react-hot-toast'
 import { AuthContext } from '../contexts/AuthContext'
 import { Input } from '../components/Form/input'
