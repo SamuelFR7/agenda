@@ -11,26 +11,18 @@ import {
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react'
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { usePeople } from '../../hooks/usePeople'
-import { IPerson } from '../../dtos/IPerson'
 import api from '../../services/api'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
 
-interface IEditPerson {
+interface IAddPersonProps {
   isOpen: boolean
   onClose: () => void
-  personToEdit: string
-  setPersonToEdit: React.Dispatch<React.SetStateAction<string>>
 }
 
-function EditPerson({
-  isOpen,
-  onClose,
-  personToEdit,
-  setPersonToEdit,
-}: IEditPerson) {
+function AddPerson({ isOpen, onClose }: IAddPersonProps) {
   const { currentPage, search, setPeople } = usePeople()
   const [RazaoSocial, setRazaoSocial] = useState('')
   const [Endereco, setEndereco] = useState('')
@@ -47,47 +39,11 @@ function EditPerson({
   const [Telefone5Contato, setTelefone5Contato] = useState('')
   const [Observacoes, setObservacoes] = useState('')
 
-  useEffect(() => {
-    async function getPersonToEditData() {
-      if (personToEdit) {
-        const { data } = await api.get<IPerson>(`/people/show/${personToEdit}`)
-        setRazaoSocial(data.RazaoSocial)
-        setEndereco(data.Endereco)
-        setEmail(data.Email)
-        setTelefone1(data.Telefone1)
-        setTelefone1Contato(data.Telefone1Contato)
-        setTelefone2(data.Telefone2)
-        setTelefone2Contato(data.Telefone2Contato)
-        setTelefone3(data.Telefone3)
-        setTelefone3Contato(data.Telefone3Contato)
-        setTelefone4(data.Telefone4)
-        setTelefone4Contato(data.Telefone4Contato)
-        setTelefone5(data.Telefone5)
-        setTelefone5Contato(data.Telefone5Contato)
-        setObservacoes(data.Observacoes)
-      }
-    }
-    getPersonToEditData()
-  }, [personToEdit])
-
-  async function handleSetPeople() {
-    if (search) {
-      const { data } = await api.get(
-        `/people/list/${currentPage}?name=${search.toUpperCase()}`
-      )
-      setPeople(data)
-    } else {
-      const { data } = await api.get(`/people/list/${currentPage}`)
-      setPeople(data)
-    }
-  }
-
-  function handleCloseAndResetPerson() {
-    setPersonToEdit('')
+  function handleResetPersonAndClose() {
     setRazaoSocial('')
     setEmail('')
+    setEndereco('')
     setObservacoes('')
-    setEmail('')
     setTelefone1('')
     setTelefone2('')
     setTelefone3('')
@@ -103,39 +59,45 @@ function EditPerson({
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    await api.patch('/people/update', {
-      id: personToEdit,
+    await api.post('/people/', {
       RazaoSocial: RazaoSocial.toUpperCase(),
-      Telefone1: Telefone1.replace('_', ''),
-      Telefone2: Telefone2.replace('_', ''),
-      Telefone3: Telefone3.replace('_', ''),
-      Telefone4: Telefone4.replace('_', ''),
-      Telefone5: Telefone5.replace('_', ''),
-      Telefone1Contato: Telefone1Contato.toUpperCase(),
-      Telefone2Contato: Telefone2Contato.toUpperCase(),
-      Telefone3Contato: Telefone3Contato.toUpperCase(),
-      Telefone4Contato: Telefone4Contato.toUpperCase(),
-      Telefone5Contato: Telefone5Contato.toUpperCase(),
-      Email: Email.toLowerCase(),
       Endereco: Endereco.toUpperCase(),
+      Email: Email.toLowerCase(),
+      Telefone1: Telefone1.replace('_', ''),
+      Telefone1Contato: Telefone1Contato.toUpperCase(),
+      Telefone2: Telefone2.replace('_', ''),
+      Telefone2Contato: Telefone2Contato.toUpperCase(),
+      Telefone3: Telefone3.replace('_', ''),
+      Telefone3Contato: Telefone3Contato.toUpperCase(),
+      Telefone4: Telefone4.replace('_', ''),
+      Telefone4Contato: Telefone4Contato.toUpperCase(),
+      Telefone5: Telefone5.replace('_', ''),
+      Telefone5Contato: Telefone5Contato.toUpperCase(),
       Observacoes: Observacoes.toUpperCase(),
     })
-    handleSetPeople()
-    handleCloseAndResetPerson()
+    if (search) {
+      const { data } = await api.get(
+        `/people/list/${currentPage}?name=${search.toUpperCase()}`
+      )
+      setPeople(data)
+    } else {
+      const { data } = await api.get(`/people/list/${currentPage}`)
+      setPeople(data)
+    }
+    handleResetPersonAndClose()
   }
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={handleCloseAndResetPerson}
+      onClose={handleResetPersonAndClose}
       isCentered
       size="xl"
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Editar Contato</ModalHeader>
+        <ModalHeader>Adicionar Contato</ModalHeader>
         <ModalCloseButton />
-
         <Box as="form" onSubmit={handleSubmit}>
           <ModalBody>
             <VStack spacing="4">
@@ -253,11 +215,15 @@ function EditPerson({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="gray" onClick={onClose} mr={3}>
+            <Button
+              colorScheme="gray"
+              onClick={handleResetPersonAndClose}
+              mr={3}
+            >
               Cancelar
             </Button>
             <Button type="submit" colorScheme="green">
-              Editar
+              Cadastrar
             </Button>
           </ModalFooter>
         </Box>
@@ -266,4 +232,4 @@ function EditPerson({
   )
 }
 
-export { EditPerson }
+export { AddPerson }
