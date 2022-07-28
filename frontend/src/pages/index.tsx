@@ -17,8 +17,12 @@ import {
   Input as ChakraInput,
   useDisclosure,
 } from '@chakra-ui/react'
-import { RiDeleteBinLine, RiEyeLine, RiPencilLine } from 'react-icons/ri'
-import { Header } from '../components/Header/'
+import {
+  RiAddLine,
+  RiDeleteBinLine,
+  RiEyeLine,
+  RiPencilLine,
+} from 'react-icons/ri'
 import { usePeople } from '../hooks/usePeople'
 import api from '../services/api'
 import { AddPerson } from '../components/AddPerson'
@@ -106,7 +110,6 @@ function Home() {
       <Head>
         <title>Agenda</title>
       </Head>
-      <Header onOpen={onAddOpen} />
       <AddPerson isOpen={isAddOpen} onClose={onAddClose} />
       <ViewPerson
         isOpen={isViewOpen}
@@ -138,6 +141,17 @@ function Home() {
               type="search"
               onChange={(e) => handleChange(e.target.value)}
             />
+            <Button
+              ml="8"
+              size="lg"
+              fontSize="md"
+              colorScheme="green"
+              bg="green.400"
+              leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+              onClick={onAddOpen}
+            >
+              Adicionar Contato
+            </Button>
           </Flex>
           <Table colorScheme="blackAlpha">
             <Thead>
