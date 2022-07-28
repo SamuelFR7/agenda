@@ -1,22 +1,22 @@
+import { Box, Flex, Image } from '@chakra-ui/react'
 import React from 'react'
 
-import Logo from '../../assets/logo.svg'
-
-import { Container, Content } from './styles'
-
-interface HeaderProps {
-    onOpenNewPersonModal: () => void
+function Header() {
+  return (
+    <Box w="100%" bg="green.500">
+      <Flex
+        as="header"
+        w="100%"
+        maxWidth={1290}
+        marginX="auto"
+        py="5"
+        align="center"
+        justify="center"
+      >
+        <Image src="/Logo.png" />
+      </Flex>
+    </Box>
+  )
 }
 
-export function Header({ onOpenNewPersonModal }: HeaderProps) {
-    return (
-        <Container>
-            <Content>
-                <Logo />
-                <button type="button" onClick={onOpenNewPersonModal}>
-                    Adicionar Contato
-                </button>
-            </Content>
-        </Container>
-    )
-}
+export { Header }
