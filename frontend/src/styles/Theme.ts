@@ -19,7 +19,14 @@ export const chakraTheme = extendTheme({
     heading: 'Poppins',
     body: 'Poppins',
   },
-  styles: {},
+  styles: {
+    global: {
+      body: {
+        bg: '#F0F2F5',
+        color: 'gray.900',
+      },
+    },
+  },
 })
 
 export const theme = {
