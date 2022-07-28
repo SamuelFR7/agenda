@@ -1,9 +1,12 @@
 import { Box, Button, Flex, Icon, Image, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import { RiAddLine } from 'react-icons/ri'
-import NextLink from 'next/link'
 
-function Header() {
+interface IHeaderProps {
+  onOpen: () => void
+}
+
+function Header({ onOpen }: IHeaderProps) {
   return (
     <Box w="100%" bg="green.500">
       <Flex
@@ -16,18 +19,16 @@ function Header() {
       >
         <Image src="/Logo.png" />
         <Spacer />
-        <NextLink href="/person/create" passHref>
-          <Button
-            as="a"
-            size="md"
-            fontSize="md"
-            colorScheme="green"
-            bg="green.400"
-            leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-          >
-            Adicionar Contato
-          </Button>
-        </NextLink>
+        <Button
+          size="md"
+          fontSize="md"
+          colorScheme="green"
+          bg="green.400"
+          leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+          onClick={onOpen}
+        >
+          Adicionar Contato
+        </Button>
       </Flex>
     </Box>
   )
