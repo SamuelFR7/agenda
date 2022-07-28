@@ -87,7 +87,12 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
+    <Modal
+      isOpen={isOpen}
+      onClose={handleResetPersonAndClose}
+      isCentered
+      size="xl"
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Adicionar Contato</ModalHeader>
@@ -199,7 +204,11 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="gray" onClick={onClose} mr={3}>
+            <Button
+              colorScheme="gray"
+              onClick={handleResetPersonAndClose}
+              mr={3}
+            >
               Cancelar
             </Button>
             <Button type="submit" colorScheme="green">
