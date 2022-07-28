@@ -36,7 +36,7 @@ export default function Home() {
       </Head>
 
       <Toaster position="top-center" reverseOrder={false} />
-      <Flex w="100vw" h="100vh" align="center" justify="center">
+      <Flex h="80vh" align="center" justify="center">
         <Flex
           as="form"
           w="100%"
