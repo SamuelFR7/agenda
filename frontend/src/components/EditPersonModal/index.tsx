@@ -1,31 +1,36 @@
+import {
+  Box,
+  Button,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
+} from '@chakra-ui/react'
 import React, { FormEvent, useEffect, useState } from 'react'
-
-import Modal from 'react-modal'
-
-import CloseImg from '../../assets/close.svg'
-import api from '../../services/api'
-
-import { IPerson } from '../PeopleTable'
-
-import { Container } from './styles'
 import { usePeople } from '../../hooks/usePeople'
+import { IPerson } from '../../pages/home'
+import api from '../../services/api'
+import { Input } from '../Form/input'
 
-import InputMask from 'react-input-mask'
-
-interface IEditPersonModal {
+interface IEditPerson {
   isOpen: boolean
-  onRequestClose: () => void
+  onClose: () => void
   personToEdit: string
   setPersonToEdit: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function EditPersonModal({
+function EditPerson({
   isOpen,
-  onRequestClose,
+  onClose,
   personToEdit,
   setPersonToEdit,
-}: IEditPersonModal) {
-  const { search, setPeople, currentPage } = usePeople()
+}: IEditPerson) {
+  const { currentPage, search, setPeople } = usePeople()
   const [RazaoSocial, setRazaoSocial] = useState('')
   const [Endereco, setEndereco] = useState('')
   const [Email, setEmail] = useState('')
@@ -92,10 +97,10 @@ export function EditPersonModal({
     setTelefone3Contato('')
     setTelefone4Contato('')
     setTelefone5Contato('')
-    onRequestClose()
+    onClose()
   }
 
-  async function handleEditPerson(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     await api.patch('/people/update', {
       id: personToEdit,
@@ -115,101 +120,139 @@ export function EditPersonModal({
       Observacoes: Observacoes.toUpperCase(),
     })
     handleSetPeople()
-    onRequestClose()
+    handleCloseAndResetPerson()
   }
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={handleCloseAndResetPerson}
-      overlayClassName="react-modal-overlay"
-      className="react-modal-content"
+      onClose={handleCloseAndResetPerson}
+      isCentered
+      size="xl"
     >
-      <button className="react-modal-close" onClick={handleCloseAndResetPerson}>
-        <CloseImg />
-      </button>
-      <Container onSubmit={handleEditPerson}>
-        <h2>Editar Contato</h2>
-        <input
-          placeholder="Nome"
-          value={RazaoSocial}
-          onChange={(e) => setRazaoSocial(e.target.value)}
-          required={true}
-        />
-        <input
-          placeholder="Endereço"
-          value={Endereco}
-          onChange={(e) => setEndereco(e.target.value)}
-        />
-        <input
-          placeholder="Email"
-          value={Email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <InputMask
-          placeholder="Telefone"
-          value={Telefone1}
-          onChange={(e) => setTelefone1(e.target.value)}
-          required={true}
-          mask="(99) 99999-9999"
-        />
-        <input
-          placeholder="Contato 1"
-          value={Telefone1Contato}
-          onChange={(e) => setTelefone1Contato(e.target.value)}
-        />
-        <InputMask
-          placeholder="Telefone 2"
-          value={Telefone2}
-          onChange={(e) => setTelefone2(e.target.value)}
-          mask="(99) 99999-9999"
-        />
-        <input
-          placeholder="Contato 2"
-          value={Telefone2Contato}
-          onChange={(e) => setTelefone2Contato(e.target.value)}
-        />
-        <InputMask
-          placeholder="Telefone 3"
-          value={Telefone3}
-          onChange={(e) => setTelefone3(e.target.value)}
-          mask="(99) 99999-9999"
-        />
-        <input
-          placeholder="Contato 3"
-          value={Telefone3Contato}
-          onChange={(e) => setTelefone3Contato(e.target.value)}
-        />
-        <InputMask
-          placeholder="Telefone 4"
-          value={Telefone4}
-          onChange={(e) => setTelefone4(e.target.value)}
-          mask="(99) 99999-9999"
-        />
-        <input
-          placeholder="Contato 4"
-          value={Telefone4Contato}
-          onChange={(e) => setTelefone4Contato(e.target.value)}
-        />
-        <InputMask
-          placeholder="Telefone 5"
-          value={Telefone5}
-          onChange={(e) => setTelefone5(e.target.value)}
-          mask="(99) 99999-9999"
-        />
-        <input
-          placeholder="Contato 5"
-          value={Telefone5Contato}
-          onChange={(e) => setTelefone5Contato(e.target.value)}
-        />
-        <input
-          placeholder="Observações"
-          value={Observacoes}
-          onChange={(e) => setObservacoes(e.target.value)}
-        />
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Editar Contato</ModalHeader>
+        <ModalCloseButton />
 
-        <button type="submit">Cadastrar</button>
-      </Container>
+        <Box as="form" onSubmit={handleSubmit}>
+          <ModalBody>
+            <VStack spacing="4">
+              <HStack spacing="4">
+                <Input
+                  value={RazaoSocial}
+                  onChange={(e) => setRazaoSocial(e.target.value)}
+                  name="RazaoSocial"
+                  label="Nome"
+                  isRequired
+                />
+                <Input
+                  value={Endereco}
+                  onChange={(e) => setEndereco(e.target.value)}
+                  name="Endereco"
+                  label="Endereço"
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Email"
+                  value={Email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  label="E-mail"
+                />
+                <Input
+                  name="Telefone1"
+                  value={Telefone1}
+                  onChange={(e) => setTelefone1(e.target.value)}
+                  label="Telefone"
+                  isRequired
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Telefone1Contato"
+                  value={Telefone1Contato}
+                  onChange={(e) => setTelefone1Contato(e.target.value)}
+                  label="Contato 1"
+                />
+                <Input
+                  name="Telefone2"
+                  value={Telefone2}
+                  onChange={(e) => setTelefone2(e.target.value)}
+                  label="Telefone 2"
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Telefone2Contato"
+                  value={Telefone2Contato}
+                  onChange={(e) => setTelefone2Contato(e.target.value)}
+                  label="Contato 2"
+                />
+                <Input
+                  name="Telefone3"
+                  value={Telefone3}
+                  onChange={(e) => setTelefone3(e.target.value)}
+                  label="Telefone 3"
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Telefone3Contato"
+                  value={Telefone3Contato}
+                  onChange={(e) => setTelefone3Contato(e.target.value)}
+                  label="Contato 3"
+                />
+                <Input
+                  name="Telefone4"
+                  value={Telefone4}
+                  onChange={(e) => setTelefone4(e.target.value)}
+                  label="Telefone 4"
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Telefone4Contato"
+                  value={Telefone4Contato}
+                  onChange={(e) => setTelefone4Contato(e.target.value)}
+                  label="Contato 4"
+                />
+                <Input
+                  name="Telefone5"
+                  value={Telefone5}
+                  onChange={(e) => setTelefone5(e.target.value)}
+                  label="Telefone 5"
+                />
+              </HStack>
+              <HStack spacing="4">
+                <Input
+                  name="Telefone5Contato"
+                  value={Telefone5Contato}
+                  onChange={(e) => setTelefone5Contato(e.target.value)}
+                  label="Contato 5"
+                />
+                <Input
+                  name="Observacoes"
+                  value={Observacoes}
+                  onChange={(e) => setObservacoes(e.target.value)}
+                  label="Observações"
+                />
+              </HStack>
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="gray" onClick={onClose} mr={3}>
+              Cancelar
+            </Button>
+            <Button type="submit" colorScheme="green">
+              Editar
+            </Button>
+          </ModalFooter>
+        </Box>
+      </ModalContent>
     </Modal>
   )
 }
+
+export { EditPerson }

@@ -18,9 +18,9 @@ import { RiDeleteBinLine, RiEyeLine, RiPencilLine } from 'react-icons/ri'
 import { Header } from '../components/Header/chakra'
 import { usePeople } from '../hooks/usePeople'
 import api from '../services/api'
-import NextLink from 'next/link'
 import { AddPerson } from '../components/AddPerson'
 import { ViewPerson } from '../components/ViewPerson'
+import { EditPerson } from '../components/EditPersonModal/'
 
 export interface IPerson {
   id: string
@@ -51,10 +51,17 @@ function Home() {
     onOpen: onViewOpen,
     onClose: onViewClose,
   } = useDisclosure()
-  const { people, setPeople, currentPage } = usePeople()
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
+  } = useDisclosure()
+  const { people, setPeople, currentPage, setSearch } = usePeople()
   const [personToView, setPersonToView] = useState('')
+  const [personToEdit, setPersonToEdit] = useState('')
 
   async function handleChange(value: string) {
+    setSearch(value)
     if (value) {
       const { data } = await api.get<IPerson[]>(
         `/people/list/${currentPage}?name=${value.toUpperCase()}`
@@ -79,6 +86,11 @@ function Home() {
     onViewOpen()
   }
 
+  function handleOpenEdit(id: string) {
+    setPersonToEdit(id)
+    onEditOpen()
+  }
+
   return (
     <>
       <Head>
@@ -91,6 +103,12 @@ function Home() {
         onClose={onViewClose}
         personToView={personToView}
         setPersonToView={setPersonToView}
+      />
+      <EditPerson
+        isOpen={isEditOpen}
+        onClose={onEditClose}
+        personToEdit={personToEdit}
+        setPersonToEdit={setPersonToEdit}
       />
       <Flex
         w="100%"
@@ -140,16 +158,14 @@ function Home() {
                       </Button>
                     </Td>
                     <Td>
-                      <NextLink href={`/person/edit/${person.id}`} passHref>
-                        <Button
-                          as="a"
-                          size="sm"
-                          fontSize="sm"
-                          colorScheme="green"
-                        >
-                          <Icon as={RiPencilLine} />
-                        </Button>
-                      </NextLink>
+                      <Button
+                        size="sm"
+                        fontSize="sm"
+                        colorScheme="green"
+                        onClick={() => handleOpenEdit(person.id)}
+                      >
+                        <Icon as={RiPencilLine} />
+                      </Button>
                     </Td>
                     <Td>
                       <Button size="sm" fontSize="sm" colorScheme="green">

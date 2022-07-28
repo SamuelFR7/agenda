@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import Edit from '../../assets/edit.svg'
 import View from '../../assets/view.svg'
@@ -6,7 +6,6 @@ import Delete from '../../assets/delete.svg'
 
 import { Container } from './styles'
 import api from '../../services/api'
-import { EditPersonModal } from '../EditPersonModal'
 
 import { usePeople } from '../../hooks/usePeople'
 
@@ -30,17 +29,6 @@ export interface IPerson {
 
 export function PeopleTable() {
   const { people, setPeople, search, currentPage } = usePeople()
-  const [isEditPersonModalOpen, setIsEditPersonModalOpen] = useState(false)
-  const [personToEdit, setPersonToEdit] = useState('')
-
-  function handleOpenEditPersonModal(id: string) {
-    setPersonToEdit(id)
-    setIsEditPersonModalOpen(true)
-  }
-
-  function handleCloseEditPersonModal() {
-    setIsEditPersonModalOpen(false)
-  }
 
   async function handleDeletePerson(id: string) {
     await api.delete(`/people/delete/${id}`)
@@ -89,10 +77,7 @@ export function PeopleTable() {
                 </div>
               </td>
               <td>
-                <div
-                  className="imgButton"
-                  onClick={() => handleOpenEditPersonModal(item.id)}
-                >
+                <div className="imgButton">
                   <Edit />
                 </div>
               </td>
@@ -115,12 +100,6 @@ export function PeopleTable() {
           ))}
         </tbody>
       </table>
-      <EditPersonModal
-        isOpen={isEditPersonModalOpen}
-        onRequestClose={handleCloseEditPersonModal}
-        personToEdit={personToEdit}
-        setPersonToEdit={setPersonToEdit}
-      />
     </Container>
   )
 }
