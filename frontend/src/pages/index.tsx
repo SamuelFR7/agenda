@@ -18,6 +18,7 @@ import {
   useDisclosure,
   Spinner,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import {
   RiAddLine,
@@ -57,6 +58,11 @@ function Home() {
   )
   const [personToView, setPersonToView] = useState('')
   const [personToEdit, setPersonToEdit] = useState('')
+
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  })
 
   function handleOpenView(id: string) {
     setPersonToView(id)
@@ -109,17 +115,19 @@ function Home() {
               type="search"
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Button
-              ml="8"
-              size="lg"
-              fontSize="md"
-              colorScheme="green"
-              bg="green.400"
-              leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-              onClick={onAddOpen}
-            >
-              Adicionar Contato
-            </Button>
+            {isWideVersion && (
+              <Button
+                ml="8"
+                size="lg"
+                fontSize="md"
+                colorScheme="green"
+                bg="green.400"
+                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+                onClick={onAddOpen}
+              >
+                Adicionar Contato
+              </Button>
+            )}
           </Flex>
           {isLoading ? (
             <Flex justify="center">
@@ -135,10 +143,14 @@ function Home() {
                 <Thead>
                   <Tr>
                     <Th>Nome</Th>
-                    <Th>Telefone</Th>
-                    <Th>Contato</Th>
-                    <Th></Th>
-                    <Th></Th>
+                    {isWideVersion && (
+                      <>
+                        <Th>Telefone</Th>
+                        <Th>Contato</Th>
+                        <Th></Th>
+                        <Th></Th>
+                      </>
+                    )}
                     <Th></Th>
                   </Tr>
                 </Thead>
@@ -147,45 +159,61 @@ function Home() {
                     return (
                       <Tr key={person.id}>
                         <Td>{person.RazaoSocial}</Td>
-                        <Td>{person.Telefone1}</Td>
-                        <Td>{person.Telefone1Contato}</Td>
-                        <Td>
-                          <Button
-                            size="sm"
-                            fontSize="sm"
-                            colorScheme="green"
-                            onClick={() => handleOpenView(person.id)}
-                          >
-                            <Icon as={RiEyeLine} />
-                          </Button>
-                        </Td>
-                        <Td>
-                          <Button
-                            size="sm"
-                            fontSize="sm"
-                            colorScheme="green"
-                            onClick={() => handleOpenEdit(person.id)}
-                          >
-                            <Icon as={RiPencilLine} />
-                          </Button>
-                        </Td>
-                        <Td>
-                          <Button
-                            size="sm"
-                            fontSize="sm"
-                            colorScheme="green"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  'Certeza de que você quer deletar este contato?'
-                                )
-                              )
-                                handleDelete(person.id)
-                            }}
-                          >
-                            <Icon as={RiDeleteBinLine} />
-                          </Button>
-                        </Td>
+                        {isWideVersion && (
+                          <>
+                            <Td>{person.Telefone1}</Td>
+                            <Td>{person.Telefone1Contato}</Td>
+                            <Td>
+                              <Button
+                                size="sm"
+                                fontSize="sm"
+                                colorScheme="green"
+                                onClick={() => handleOpenView(person.id)}
+                              >
+                                <Icon as={RiEyeLine} />
+                              </Button>
+                            </Td>
+                            <Td>
+                              <Button
+                                size="sm"
+                                fontSize="sm"
+                                colorScheme="green"
+                                onClick={() => handleOpenEdit(person.id)}
+                              >
+                                <Icon as={RiPencilLine} />
+                              </Button>
+                            </Td>
+                            <Td>
+                              <Button
+                                size="sm"
+                                fontSize="sm"
+                                colorScheme="green"
+                                onClick={() => {
+                                  if (
+                                    window.confirm(
+                                      'Certeza de que você quer deletar este contato?'
+                                    )
+                                  )
+                                    handleDelete(person.id)
+                                }}
+                              >
+                                <Icon as={RiDeleteBinLine} />
+                              </Button>
+                            </Td>
+                          </>
+                        )}
+                        {!isWideVersion && (
+                          <Td>
+                            <Button
+                              size="sm"
+                              fontSize="sm"
+                              colorScheme="green"
+                              onClick={() => handleOpenView(person.id)}
+                            >
+                              <Icon as={RiEyeLine} />
+                            </Button>
+                          </Td>
+                        )}
                       </Tr>
                     )
                   })}
