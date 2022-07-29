@@ -19,6 +19,7 @@ import InputMask from 'react-input-mask'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { queryClient } from '../../services/queryClient'
 
 interface IAddPersonProps {
   isOpen: boolean
@@ -64,7 +65,7 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(createPersonFormSchema),
   })
-  
+
   const { errors } = formState
 
   function handleResetAndClose() {
@@ -99,6 +100,7 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
       setPeople(data)
     }
     handleResetAndClose()
+    queryClient.invalidateQueries(['people'])
   }
 
   return (

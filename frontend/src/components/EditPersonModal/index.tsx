@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react'
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { usePeople } from '../../hooks/usePeople'
 import { IPerson } from '../../dtos/IPerson'
 import api from '../../services/api'
@@ -20,6 +20,7 @@ import InputMask from 'react-input-mask'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { queryClient } from '../../services/queryClient'
 
 interface IEditPerson {
   isOpen: boolean
@@ -70,7 +71,7 @@ function EditPerson({
 }: IEditPerson) {
   const { currentPage, search, setPeople } = usePeople()
   const { register, formState, handleSubmit, reset, setValue } = useForm({
-    resolver: yupResolver(editPersonFormSchema)
+    resolver: yupResolver(editPersonFormSchema),
   })
   const { errors } = formState
 
@@ -135,6 +136,7 @@ function EditPerson({
     })
     handleSetPeople()
     handleCloseAndResetPerson()
+    queryClient.invalidateQueries(['people'])
   }
 
   return (
