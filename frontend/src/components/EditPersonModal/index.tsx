@@ -20,6 +20,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { queryClient } from '../../services/queryClient'
+import { useMutation } from '@tanstack/react-query'
 
 interface IEditPerson {
   isOpen: boolean
@@ -71,7 +72,50 @@ function EditPerson({
   const { register, formState, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(editPersonFormSchema),
   })
+
   const { errors } = formState
+
+  function handleCloseAndResetPerson() {
+    setPersonToEdit('')
+    reset()
+    onClose()
+  }
+
+  const editPerson = useMutation(
+    async (person: IEditPersonFormData) => {
+      await api.patch('/people/update', {
+        id: personToEdit,
+        ...person,
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['people'])
+        handleCloseAndResetPerson()
+      },
+    }
+  )
+
+  const handleEditPerson: SubmitHandler<IEditPersonFormData> = async (
+    values
+  ) => {
+    await editPerson.mutateAsync({
+      RazaoSocial: values.RazaoSocial.toUpperCase(),
+      Endereco: values.Endereco.toUpperCase(),
+      Email: values.Email.toLowerCase(),
+      Telefone1: values.Telefone1.replace('_', ''),
+      Telefone1Contato: values.Telefone1Contato.toUpperCase(),
+      Telefone2: values.Telefone2.replace('_', ''),
+      Telefone2Contato: values.Telefone2Contato.toUpperCase(),
+      Telefone3: values.Telefone3.replace('_', ''),
+      Telefone3Contato: values.Telefone3Contato.toUpperCase(),
+      Telefone4: values.Telefone4.replace('_', ''),
+      Telefone4Contato: values.Telefone4Contato.toUpperCase(),
+      Telefone5: values.Telefone5.replace('_', ''),
+      Telefone5Contato: values.Telefone5Contato.toUpperCase(),
+      Observacoes: values.Observacoes.toUpperCase(),
+    })
+  }
 
   useEffect(() => {
     async function getPersonToEditData() {
@@ -96,34 +140,6 @@ function EditPerson({
     getPersonToEditData()
   }, [personToEdit])
 
-  function handleCloseAndResetPerson() {
-    setPersonToEdit('')
-    reset()
-    onClose()
-  }
-
-  const handleEdit: SubmitHandler<IEditPersonFormData> = async (values) => {
-    await api.patch('/people/update', {
-      id: personToEdit,
-      RazaoSocial: values.RazaoSocial.toUpperCase(),
-      Telefone1: values.Telefone1.replace('_', ''),
-      Telefone2: values.Telefone2.replace('_', ''),
-      Telefone3: values.Telefone3.replace('_', ''),
-      Telefone4: values.Telefone4.replace('_', ''),
-      Telefone5: values.Telefone5.replace('_', ''),
-      Telefone1Contato: values.Telefone1Contato.toUpperCase(),
-      Telefone2Contato: values.Telefone2Contato.toUpperCase(),
-      Telefone3Contato: values.Telefone3Contato.toUpperCase(),
-      Telefone4Contato: values.Telefone4Contato.toUpperCase(),
-      Telefone5Contato: values.Telefone5Contato.toUpperCase(),
-      Email: values.Email.toLowerCase(),
-      Endereco: values.Endereco.toUpperCase(),
-      Observacoes: values.Observacoes.toUpperCase(),
-    })
-    handleCloseAndResetPerson()
-    queryClient.invalidateQueries(['people'])
-  }
-
   return (
     <Modal
       isOpen={isOpen}
@@ -136,7 +152,7 @@ function EditPerson({
         <ModalHeader>Editar Contato</ModalHeader>
         <ModalCloseButton />
 
-        <Box as="form" onSubmit={handleSubmit(handleEdit)}>
+        <Box as="form" onSubmit={handleSubmit(handleEditPerson)}>
           <ModalBody>
             <VStack spacing="4">
               <HStack spacing="4">
