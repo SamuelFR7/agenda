@@ -11,69 +11,83 @@ import {
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react'
-import React, { FormEvent, useState } from 'react'
+import React from 'react'
 import { usePeople } from '../../hooks/usePeople'
 import api from '../../services/api'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 interface IAddPersonProps {
   isOpen: boolean
   onClose: () => void
 }
 
+interface IPersonFormData {
+  RazaoSocial: string
+  Endereco: string
+  Email: string
+  Telefone1: string
+  Telefone1Contato: string
+  Telefone2: string
+  Telefone2Contato: string
+  Telefone3: string
+  Telefone3Contato: string
+  Telefone4: string
+  Telefone4Contato: string
+  Telefone5: string
+  Telefone5Contato: string
+  Observacoes: string
+}
+
+const createPersonFormSchema = yup.object().shape({
+  RazaoSocial: yup.string().required('Nome Obrigatório'),
+  Email: yup.string().email('Digite um e-mail válido'),
+  Observacoes: yup.string(),
+  Endereco: yup.string(),
+  Telefone1: yup.string().required('Telefone Obrigatório'),
+  Telefone2: yup.string(),
+  Telefone3: yup.string(),
+  Telefone4: yup.string(),
+  Telefone5: yup.string(),
+  Telefone1Contato: yup.string(),
+  Telefone2Contato: yup.string(),
+  Telefone3Contato: yup.string(),
+  Telefone4Contato: yup.string(),
+  Telefone5Contato: yup.string(),
+})
+
 function AddPerson({ isOpen, onClose }: IAddPersonProps) {
   const { currentPage, search, setPeople } = usePeople()
-  const [RazaoSocial, setRazaoSocial] = useState('')
-  const [Endereco, setEndereco] = useState('')
-  const [Email, setEmail] = useState('')
-  const [Telefone1, setTelefone1] = useState('')
-  const [Telefone1Contato, setTelefone1Contato] = useState('')
-  const [Telefone2, setTelefone2] = useState('')
-  const [Telefone2Contato, setTelefone2Contato] = useState('')
-  const [Telefone3, setTelefone3] = useState('')
-  const [Telefone3Contato, setTelefone3Contato] = useState('')
-  const [Telefone4, setTelefone4] = useState('')
-  const [Telefone4Contato, setTelefone4Contato] = useState('')
-  const [Telefone5, setTelefone5] = useState('')
-  const [Telefone5Contato, setTelefone5Contato] = useState('')
-  const [Observacoes, setObservacoes] = useState('')
+  const { register, handleSubmit, formState, reset } = useForm({
+    resolver: yupResolver(createPersonFormSchema),
+  })
+  
+  const { errors } = formState
 
-  function handleResetPersonAndClose() {
-    setRazaoSocial('')
-    setEmail('')
-    setEndereco('')
-    setObservacoes('')
-    setTelefone1('')
-    setTelefone2('')
-    setTelefone3('')
-    setTelefone4('')
-    setTelefone5('')
-    setTelefone1Contato('')
-    setTelefone2Contato('')
-    setTelefone3Contato('')
-    setTelefone4Contato('')
-    setTelefone5Contato('')
+  function handleResetAndClose() {
+    reset()
     onClose()
   }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
+  const handleFinish: SubmitHandler<IPersonFormData> = async (values) => {
     await api.post('/people/', {
-      RazaoSocial: RazaoSocial.toUpperCase(),
-      Endereco: Endereco.toUpperCase(),
-      Email: Email.toLowerCase(),
-      Telefone1: Telefone1.replace('_', ''),
-      Telefone1Contato: Telefone1Contato.toUpperCase(),
-      Telefone2: Telefone2.replace('_', ''),
-      Telefone2Contato: Telefone2Contato.toUpperCase(),
-      Telefone3: Telefone3.replace('_', ''),
-      Telefone3Contato: Telefone3Contato.toUpperCase(),
-      Telefone4: Telefone4.replace('_', ''),
-      Telefone4Contato: Telefone4Contato.toUpperCase(),
-      Telefone5: Telefone5.replace('_', ''),
-      Telefone5Contato: Telefone5Contato.toUpperCase(),
-      Observacoes: Observacoes.toUpperCase(),
+      RazaoSocial: values.RazaoSocial.toUpperCase(),
+      Endereco: values.Endereco.toUpperCase(),
+      Email: values.Email.toLowerCase(),
+      Telefone1: values.Telefone1.replace('_', ''),
+      Telefone1Contato: values.Telefone1Contato.toUpperCase(),
+      Telefone2: values.Telefone2.replace('_', ''),
+      Telefone2Contato: values.Telefone2Contato.toUpperCase(),
+      Telefone3: values.Telefone3.replace('_', ''),
+      Telefone3Contato: values.Telefone3Contato.toUpperCase(),
+      Telefone4: values.Telefone4.replace('_', ''),
+      Telefone4Contato: values.Telefone4Contato.toUpperCase(),
+      Telefone5: values.Telefone5.replace('_', ''),
+      Telefone5Contato: values.Telefone5Contato.toUpperCase(),
+      Observacoes: values.Observacoes.toUpperCase(),
     })
     if (search) {
       const { data } = await api.get(
@@ -84,130 +98,123 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
       const { data } = await api.get(`/people/list/${currentPage}`)
       setPeople(data)
     }
-    handleResetPersonAndClose()
+    handleResetAndClose()
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleResetPersonAndClose}
-      isCentered
-      size="xl"
-    >
+    <Modal isOpen={isOpen} onClose={handleResetAndClose} isCentered size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Adicionar Contato</ModalHeader>
         <ModalCloseButton />
-        <Box as="form" onSubmit={handleSubmit}>
+        <Box as="form" onSubmit={handleSubmit(handleFinish)}>
           <ModalBody>
             <VStack spacing="4">
               <HStack spacing="4">
                 <Input
-                  value={RazaoSocial}
-                  onChange={(e) => setRazaoSocial(e.target.value)}
+                  error={errors.RazaoSocial}
+                  {...register('RazaoSocial')}
                   name="RazaoSocial"
                   label="Nome"
-                  isRequired
                 />
                 <Input
-                  value={Endereco}
-                  onChange={(e) => setEndereco(e.target.value)}
+                  error={errors.Endereco}
+                  {...register('Endereco')}
                   name="Endereco"
                   label="Endereço"
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
+                  error={errors.Email}
+                  {...register('Email')}
                   name="Email"
-                  value={Email}
-                  onChange={(e) => setEmail(e.target.value)}
                   label="E-mail"
                 />
                 <Input
+                  error={errors.Telefone1}
+                  {...register('Telefone1')}
                   name="Telefone1"
-                  value={Telefone1}
                   as={InputMask}
                   mask="(**) *****-****"
-                  onChange={(e) => setTelefone1(e.target.value)}
                   label="Telefone"
-                  isRequired
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
+                  error={errors.Telefone1Contato}
+                  {...register('Telefone1Contato')}
                   name="Telefone1Contato"
-                  value={Telefone1Contato}
-                  onChange={(e) => setTelefone1Contato(e.target.value)}
                   label="Contato 1"
                 />
                 <Input
+                  error={errors.Telefone2}
+                  {...register('Telefone2')}
                   name="Telefone2"
-                  value={Telefone2}
                   as={InputMask}
                   mask="(**) *****-****"
-                  onChange={(e) => setTelefone2(e.target.value)}
                   label="Telefone 2"
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
+                  error={errors.Telefone2Contato}
+                  {...register('Telefone2Contato')}
                   name="Telefone2Contato"
-                  value={Telefone2Contato}
-                  onChange={(e) => setTelefone2Contato(e.target.value)}
                   label="Contato 2"
                 />
                 <Input
+                  error={errors.Telefone3}
+                  {...register('Telefone3')}
                   name="Telefone3"
-                  value={Telefone3}
                   as={InputMask}
                   mask="(**) *****-****"
-                  onChange={(e) => setTelefone3(e.target.value)}
                   label="Telefone 3"
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
                   name="Telefone3Contato"
-                  value={Telefone3Contato}
-                  onChange={(e) => setTelefone3Contato(e.target.value)}
                   label="Contato 3"
+                  error={errors.Telefone3Contato}
+                  {...register('Telefone3Contato')}
                 />
                 <Input
+                  error={errors.Telefone4}
+                  {...register('Telefone4')}
                   name="Telefone4"
-                  value={Telefone4}
                   as={InputMask}
                   mask="(**) *****-****"
-                  onChange={(e) => setTelefone4(e.target.value)}
                   label="Telefone 4"
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
+                  error={errors.Telefone4Contato}
+                  {...register('Telefone4Contato')}
                   name="Telefone4Contato"
-                  value={Telefone4Contato}
-                  onChange={(e) => setTelefone4Contato(e.target.value)}
                   label="Contato 4"
                 />
                 <Input
+                  error={errors.Telefone5}
+                  {...register('Telefone5')}
                   name="Telefone5"
-                  value={Telefone5}
                   as={InputMask}
                   mask="(**) *****-****"
-                  onChange={(e) => setTelefone5(e.target.value)}
                   label="Telefone 5"
                 />
               </HStack>
               <HStack spacing="4">
                 <Input
+                  error={errors.Telefone5Contato}
+                  {...register('Telefone5Contato')}
                   name="Telefone5Contato"
-                  value={Telefone5Contato}
-                  onChange={(e) => setTelefone5Contato(e.target.value)}
                   label="Contato 5"
                 />
                 <Input
+                  error={errors.Observacoes}
+                  {...register('Observacoes')}
                   name="Observacoes"
-                  value={Observacoes}
-                  onChange={(e) => setObservacoes(e.target.value)}
                   label="Observações"
                 />
               </HStack>
@@ -215,11 +222,7 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              colorScheme="gray"
-              onClick={handleResetPersonAndClose}
-              mr={3}
-            >
+            <Button colorScheme="gray" onClick={handleResetAndClose} mr={3}>
               Cancelar
             </Button>
             <Button type="submit" colorScheme="green">
