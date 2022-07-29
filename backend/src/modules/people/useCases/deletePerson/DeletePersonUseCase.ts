@@ -3,15 +3,15 @@ import { inject, injectable } from 'tsyringe'
 
 @injectable()
 class DeletePersonUseCase {
-    constructor(
-        @inject('PersonRepository')
-        private peopleRepository: IPersonRepository
-    ) {}
+  constructor(
+    @inject('PersonRepository')
+    private peopleRepository: IPersonRepository
+  ) {}
 
-    async execute(id: string): Promise<void> {
-        const personDeleted = await this.peopleRepository.delete(id)
+  async execute(id: string): Promise<void> {
+    const personDeleted = await this.peopleRepository.delete(id)
 
-        return personDeleted
-    }
+    return personDeleted
+  }
 }
 export { DeletePersonUseCase }

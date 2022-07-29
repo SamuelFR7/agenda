@@ -7,6 +7,6 @@ import { container } from 'tsyringe'
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
 
 container.registerSingleton<IPersonRepository>(
-    'PersonRepository',
-    PersonRepository
+  'PersonRepository',
+  PersonRepository
 )

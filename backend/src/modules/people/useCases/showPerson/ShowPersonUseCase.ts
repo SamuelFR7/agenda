@@ -4,16 +4,16 @@ import { inject, injectable } from 'tsyringe'
 
 @injectable()
 class ShowPersonUseCase {
-    constructor(
-        @inject('PersonRepository')
-        private peopleRepository: IPersonRepository
-    ) {}
+  constructor(
+    @inject('PersonRepository')
+    private peopleRepository: IPersonRepository
+  ) {}
 
-    async execute(id: string): Promise<Person> {
-        const person = await this.peopleRepository.show(id)
+  async execute(id: string): Promise<Person> {
+    const person = await this.peopleRepository.show(id)
 
-        return person
-    }
+    return person
+  }
 }
 
 export { ShowPersonUseCase }
