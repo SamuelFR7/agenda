@@ -20,40 +20,40 @@ const updatePersonController = new UpdatePersonController()
 const deletePersonController = new DeletePersonController()
 
 peopleRoutes.get(
-    '/list/:page',
-    ensureAuthenticated,
-    ensureAdmin,
-    listPeopleController.handle
+  '/list/:page',
+  ensureAuthenticated,
+  ensureAdmin,
+  listPeopleController.handle
 )
 peopleRoutes.post(
-    '/',
-    ensureAuthenticated,
-    ensureAdmin,
-    createPersonController.handle
+  '/',
+  ensureAuthenticated,
+  ensureAdmin,
+  createPersonController.handle
 )
 peopleRoutes.get(
-    '/length',
-    ensureAuthenticated,
-    ensureAdmin,
-    indexLengthController.handle
+  '/length',
+  ensureAuthenticated,
+  ensureAdmin,
+  indexLengthController.handle
 )
 peopleRoutes.get(
-    '/show/:id',
-    ensureAuthenticated,
-    ensureAdmin,
-    showPersonController.handle
+  '/show/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  showPersonController.handle
 )
 peopleRoutes.patch(
-    '/update',
-    ensureAuthenticated,
-    ensureAdmin,
-    updatePersonController.handle
+  '/update',
+  ensureAuthenticated,
+  ensureAdmin,
+  updatePersonController.handle
 )
 peopleRoutes.delete(
-    '/delete/:id',
-    ensureAuthenticated,
-    ensureAdmin,
-    deletePersonController.handle
+  '/delete/:id',
+  ensureAuthenticated,
+  ensureAdmin,
+  deletePersonController.handle
 )
 
 export { peopleRoutes }

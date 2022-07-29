@@ -14,7 +14,10 @@ class ListPeopleController {
             name as string
         )
 
-        return res.status(200).json(response)
+        return res
+            .setHeader('X-Total-Count', String(response.length))
+            .status(200)
+            .json(response.people)
     }
 }
 
