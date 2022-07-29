@@ -19,6 +19,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { queryClient } from '../../services/queryClient'
+import { useMutation } from '@tanstack/react-query'
 
 interface IAddPersonProps {
   isOpen: boolean
@@ -71,8 +72,22 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
     onClose()
   }
 
-  const handleFinish: SubmitHandler<IPersonFormData> = async (values) => {
-    await api.post('/people/', {
+  const createPerson = useMutation(
+    async (person: IPersonFormData) => {
+      await api.post('people', {
+        ...person,
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['people'])
+        handleResetAndClose()
+      },
+    }
+  )
+
+  const handleCreatePerson: SubmitHandler<IPersonFormData> = async (values) => {
+    await createPerson.mutateAsync({
       RazaoSocial: values.RazaoSocial.toUpperCase(),
       Endereco: values.Endereco.toUpperCase(),
       Email: values.Email.toLowerCase(),
@@ -89,7 +104,6 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
       Observacoes: values.Observacoes.toUpperCase(),
     })
     handleResetAndClose()
-    queryClient.invalidateQueries(['people'])
   }
 
   return (
@@ -98,7 +112,7 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
       <ModalContent>
         <ModalHeader>Adicionar Contato</ModalHeader>
         <ModalCloseButton />
-        <Box as="form" onSubmit={handleSubmit(handleFinish)}>
+        <Box as="form" onSubmit={handleSubmit(handleCreatePerson)}>
           <ModalBody>
             <VStack spacing="4">
               <HStack spacing="4">
