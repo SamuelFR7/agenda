@@ -12,7 +12,6 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { usePeople } from '../../hooks/usePeople'
 import api from '../../services/api'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
@@ -61,7 +60,6 @@ const createPersonFormSchema = yup.object().shape({
 })
 
 function AddPerson({ isOpen, onClose }: IAddPersonProps) {
-  const { currentPage, search, setPeople } = usePeople()
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(createPersonFormSchema),
   })
@@ -90,15 +88,6 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
       Telefone5Contato: values.Telefone5Contato.toUpperCase(),
       Observacoes: values.Observacoes.toUpperCase(),
     })
-    if (search) {
-      const { data } = await api.get(
-        `/people/list/${currentPage}?name=${search.toUpperCase()}`
-      )
-      setPeople(data)
-    } else {
-      const { data } = await api.get(`/people/list/${currentPage}`)
-      setPeople(data)
-    }
     handleResetAndClose()
     queryClient.invalidateQueries(['people'])
   }
