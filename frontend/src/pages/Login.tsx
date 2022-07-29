@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Head from 'next/head'
 
 import { GetServerSideProps } from 'next'
@@ -6,23 +6,32 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 
 import { Button, Flex, Stack } from '@chakra-ui/react'
-import toast, { Toaster } from 'react-hot-toast'
 import { AuthContext } from '../contexts/AuthContext'
 import { Input } from '../components/Form/input'
+import * as yup from 'yup'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import toast, { Toaster } from 'react-hot-toast'
 
-export interface IUser {
+interface ISignInFormData {
   email: string
   password: string
 }
 
-export default function Home() {
-  const { SignIn } = useContext(AuthContext)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const signInFormSchema = yup.object().shape({
+  email: yup.string().required('Usuário obrigatório'),
+  password: yup.string().required('Senha obrigatória'),
+})
 
-  async function handleSignIn(e: FormEvent) {
-    e.preventDefault()
-    toast.promise(SignIn(email.toUpperCase(), password), {
+export default function Home() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema),
+  })
+  const { errors } = formState
+  const { SignIn } = useContext(AuthContext)
+
+  const handleSignIn: SubmitHandler<ISignInFormData> = async (values) => {
+    toast.promise(SignIn(values.email.toUpperCase(), values.password), {
       loading: 'Entrando...',
       success: <b>Sucesso</b>,
       error: <b>Usuário ou senha incorretos!</b>,
@@ -35,7 +44,7 @@ export default function Home() {
         <title>Login</title>
       </Head>
 
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
       <Flex h="80vh" align="center" justify="center">
         <Flex
           as="form"
@@ -46,33 +55,31 @@ export default function Home() {
           borderColor="gray.200"
           borderRadius={8}
           flexDir="column"
-          onSubmit={handleSignIn}
+          onSubmit={handleSubmit(handleSignIn)}
         >
           <Stack spacing={4}>
             <Input
-              error={null}
-              name="user"
+              error={errors.email}
+              {...register('email')}
+              name="email"
               label="Usuário"
-              focusBorderColor="green.500"
-              _hover={{ bgColor: 'gray.50' }}
-              size="lg"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              error={null}
+              error={errors.password}
+              {...register('password')}
               name="password"
               label="Senha"
-              focusBorderColor="green.500"
               type="password"
-              _hover={{ bgColor: 'gray.50' }}
-              size="lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
           </Stack>
 
-          <Button type="submit" marginTop={6} size="lg" colorScheme="green">
+          <Button
+            type="submit"
+            marginTop={6}
+            size="lg"
+            colorScheme="green"
+            isLoading={formState.isSubmitting}
+          >
             Entrar
           </Button>
         </Flex>
