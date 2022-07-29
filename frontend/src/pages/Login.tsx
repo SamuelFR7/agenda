@@ -50,6 +50,7 @@ export default function Home() {
         >
           <Stack spacing={4}>
             <Input
+              error={null}
               name="user"
               label="Usuário"
               focusBorderColor="green.500"
@@ -59,6 +60,7 @@ export default function Home() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
+              error={null}
               name="password"
               label="Senha"
               focusBorderColor="green.500"
