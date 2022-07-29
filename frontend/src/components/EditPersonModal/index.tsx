@@ -12,7 +12,6 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
-import { usePeople } from '../../hooks/usePeople'
 import { IPerson } from '../../dtos/IPerson'
 import api from '../../services/api'
 import { Input } from '../Form/input'
@@ -69,7 +68,6 @@ function EditPerson({
   personToEdit,
   setPersonToEdit,
 }: IEditPerson) {
-  const { currentPage, search, setPeople } = usePeople()
   const { register, formState, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(editPersonFormSchema),
   })
@@ -98,18 +96,6 @@ function EditPerson({
     getPersonToEditData()
   }, [personToEdit])
 
-  async function handleSetPeople() {
-    if (search) {
-      const { data } = await api.get(
-        `/people/list/${currentPage}?name=${search.toUpperCase()}`
-      )
-      setPeople(data)
-    } else {
-      const { data } = await api.get(`/people/list/${currentPage}`)
-      setPeople(data)
-    }
-  }
-
   function handleCloseAndResetPerson() {
     setPersonToEdit('')
     reset()
@@ -134,7 +120,6 @@ function EditPerson({
       Endereco: values.Endereco.toUpperCase(),
       Observacoes: values.Observacoes.toUpperCase(),
     })
-    handleSetPeople()
     handleCloseAndResetPerson()
     queryClient.invalidateQueries(['people'])
   }

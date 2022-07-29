@@ -30,7 +30,7 @@ import { AddPerson } from '../components/AddPerson'
 import { ViewPerson } from '../components/ViewPerson'
 import { EditPerson } from '../components/EditPersonModal/'
 import { Pagination } from '../components/Pagination/'
-import { usePerson } from '../hooks/usePerson'
+import { usePeople } from '../hooks/usePeople'
 import { queryClient } from '../services/queryClient'
 
 function Home() {
@@ -51,7 +51,7 @@ function Home() {
   } = useDisclosure()
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
-  const { data, isLoading, error } = usePerson(
+  const { data, isLoading, error } = usePeople(
     currentPage,
     search.toUpperCase()
   )
