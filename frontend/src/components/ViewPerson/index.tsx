@@ -100,6 +100,7 @@ function ViewPerson({
           <VStack spacing="4">
             <HStack spacing="4">
               <Input
+                error={null}
                 value={RazaoSocial}
                 name="RazaoSocial"
                 label="Nome"
@@ -107,6 +108,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 value={Endereco}
                 name="Endereco"
                 label="Endereço"
@@ -116,6 +118,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Email"
                 value={Email}
                 label="E-mail"
@@ -123,6 +126,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Telefone1"
                 value={Telefone1}
                 label="Telefone"
@@ -132,6 +136,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Telefone1Contato"
                 value={Telefone1Contato}
                 label="Contato 1"
@@ -139,6 +144,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Telefone2"
                 value={Telefone2}
                 label="Telefone 2"
@@ -148,6 +154,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Telefone2Contato"
                 value={Telefone2Contato}
                 label="Contato 2"
@@ -155,6 +162,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Telefone3"
                 value={Telefone3}
                 label="Telefone 3"
@@ -164,6 +172,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Telefone3Contato"
                 value={Telefone3Contato}
                 label="Contato 3"
@@ -171,6 +180,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Telefone4"
                 value={Telefone4}
                 label="Telefone 4"
@@ -180,6 +190,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Telefone4Contato"
                 value={Telefone4Contato}
                 label="Contato 4"
@@ -187,6 +198,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Telefone5"
                 value={Telefone5}
                 label="Telefone 5"
@@ -196,6 +208,7 @@ function ViewPerson({
             </HStack>
             <HStack spacing="4">
               <Input
+                error={null}
                 name="Telefone5Contato"
                 value={Telefone5Contato}
                 label="Contato 5"
@@ -203,6 +216,7 @@ function ViewPerson({
                 _disabled={{ color: 'black', opacity: 100 }}
               />
               <Input
+                error={null}
                 name="Observacoes"
                 value={Observacoes}
                 label="Observações"
