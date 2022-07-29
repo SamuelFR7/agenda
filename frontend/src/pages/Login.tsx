@@ -31,7 +31,7 @@ export default function Home() {
   const { SignIn } = useContext(AuthContext)
 
   const handleSignIn: SubmitHandler<ISignInFormData> = async (values) => {
-    toast.promise(SignIn(values.email.toUpperCase(), values.password), {
+    await toast.promise(SignIn(values.email.toUpperCase(), values.password), {
       loading: 'Entrando...',
       success: <b>Sucesso</b>,
       error: <b>Usuário ou senha incorretos!</b>,
