@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@chakra-ui/react'
+import { Button, useColorModeValue } from '@chakra-ui/react'
 
 interface IPaginationItemProps {
   isCurrent?: boolean
@@ -12,6 +12,8 @@ export function PaginationItem({
   number,
   onPageChange,
 }: IPaginationItemProps) {
+  const notCurrentBg = useColorModeValue('gray.200', 'gray.500')
+
   if (isCurrent) {
     return (
       <Button
@@ -32,7 +34,7 @@ export function PaginationItem({
       size="sm"
       fontSize="xs"
       width="4"
-      bg="gray.200"
+      bg={notCurrentBg}
       _hover={{
         bg: 'gray.300',
       }}
