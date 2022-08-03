@@ -5,7 +5,7 @@ import { GetServerSideProps } from 'next'
 
 import { parseCookies } from 'nookies'
 
-import { Button, Flex, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack, useColorModeValue } from '@chakra-ui/react'
 import { AuthContext } from '../contexts/AuthContext'
 import { Input } from '../components/Form/input'
 import * as yup from 'yup'
@@ -38,6 +38,9 @@ export default function Home() {
     })
   }
 
+  const ButtonsBg = useColorModeValue('green.400', 'green.600')
+  const borderColor = useColorModeValue('gray.200', 'gray.400')
+
   return (
     <>
       <Head>
@@ -52,7 +55,7 @@ export default function Home() {
           maxWidth={360}
           p="8"
           border="1px"
-          borderColor="gray.200"
+          borderColor={borderColor}
           borderRadius={8}
           flexDir="column"
           onSubmit={handleSubmit(handleSignIn)}
@@ -78,6 +81,7 @@ export default function Home() {
             marginTop={6}
             size="lg"
             colorScheme="green"
+            bg={ButtonsBg}
             isLoading={formState.isSubmitting}
           >
             Entrar
