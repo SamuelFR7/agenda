@@ -151,7 +151,6 @@ function Home() {
                     {isWideVersion && (
                       <>
                         <Th>Telefone</Th>
-                        <Th>Contato</Th>
                         <Th></Th>
                         <Th></Th>
                       </>
@@ -167,7 +166,6 @@ function Home() {
                         {isWideVersion && (
                           <>
                             <Td>{person.Telefone1}</Td>
-                            <Td>{person.Telefone1Contato}</Td>
                             <Td>
                               <Button
                                 size="sm"

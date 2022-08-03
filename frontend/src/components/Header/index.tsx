@@ -5,7 +5,6 @@ import {
   Image,
   Spacer,
   Switch,
-  useBreakpointValue,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
