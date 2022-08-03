@@ -5,6 +5,7 @@ import {
   Image,
   Spacer,
   Switch,
+  useBreakpointValue,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -27,9 +28,9 @@ function Header() {
         align="center"
         justify="center"
       >
-        <Image src="/Logo.png" />
+        <Image src="/Logo.png" ml={['4', '0']} />
         <Spacer />
-        <Flex align="center">
+        <Flex align="center" mr={['4', '0']}>
           <Icon as={MdOutlineLightMode} color="#F0F2F5" size="lg" mr="2" />
           <Switch
             size="lg"
