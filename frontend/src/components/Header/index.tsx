@@ -12,7 +12,7 @@ import React from 'react'
 import { MdOutlineLightMode, MdOutlineDarkMode } from 'react-icons/md'
 
 function Header() {
-  const { toggleColorMode } = useColorMode()
+  const { toggleColorMode, colorMode } = useColorMode()
 
   const headerBg = useColorModeValue('green.500', 'green.900')
 
@@ -31,7 +31,12 @@ function Header() {
         <Spacer />
         <Flex align="center">
           <Icon as={MdOutlineLightMode} color="#F0F2F5" size="lg" mr="2" />
-          <Switch size="lg" onChange={toggleColorMode} colorScheme="green" />
+          <Switch
+            size="lg"
+            isChecked={colorMode === 'dark'}
+            onChange={toggleColorMode}
+            colorScheme="green"
+          />
           <Icon as={MdOutlineDarkMode} color="#F0F2F5" size="lg" ml="2" />
         </Flex>
       </Flex>
