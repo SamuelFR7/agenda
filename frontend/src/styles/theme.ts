@@ -1,6 +1,8 @@
 import { extendTheme } from '@chakra-ui/react'
 
 export const theme = extendTheme({
+  initialColorMode: 'light',
+  useSystemColorMode: false,
   colors: {
     gray: {
       '900': '#181B23',
@@ -20,11 +22,11 @@ export const theme = extendTheme({
     body: 'Poppins',
   },
   styles: {
-    global: {
+    global: (props) => ({
       body: {
-        bg: '#F0F2F5',
-        color: 'gray.900',
+        bg: props.colorMode === 'light' ? '#F0F2F5' : 'gray.900',
+        color: props.colorMode === 'light' ? 'gray.900' : 'gray.50',
       },
-    },
+    }),
   },
 })

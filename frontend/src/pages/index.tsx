@@ -19,6 +19,7 @@ import {
   Spinner,
   Text,
   useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import {
   RiAddLine,
@@ -79,6 +80,10 @@ function Home() {
     queryClient.invalidateQueries(['people'])
   }
 
+  const tableBg = useColorModeValue('gray.50', 'gray.800')
+  const hoverInputBg = useColorModeValue('gray.100', 'gray.900')
+  const ButtonsBg = useColorModeValue('green.400', 'green.600')
+
   return (
     <>
       <Head>
@@ -105,12 +110,12 @@ function Home() {
         px="6"
         direction="column"
       >
-        <Box flex={1} borderRadius={8} bg="gray.50" p="8">
+        <Box flex={1} borderRadius={8} bg={tableBg} p="8">
           <Flex mb="8" justify="space-between" align="center">
             <ChakraInput
               size="lg"
               focusBorderColor="green.500"
-              _hover={{ bgColor: 'gray.50' }}
+              _hover={{ bgColor: `${hoverInputBg}` }}
               placeholder="Pesquisar"
               type="search"
               onChange={(e) => setSearch(e.target.value)}
@@ -121,7 +126,7 @@ function Home() {
                 size="lg"
                 fontSize="md"
                 colorScheme="green"
-                bg="green.400"
+                bg={ButtonsBg}
                 leftIcon={<Icon as={RiAddLine} fontSize="20" />}
                 onClick={onAddOpen}
               >
@@ -168,6 +173,7 @@ function Home() {
                                 size="sm"
                                 fontSize="sm"
                                 colorScheme="green"
+                                bg={ButtonsBg}
                                 onClick={() => handleOpenView(person.id)}
                               >
                                 <Icon as={RiEyeLine} />
@@ -178,6 +184,7 @@ function Home() {
                                 size="sm"
                                 fontSize="sm"
                                 colorScheme="green"
+                                bg={ButtonsBg}
                                 onClick={() => handleOpenEdit(person.id)}
                               >
                                 <Icon as={RiPencilLine} />
@@ -188,6 +195,7 @@ function Home() {
                                 size="sm"
                                 fontSize="sm"
                                 colorScheme="green"
+                                bg={ButtonsBg}
                                 onClick={() => {
                                   if (
                                     window.confirm(

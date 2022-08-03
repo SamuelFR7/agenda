@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
@@ -85,6 +86,8 @@ function ViewPerson({
     onClose()
   }
 
+  const inputColor = useColorModeValue('gray.900', 'gray.50')
+
   return (
     <Modal
       isOpen={isOpen}
@@ -105,7 +108,7 @@ function ViewPerson({
                 name="RazaoSocial"
                 label="Nome"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -113,7 +116,7 @@ function ViewPerson({
                 name="Endereco"
                 label="Endereço"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -123,7 +126,7 @@ function ViewPerson({
                 value={Email}
                 label="E-mail"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -131,7 +134,7 @@ function ViewPerson({
                 value={Telefone1}
                 label="Telefone"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -141,7 +144,7 @@ function ViewPerson({
                 value={Telefone1Contato}
                 label="Contato 1"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -149,7 +152,7 @@ function ViewPerson({
                 value={Telefone2}
                 label="Telefone 2"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -159,7 +162,7 @@ function ViewPerson({
                 value={Telefone2Contato}
                 label="Contato 2"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -167,7 +170,7 @@ function ViewPerson({
                 value={Telefone3}
                 label="Telefone 3"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -177,7 +180,7 @@ function ViewPerson({
                 value={Telefone3Contato}
                 label="Contato 3"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -185,7 +188,7 @@ function ViewPerson({
                 value={Telefone4}
                 label="Telefone 4"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -195,7 +198,7 @@ function ViewPerson({
                 value={Telefone4Contato}
                 label="Contato 4"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -203,7 +206,7 @@ function ViewPerson({
                 value={Telefone5}
                 label="Telefone 5"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
             <HStack spacing="4">
@@ -213,7 +216,7 @@ function ViewPerson({
                 value={Telefone5Contato}
                 label="Contato 5"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
               <Input
                 error={null}
@@ -221,7 +224,7 @@ function ViewPerson({
                 value={Observacoes}
                 label="Observações"
                 isDisabled={true}
-                _disabled={{ color: 'black', opacity: 100 }}
+                _disabled={{ color: `${inputColor}`, opacity: 100 }}
               />
             </HStack>
           </VStack>
