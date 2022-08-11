@@ -18,7 +18,7 @@ class ListPeopleUseCase {
     page: number,
     name?: string
   ): Promise<IListPeopleUseCaseReturn> {
-    const people = await this.peopleRepository.filter(page, name)
+    const people = await this.peopleRepository.filter(page, name.toUpperCase())
     const length = await this.peopleRepository.getLength()
 
     return { people, length }
