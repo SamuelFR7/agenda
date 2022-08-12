@@ -12,7 +12,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import api from '../../services/api'
+import { api } from '../../services/apiClient'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
 import { SubmitHandler, useForm } from 'react-hook-form'
