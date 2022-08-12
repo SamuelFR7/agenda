@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { IPerson } from '../../dtos/IPerson'
-import api from '../../services/api'
+import { api } from '../../services/apiClient'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
 import { useForm, SubmitHandler } from 'react-hook-form'

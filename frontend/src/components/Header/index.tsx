@@ -30,14 +30,14 @@ function Header() {
         <Image src="/Logo.png" ml={['4', '0']} />
         <Spacer />
         <Flex align="center" mr={['4', '0']}>
-          <Icon as={MdOutlineLightMode} color="#F0F2F5" size="lg" mr="2" />
+          <Icon as={MdOutlineLightMode} color="#F0F2F5" mr="2" />
           <Switch
             size="lg"
             isChecked={colorMode === 'dark'}
             onChange={toggleColorMode}
             colorScheme="green"
           />
-          <Icon as={MdOutlineDarkMode} color="#F0F2F5" size="lg" ml="2" />
+          <Icon as={MdOutlineDarkMode} color="#F0F2F5" ml="2" />
         </Flex>
       </Flex>
     </Box>

@@ -1,10 +1,6 @@
 import React, { useContext } from 'react'
 import Head from 'next/head'
 
-import { GetServerSideProps } from 'next'
-
-import { parseCookies } from 'nookies'
-
 import { Button, Flex, Stack, useColorModeValue } from '@chakra-ui/react'
 import { AuthContext } from '../contexts/AuthContext'
 import { Input } from '../components/Form/input'
@@ -12,6 +8,7 @@ import * as yup from 'yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast, { Toaster } from 'react-hot-toast'
+import { withSSRGuest } from '../utils/withSSRGuest'
 
 interface ISignInFormData {
   email: string
@@ -28,14 +25,17 @@ export default function Home() {
     resolver: yupResolver(signInFormSchema),
   })
   const { errors } = formState
-  const { SignIn } = useContext(AuthContext)
+  const { signIn } = useContext(AuthContext)
 
   const handleSignIn: SubmitHandler<ISignInFormData> = async (values) => {
-    await toast.promise(SignIn(values.email.toUpperCase(), values.password), {
-      loading: 'Entrando...',
-      success: <b>Sucesso</b>,
-      error: <b>Usuário ou senha incorretos!</b>,
-    })
+    await toast.promise(
+      signIn({ email: values.email.toUpperCase(), password: values.password }),
+      {
+        loading: 'Entrando...',
+        success: <b>Sucesso</b>,
+        error: <b>Usuário ou senha incorretos!</b>,
+      }
+    )
   }
 
   const ButtonsBg = useColorModeValue('green.400', 'green.600')
@@ -92,19 +92,8 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { token } = parseCookies(ctx)
-
-  if (token) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
+export const getServerSideProps = withSSRGuest(async () => {
   return {
     props: {},
   }
-}
+})

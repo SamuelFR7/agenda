@@ -22,7 +22,8 @@
     "rules": {
         "prettier/prettier": ["error", {"endOfLine": "auto"}],
         "no-useless-constructor": "off",
-        "array-callback-return": "off"
+        "array-callback-return": "off",
+        "camelcase": "off"
     },
     "settings": {
         "import/resolver": {
