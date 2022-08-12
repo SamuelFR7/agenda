@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import { parseCookies } from 'nookies'
-import { GetServerSideProps } from 'next'
 
 import {
   Box,
@@ -27,13 +25,14 @@ import {
   RiEyeLine,
   RiPencilLine,
 } from 'react-icons/ri'
-import api from '../services/api'
+import { api } from '../services/apiClient'
 import { AddPerson } from '../components/AddPerson'
 import { ViewPerson } from '../components/ViewPerson'
 import { EditPerson } from '../components/EditPersonModal/'
 import { Pagination } from '../components/Pagination/'
 import { usePeople } from '../hooks/usePeople'
 import { queryClient } from '../services/queryClient'
+import { withSSRAuth } from '../utils/withSSRAuth'
 
 function Home() {
   const {
@@ -241,19 +240,8 @@ function Home() {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { token } = parseCookies(ctx)
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/Login',
-        permanent: false,
-      },
-    }
-  }
-
+export const getServerSideProps = withSSRAuth(async () => {
   return {
     props: {},
   }
-}
+})

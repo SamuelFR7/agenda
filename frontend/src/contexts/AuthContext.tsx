@@ -1,43 +1,66 @@
 import React, { createContext, ReactNode, useState } from 'react'
-import api from '../services/api'
-import { setCookie } from 'nookies'
+import { api } from '../services/apiClient'
+import { destroyCookie, setCookie } from 'nookies'
 import Router from 'next/router'
 
-interface IAuthProviderProps {
+type User = {
+  email: string
+}
+
+type SignInCredentials = {
+  email: string
+  password: string
+}
+
+type AuthContextData = {
+  signIn: (credentials: SignInCredentials) => Promise<void>
+  signOut: () => void
+  user: User
+  isAuthenticated: boolean
+}
+
+type AuthProviderProps = {
   children: ReactNode
 }
 
-interface IAuthContext {
-  isAuthenticated: boolean
-  SignIn: (email: string, password: string) => Promise<void>
+const AuthContext = createContext({} as AuthContextData)
+
+export function signOut() {
+  destroyCookie(undefined, 'agenda.token')
+  destroyCookie(undefined, 'agenda.refreshToken')
+
+  Router.push('/Login')
 }
 
-const AuthContext = createContext({} as IAuthContext)
+function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<User>()
+  const isAuthenticated = !!user
 
-function AuthProvider({ children }: IAuthProviderProps) {
-  const [token, setToken] = useState('')
-
-  const isAuthenticated = !!token
-
-  async function SignIn(email: string, password: string) {
-    const { data } = await api.post('/users/session', {
+  async function signIn({ email, password }: SignInCredentials) {
+    const response = await api.post('/users/session', {
       email,
       password,
     })
 
-    setCookie(undefined, 'token', data, {
-      maxAge: 86400, // 1 Day
+    const { token, refresh_token, user } = response.data
+    setUser(user)
+
+    setCookie(undefined, 'agenda.token', token, {
+      maxAge: 60 * 30 * 24 * 30, // 30 days
+      path: '/',
+    })
+    setCookie(undefined, 'agenda.refreshToken', refresh_token, {
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: '/',
     })
 
-    api.defaults.headers.common.authorization = `Bearer ${data}`
-
-    setToken(data)
+    api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     Router.push('/')
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, SignIn }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   )
