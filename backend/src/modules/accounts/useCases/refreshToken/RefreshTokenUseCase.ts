@@ -1,9 +1,9 @@
 import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository'
 import { AppError } from '@shared/errors/AppError'
-import { auth } from 'config/auth'
 import dayjs from 'dayjs'
 import { sign, verify } from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
+import { auth } from '@config/auth'
 
 interface IPayload {
   sub: string
