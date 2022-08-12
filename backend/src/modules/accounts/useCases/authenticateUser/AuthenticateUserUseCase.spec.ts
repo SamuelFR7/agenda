@@ -5,15 +5,19 @@ import { CreateUserUseCase } from '../createUser/CreateUserUseCase'
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO'
 import { config } from 'dotenv'
 import { AppError } from '@shared/errors/AppError'
+import { UsersTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersTokensRepository'
 let userRepositoryInMemory: UserRepositoryInMemory
 let authenticateUserUseCase: AuthenticateUserUseCase
 let createUserUseCase: CreateUserUseCase
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory
 
 describe('Authenticate user use case', () => {
   beforeEach(() => {
     userRepositoryInMemory = new UserRepositoryInMemory()
+    usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory()
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      userRepositoryInMemory
+      userRepositoryInMemory,
+      usersTokensRepositoryInMemory
     )
     createUserUseCase = new CreateUserUseCase(userRepositoryInMemory)
     config()
