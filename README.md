@@ -47,7 +47,7 @@ This project was made using the follow technologies:
 * [Typescript](https://www.typescriptlang.org/)      
 * [React](https://reactjs.org/)      
 * [NextJS](https://nextjs.org)
-* [Styled Components](https://styled-components.com/)
+* [Chakra UI](https://chakra-ui.com)
 * [ExpressJS](https://expressjs.com/)
 * [Prisma](https://www.prisma.io)
 * [Postgres](https://www.postgresql.org)
