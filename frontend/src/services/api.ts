@@ -26,7 +26,6 @@ export function setupAPIClient(ctx = undefined) {
     (error: AxiosError<IAxiosErrorResponse>) => {
       if (error.response.status === 401) {
         if (error.response.data.message === 'Invalid token') {
-          console.log('aqui')
           cookies = parseCookies(ctx)
 
           const { 'agenda.refreshToken': refreshToken } = cookies
