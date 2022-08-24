@@ -50,7 +50,7 @@ This project was made using the follow technologies:
 * [Chakra UI](https://chakra-ui.com)
 * [ExpressJS](https://expressjs.com/)
 * [Prisma](https://www.prisma.io)
-* [Postgres](https://www.postgresql.org)
+* [MySQL](https://www.mysql.com)
 
 
 # :computer: How to run
