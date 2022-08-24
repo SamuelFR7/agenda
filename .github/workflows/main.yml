@@ -50,6 +50,6 @@ jobs:
           script: |
             cd ~/apps/agenda-api/backend
             yarn
-            yarn prisma migrate dev
+            yarn prisma migrate deploy
             pm2 restart agenda_api
         
