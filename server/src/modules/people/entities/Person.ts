@@ -1,19 +1,19 @@
 class Person {
-  id?: string
-  RazaoSocial: string
-  Telefone1: string
-  Telefone1Contato: string
-  Telefone2: string
-  Telefone2Contato: string
-  Telefone3: string
-  Telefone3Contato: string
-  Telefone4: string
-  Telefone4Contato: string
-  Telefone5: string
-  Telefone5Contato: string
-  Email: string
-  Endereco: string
-  Observacoes: string
+  id?: string;
+  RazaoSocial: string;
+  Telefone1: string;
+  Telefone1Contato: string;
+  Telefone2: string;
+  Telefone2Contato: string;
+  Telefone3: string;
+  Telefone3Contato: string;
+  Telefone4: string;
+  Telefone4Contato: string;
+  Telefone5: string;
+  Telefone5Contato: string;
+  Email: string;
+  Endereco: string;
+  Observacoes: string;
 
   private constructor(person: Person) {
     return Object.assign(this, {
@@ -31,14 +31,14 @@ class Person {
       Email: person.Email,
       Endereco: person.Endereco,
       Observacoes: person.Observacoes,
-    })
+    });
   }
 
   static create(personInfo: Person) {
-    const person = new Person(personInfo)
+    const person = new Person(personInfo);
 
-    return person
+    return person;
   }
 }
 
-export { Person }
+export { Person };

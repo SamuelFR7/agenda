@@ -1,7 +1,7 @@
-import { ICreateUserDTO } from '../../dtos/ICreateUserDTO'
-import { User } from '../../entities/User'
-import { IUserRepository } from '../../repositories/IUserRepository'
-import { prisma } from '@shared/infra/database/prisma/client'
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
+import { User } from "../../entities/User";
+import { IUserRepository } from "../../repositories/IUserRepository";
+import { prisma } from "@shared/infra/database/prisma/client";
 
 class UserRepository implements IUserRepository {
   async create(data: ICreateUserDTO): Promise<User> {
@@ -10,16 +10,16 @@ class UserRepository implements IUserRepository {
         email: data.email,
         password: data.password,
       },
-    })
+    });
 
-    return newUser
+    return newUser;
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await prisma.user.findUnique({ where: { email } })
+    const user = await prisma.user.findUnique({ where: { email } });
 
-    return user
+    return user;
   }
 }
 
-export { UserRepository }
+export { UserRepository };

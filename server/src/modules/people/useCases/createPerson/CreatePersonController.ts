@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
-import { container } from 'tsyringe'
-import { CreatePersonUseCase } from './CreatePersonUseCase'
+import { Request, Response } from "express";
+import { container } from "tsyringe";
+import { CreatePersonUseCase } from "./CreatePersonUseCase";
 
 class CreatePersonController {
   async handle(req: Request, res: Response): Promise<Response> {
@@ -19,9 +19,9 @@ class CreatePersonController {
       Email,
       Endereco,
       Observacoes,
-    } = req.body
+    } = req.body;
 
-    const createPersonUseCase = container.resolve(CreatePersonUseCase)
+    const createPersonUseCase = container.resolve(CreatePersonUseCase);
 
     const response = await createPersonUseCase.execute({
       RazaoSocial,
@@ -38,10 +38,10 @@ class CreatePersonController {
       Email,
       Endereco,
       Observacoes,
-    })
+    });
 
-    return res.status(201).json(response)
+    return res.status(201).json(response);
   }
 }
 
-export { CreatePersonController }
+export { CreatePersonController };

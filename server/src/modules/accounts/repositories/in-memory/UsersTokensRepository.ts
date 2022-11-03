@@ -1,10 +1,10 @@
-import { ICreateUserTokenDTO } from '@modules/accounts/dtos/ICreateUserTokenDTO'
-import { UserTokens } from '@modules/accounts/entities/UserTokens'
-import { IUsersTokensRepository } from '../IUsersTokensRepository'
-import { v4 as uuid } from 'uuid'
+import { ICreateUserTokenDTO } from "@modules/accounts/dtos/ICreateUserTokenDTO";
+import { UserTokens } from "@modules/accounts/entities/UserTokens";
+import { IUsersTokensRepository } from "../IUsersTokensRepository";
+import { v4 as uuid } from "uuid";
 
 class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
-  usersTokens: UserTokens[] = []
+  usersTokens: UserTokens[] = [];
 
   async create({
     expires_date,
@@ -16,15 +16,15 @@ class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
       user_id,
       refresh_token,
       created_at: new Date(Date.now()),
-    })
+    });
 
     Object.assign(userTokens, {
       id: uuid(),
-    })
+    });
 
-    this.usersTokens.push(userTokens)
+    this.usersTokens.push(userTokens);
 
-    return userTokens
+    return userTokens;
   }
 
   async findByUsersIdAndRefreshToken(
@@ -33,19 +33,19 @@ class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
   ): Promise<UserTokens> {
     const userToken = this.usersTokens.find(
       (item) => item.user_id === user_id && item.refresh_token === refresh_token
-    )
+    );
 
-    return userToken
+    return userToken;
   }
 
   async deleteById(id: string): Promise<void> {
-    const tokenToDelete = this.usersTokens.find((item) => item.id === id)
+    const tokenToDelete = this.usersTokens.find((item) => item.id === id);
 
-    const index = this.usersTokens.indexOf(tokenToDelete)
+    const index = this.usersTokens.indexOf(tokenToDelete);
     if (index > -1) {
-      this.usersTokens.splice(index, -1)
+      this.usersTokens.splice(index, -1);
     }
   }
 }
 
-export { UsersTokensRepositoryInMemory }
+export { UsersTokensRepositoryInMemory };

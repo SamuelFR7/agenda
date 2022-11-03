@@ -1,7 +1,7 @@
-import { ICreateUserTokenDTO } from '@modules/accounts/dtos/ICreateUserTokenDTO'
-import { UserTokens } from '@modules/accounts/entities/UserTokens'
-import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository'
-import { prisma } from '@shared/infra/database/prisma/client'
+import { ICreateUserTokenDTO } from "@modules/accounts/dtos/ICreateUserTokenDTO";
+import { UserTokens } from "@modules/accounts/entities/UserTokens";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { prisma } from "@shared/infra/database/prisma/client";
 
 class UsersTokensRepository implements IUsersTokensRepository {
   async create({
@@ -15,9 +15,9 @@ class UsersTokensRepository implements IUsersTokensRepository {
         refresh_token,
         user_id,
       },
-    })
+    });
 
-    return newToken
+    return newToken;
   }
 
   async findByUsersIdAndRefreshToken(
@@ -26,14 +26,14 @@ class UsersTokensRepository implements IUsersTokensRepository {
   ): Promise<UserTokens> {
     const usersTokens = await prisma.usersTokens.findMany({
       where: { user_id, refresh_token },
-    })
+    });
 
-    return usersTokens[0]
+    return usersTokens[0];
   }
 
   async deleteById(id: string): Promise<void> {
-    await prisma.usersTokens.delete({ where: { id } })
+    await prisma.usersTokens.delete({ where: { id } });
   }
 }
 
-export { UsersTokensRepository }
+export { UsersTokensRepository };
