@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { beforeEach, describe, expect, it } from "vitest";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 import { UserRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UserRepositoryInMemory";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
