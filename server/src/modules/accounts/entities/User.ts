@@ -1,22 +1,22 @@
 class User {
-  id?: string
-  email: string
-  password: string
-  admin: boolean
+  id?: string;
+  email: string;
+  password: string;
+  admin: boolean;
 
   private constructor(user: User) {
     return Object.assign(this, {
       email: user.email,
       password: user.password,
       admin: user.admin,
-    })
+    });
   }
 
   static create(userInfo: User) {
-    const user = new User(userInfo)
+    const user = new User(userInfo);
 
-    return user
+    return user;
   }
 }
 
-export { User }
+export { User };

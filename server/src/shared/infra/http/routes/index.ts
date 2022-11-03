@@ -1,10 +1,10 @@
-import { Router } from 'express'
-import { peopleRoutes } from './people.routes'
-import { userRoutes } from './user.routes'
+import { Router } from "express";
+import { peopleRoutes } from "./people.routes";
+import { userRoutes } from "./user.routes";
 
-const router = Router()
+const router = Router();
 
-router.use('/users', userRoutes)
-router.use('/people', peopleRoutes)
+router.use("/users", userRoutes);
+router.use("/people", peopleRoutes);
 
-export { router }
+export { router };

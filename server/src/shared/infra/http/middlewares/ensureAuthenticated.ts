@@ -1,9 +1,9 @@
-import { AppError } from '@shared/errors/AppError'
-import { Request, Response, NextFunction } from 'express'
-import { verify } from 'jsonwebtoken'
+import { AppError } from "@shared/errors/AppError";
+import { Request, Response, NextFunction } from "express";
+import { verify } from "jsonwebtoken";
 
 interface IPayload {
-  sub: string
+  sub: string;
 }
 
 async function ensureAuthenticated(
@@ -11,21 +11,21 @@ async function ensureAuthenticated(
   res: Response,
   next: NextFunction
 ) {
-  const authToken = req.headers.authorization
+  const authToken = req.headers.authorization;
   if (!authToken) {
-    throw new AppError('Token missing', 401)
+    throw new AppError("Token missing", 401);
   }
 
-  const [, token] = authToken.split(' ')
+  const [, token] = authToken.split(" ");
   try {
-    const { sub } = verify(token, process.env.TOKEN_SECRET) as IPayload
+    const { sub } = verify(token, process.env.TOKEN_SECRET) as IPayload;
 
-    req.userId = sub
+    req.userId = sub;
   } catch (error) {
-    throw new AppError('Invalid token', 401)
+    throw new AppError("Invalid token", 401);
   }
 
-  return next()
+  return next();
 }
 
-export { ensureAuthenticated }
+export { ensureAuthenticated };
