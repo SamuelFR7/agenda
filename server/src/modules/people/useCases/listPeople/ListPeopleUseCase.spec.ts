@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ListPeopleUseCase } from "./ListPeopleUseCase";
 import { PersonRepositoryInMemory } from "@modules/people/repositories/in-memory/PersonRepositoryInMemory";
 import { v4 as uuid } from "uuid";
