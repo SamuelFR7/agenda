@@ -1,27 +1,27 @@
-import { IUpdatePersonDTO } from '@modules/people/dtos/IUpdatePersonDTO'
-import { Person } from '@modules/people/entities/Person'
-import { IPersonRepository } from '@modules/people/repositories/IPersonRepository'
-import { prisma } from '@shared/infra/database/prisma/client'
+import { IUpdatePersonDTO } from "@modules/people/dtos/IUpdatePersonDTO";
+import { Person } from "@modules/people/entities/Person";
+import { IPersonRepository } from "@modules/people/repositories/IPersonRepository";
+import { prisma } from "@shared/infra/database/prisma/client";
 
 class PersonRepository implements IPersonRepository {
   async create(person: Person): Promise<Person> {
     const newPerson = await prisma.person.create({
       data: person,
-    })
+    });
 
-    return newPerson
+    return newPerson;
   }
 
   async getLength(): Promise<number> {
-    const length = await prisma.person.count()
+    const length = await prisma.person.count();
 
-    return length
+    return length;
   }
 
   async show(id: string): Promise<Person> {
-    const person = await prisma.person.findUnique({ where: { id } })
+    const person = await prisma.person.findUnique({ where: { id } });
 
-    return person
+    return person;
   }
 
   async update(id: string, person: IUpdatePersonDTO): Promise<Person> {
@@ -30,17 +30,17 @@ class PersonRepository implements IPersonRepository {
         id,
       },
       data: person,
-    })
+    });
 
-    return personUpdated
+    return personUpdated;
   }
 
   async delete(id: string): Promise<void> {
-    await prisma.person.delete({ where: { id } })
+    await prisma.person.delete({ where: { id } });
   }
 
   async filter(page: number, name?: string): Promise<Person[]> {
-    const skip = (page - 1) * 10
+    const skip = (page - 1) * 10;
 
     if (name) {
       const people = await prisma.person.findMany({
@@ -51,22 +51,22 @@ class PersonRepository implements IPersonRepository {
         },
         take: 10,
         orderBy: {
-          RazaoSocial: 'asc',
+          RazaoSocial: "asc",
         },
-      })
+      });
 
-      return people
+      return people;
     }
     const people = await prisma.person.findMany({
       skip,
       take: 10,
       orderBy: {
-        RazaoSocial: 'asc',
+        RazaoSocial: "asc",
       },
-    })
+    });
 
-    return people
+    return people;
   }
 }
 
-export { PersonRepository }
+export { PersonRepository };
