@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { describe, beforeEach, it, expect } from "vitest";
 import { CreatePersonUseCase } from "./CreatePersonUseCase";
 import { PersonRepositoryInMemory } from "../../repositories/in-memory/PersonRepositoryInMemory";
 let createPersonUseCase: CreatePersonUseCase;

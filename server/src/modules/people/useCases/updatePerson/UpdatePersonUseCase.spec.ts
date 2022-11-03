@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { beforeEach, describe, expect, it } from "vitest";
 import { UpdatePersonUseCase } from "./UpdatePersonUseCase";
 import { PersonRepositoryInMemory } from "@modules/people/repositories/in-memory/PersonRepositoryInMemory";
 let updatePersonUseCase: UpdatePersonUseCase;
