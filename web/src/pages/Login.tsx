@@ -7,7 +7,6 @@ import { Input } from '../components/Form/input'
 import * as yup from 'yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import toast, { Toaster } from 'react-hot-toast'
 import { withSSRGuest } from '../utils/withSSRGuest'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
@@ -57,7 +56,6 @@ export default function Home() {
         <title>Login</title>
       </Head>
 
-      <Toaster position="bottom-center" reverseOrder={false} />
       <Flex h="80vh" align="center" justify="center">
         <Flex
           as="form"
