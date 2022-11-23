@@ -9,6 +9,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast, { Toaster } from 'react-hot-toast'
 import { withSSRGuest } from '../utils/withSSRGuest'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 interface ISignInFormData {
   email: string
@@ -21,6 +23,7 @@ const signInFormSchema = yup.object().shape({
 })
 
 export default function Home() {
+  const { push } = useRouter()
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema),
   })
@@ -28,14 +31,21 @@ export default function Home() {
   const { signIn } = useContext(AuthContext)
 
   const handleSignIn: SubmitHandler<ISignInFormData> = async (values) => {
-    await toast.promise(
-      signIn({ email: values.email.toUpperCase(), password: values.password }),
-      {
-        loading: 'Entrando...',
-        success: <b>Sucesso</b>,
-        error: <b>Usuário ou senha incorretos!</b>,
-      }
-    )
+    await signIn({
+      email: values.email.toUpperCase(),
+      password: values.password,
+    })
+
+    await Swal.fire({
+      title: 'Sucesso',
+      text: 'Seja bem-vindo',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1 * 10 * 10 * 10, // 1 Second,
+      timerProgressBar: true,
+    })
+
+    push('/')
   }
 
   const ButtonsBg = useColorModeValue('green.400', 'green.600')

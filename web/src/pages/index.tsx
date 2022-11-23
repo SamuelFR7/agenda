@@ -18,6 +18,7 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
+  theme,
 } from '@chakra-ui/react'
 import {
   RiAddLine,
@@ -33,6 +34,7 @@ import { Pagination } from '../components/Pagination/'
 import { usePeople } from '../hooks/usePeople'
 import { queryClient } from '../services/queryClient'
 import { withSSRAuth } from '../utils/withSSRAuth'
+import Swal from 'sweetalert2'
 
 function Home() {
   const {
@@ -75,8 +77,26 @@ function Home() {
   }
 
   async function handleDelete(id: string) {
-    await api.delete(`/people/delete/${id}`)
-    queryClient.invalidateQueries(['people'])
+    const { isConfirmed } = await Swal.fire({
+      title: 'Certeza de que quer apagar este contato?',
+      confirmButtonText: 'Apagar',
+      icon: 'question',
+      confirmButtonColor: theme.colors.red['500'],
+      cancelButtonColor: theme.colors.gray['400'],
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+    })
+
+    if (isConfirmed) {
+      await api.delete(`/people/delete/${id}`)
+      queryClient.invalidateQueries(['people'])
+      Swal.fire({
+        title: 'Contato apagado',
+        icon: 'success',
+        timer: (3 / 2) * 10 * 10 * 10, // 1.5 Seconds,
+        timerProgressBar: true,
+      })
+    }
   }
 
   const tableBg = useColorModeValue('gray.50', 'gray.800')
@@ -193,14 +213,7 @@ function Home() {
                                 fontSize="sm"
                                 colorScheme="green"
                                 bg={ButtonsBg}
-                                onClick={() => {
-                                  if (
-                                    window.confirm(
-                                      'Certeza de que você quer deletar este contato?'
-                                    )
-                                  )
-                                    handleDelete(person.id)
-                                }}
+                                onClick={() => handleDelete(person.id)}
                               >
                                 <Icon as={RiDeleteBinLine} />
                               </Button>
@@ -225,11 +238,13 @@ function Home() {
                 </Tbody>
               </Table>
 
-              <Pagination
-                totalCountOfRegisters={data.totalCount}
-                onPageChange={setCurrentPage}
-                currentPage={currentPage}
-              />
+              {!search && (
+                <Pagination
+                  totalCountOfRegisters={data.totalCount}
+                  onPageChange={setCurrentPage}
+                  currentPage={currentPage}
+                />
+              )}
             </>
           )}
         </Box>
