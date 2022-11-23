@@ -55,13 +55,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     })
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-    Router.push('/')
   }
 
   async function signOut() {
     destroyCookie(undefined, 'agenda.token')
     destroyCookie(undefined, 'agenda.refreshToken')
+    setUser(null)
 
     Router.push('/Login')
   }
