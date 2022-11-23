@@ -59,6 +59,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     Router.push('/')
   }
 
+  async function signOut() {
+    destroyCookie(undefined, 'agenda.token')
+    destroyCookie(undefined, 'agenda.refreshToken')
+
+    Router.push('/Login')
+  }
+
   return (
     <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
       {children}
