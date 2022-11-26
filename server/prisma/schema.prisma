@@ -22,7 +22,7 @@ model Person {
   Telefone5Contato String
   Email            String
   Endereco         String
-  Observacoes      String @db.Text()
+  Observacoes      String
 
   @@map("people")
 }
