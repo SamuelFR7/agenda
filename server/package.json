@@ -9,7 +9,7 @@
     "build": "yarn migrate:deploy && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/shared/infra/http/server.js",
     "migrate:dev": "prisma migrate dev",
-    "migrate:deploy": "primsa migrate deploy",
+    "migrate:deploy": "prisma migrate deploy",
     "generate": "prisma generate"
   },
   "dependencies": {
