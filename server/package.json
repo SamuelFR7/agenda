@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vitest",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "build": "yarn migrate:deploy && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "build:railway": "yarn migrate:deploy && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/shared/infra/http/server.js",
     "migrate:dev": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
