@@ -15,7 +15,7 @@ import React from 'react'
 import { api } from '../../services/apiClient'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { queryClient } from '../../services/queryClient'
@@ -117,13 +117,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
             <VStack spacing="4">
               <HStack spacing="4">
                 <Input
-                  error={errors.RazaoSocial}
+                  error={errors.RazaoSocial as FieldError}
                   {...register('RazaoSocial')}
                   name="RazaoSocial"
                   label="Nome"
                 />
                 <Input
-                  error={errors.Endereco}
+                  error={errors.Endereco as FieldError}
                   {...register('Endereco')}
                   name="Endereco"
                   label="Endereço"
@@ -131,13 +131,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
               </HStack>
               <HStack spacing="4">
                 <Input
-                  error={errors.Email}
+                  error={errors.Email as FieldError}
                   {...register('Email')}
                   name="Email"
                   label="E-mail"
                 />
                 <Input
-                  error={errors.Telefone1}
+                  error={errors.Telefone1 as FieldError}
                   {...register('Telefone1')}
                   name="Telefone1"
                   as={InputMask}
@@ -147,13 +147,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
               </HStack>
               <HStack spacing="4">
                 <Input
-                  error={errors.Telefone1Contato}
+                  error={errors.Telefone1Contato as FieldError}
                   {...register('Telefone1Contato')}
                   name="Telefone1Contato"
                   label="Contato 1"
                 />
                 <Input
-                  error={errors.Telefone2}
+                  error={errors.Telefone2 as FieldError}
                   {...register('Telefone2')}
                   name="Telefone2"
                   as={InputMask}
@@ -163,13 +163,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
               </HStack>
               <HStack spacing="4">
                 <Input
-                  error={errors.Telefone2Contato}
+                  error={errors.Telefone2Contato as FieldError}
                   {...register('Telefone2Contato')}
                   name="Telefone2Contato"
                   label="Contato 2"
                 />
                 <Input
-                  error={errors.Telefone3}
+                  error={errors.Telefone3 as FieldError}
                   {...register('Telefone3')}
                   name="Telefone3"
                   as={InputMask}
@@ -181,11 +181,11 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
                 <Input
                   name="Telefone3Contato"
                   label="Contato 3"
-                  error={errors.Telefone3Contato}
+                  error={errors.Telefone3Contato as FieldError}
                   {...register('Telefone3Contato')}
                 />
                 <Input
-                  error={errors.Telefone4}
+                  error={errors.Telefone4 as FieldError}
                   {...register('Telefone4')}
                   name="Telefone4"
                   as={InputMask}
@@ -195,13 +195,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
               </HStack>
               <HStack spacing="4">
                 <Input
-                  error={errors.Telefone4Contato}
+                  error={errors.Telefone4Contato as FieldError}
                   {...register('Telefone4Contato')}
                   name="Telefone4Contato"
                   label="Contato 4"
                 />
                 <Input
-                  error={errors.Telefone5}
+                  error={errors.Telefone5 as FieldError}
                   {...register('Telefone5')}
                   name="Telefone5"
                   as={InputMask}
@@ -211,13 +211,13 @@ function AddPerson({ isOpen, onClose }: IAddPersonProps) {
               </HStack>
               <HStack spacing="4">
                 <Input
-                  error={errors.Telefone5Contato}
+                  error={errors.Telefone5Contato as FieldError}
                   {...register('Telefone5Contato')}
                   name="Telefone5Contato"
                   label="Contato 5"
                 />
                 <Input
-                  error={errors.Observacoes}
+                  error={errors.Observacoes as FieldError}
                   {...register('Observacoes')}
                   name="Observacoes"
                   label="Observações"

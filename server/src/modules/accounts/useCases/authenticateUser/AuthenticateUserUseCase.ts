@@ -1,9 +1,9 @@
 import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { AppError } from "@shared/errors/AppError";
-import { compare } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { auth } from "@config/auth";
-import { sign } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 import dayjs from "dayjs";
 
@@ -41,18 +41,18 @@ class AuthenticateUserUseCase {
       throw new AppError("User or password incorrect!", 401);
     }
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       throw new AppError("User or password incorrect!", 401);
     }
 
-    const token = sign({}, process.env.TOKEN_SECRET, {
+    const token = jwt.sign({}, process.env.TOKEN_SECRET, {
       subject: user.id,
       expiresIn: expires_in_token,
     });
 
-    const refreshToken = sign(
+    const refreshToken = jwt.sign(
       {
         email: user.email,
       },
