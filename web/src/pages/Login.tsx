@@ -5,7 +5,7 @@ import { Button, Flex, Stack, useColorModeValue } from '@chakra-ui/react'
 import { AuthContext } from '../contexts/AuthContext'
 import { Input } from '../components/Form/input'
 import * as yup from 'yup'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { withSSRGuest } from '../utils/withSSRGuest'
 import Swal from 'sweetalert2'
@@ -70,13 +70,13 @@ export default function Home() {
         >
           <Stack spacing={4}>
             <Input
-              error={errors.email}
+              error={errors.email as FieldError}
               {...register('email')}
               name="email"
               label="Usuário"
             />
             <Input
-              error={errors.password}
+              error={errors.password as FieldError}
               {...register('password')}
               name="password"
               label="Senha"

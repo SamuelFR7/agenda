@@ -16,7 +16,7 @@ import { IPerson } from '../../dtos/IPerson'
 import { api } from '../../services/apiClient'
 import { Input } from '../Form/input'
 import InputMask from 'react-input-mask'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, FieldError } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { queryClient } from '../../services/queryClient'
@@ -158,13 +158,13 @@ function EditPerson({
               <HStack spacing="4">
                 <Input
                   {...register('RazaoSocial')}
-                  error={errors.RazaoSocial}
+                  error={errors.RazaoSocial as FieldError}
                   name="RazaoSocial"
                   label="Nome"
                 />
                 <Input
                   {...register('Endereco')}
-                  error={errors.Endereco}
+                  error={errors.Endereco as FieldError}
                   name="Endereco"
                   label="Endereço"
                 />
@@ -173,13 +173,13 @@ function EditPerson({
                 <Input
                   name="Email"
                   {...register('Email')}
-                  error={errors.Email}
+                  error={errors.Email as FieldError}
                   label="E-mail"
                 />
                 <Input
                   name="Telefone1"
                   {...register('Telefone1')}
-                  error={errors.Telefone1}
+                  error={errors.Telefone1 as FieldError}
                   label="Telefone"
                 />
               </HStack>
@@ -187,7 +187,7 @@ function EditPerson({
                 <Input
                   name="Telefone1Contato"
                   {...register('Telefone1Contato')}
-                  error={errors.Telefone1Contato}
+                  error={errors.Telefone1Contato as FieldError}
                   label="Contato 1"
                 />
                 <Input
@@ -195,7 +195,7 @@ function EditPerson({
                   as={InputMask}
                   mask="(**) *****-****"
                   {...register('Telefone2')}
-                  error={errors.Telefone2}
+                  error={errors.Telefone2 as FieldError}
                   label="Telefone 2"
                 />
               </HStack>
@@ -203,7 +203,7 @@ function EditPerson({
                 <Input
                   name="Telefone2Contato"
                   {...register('Telefone2Contato')}
-                  error={errors.Telefone2Contato}
+                  error={errors.Telefone2Contato as FieldError}
                   label="Contato 2"
                 />
                 <Input
@@ -211,7 +211,7 @@ function EditPerson({
                   as={InputMask}
                   mask="(**) *****-****"
                   {...register('Telefone3')}
-                  error={errors.Telefone3}
+                  error={errors.Telefone3 as FieldError}
                   label="Telefone 3"
                 />
               </HStack>
@@ -219,7 +219,7 @@ function EditPerson({
                 <Input
                   name="Telefone3Contato"
                   {...register('Telefone3Contato')}
-                  error={errors.Telefone3Contato}
+                  error={errors.Telefone3Contato as FieldError}
                   label="Contato 3"
                 />
                 <Input
@@ -227,7 +227,7 @@ function EditPerson({
                   as={InputMask}
                   mask="(**) *****-****"
                   {...register('Telefone4')}
-                  error={errors.Telefone4}
+                  error={errors.Telefone4 as FieldError}
                   label="Telefone 4"
                 />
               </HStack>
@@ -235,7 +235,7 @@ function EditPerson({
                 <Input
                   name="Telefone4Contato"
                   {...register('Telefone4Contato')}
-                  error={errors.Telefone4Contato}
+                  error={errors.Telefone4Contato as FieldError}
                   label="Contato 4"
                 />
                 <Input
@@ -243,7 +243,7 @@ function EditPerson({
                   as={InputMask}
                   mask="(**) *****-****"
                   {...register('Telefone5')}
-                  error={errors.Telefone5}
+                  error={errors.Telefone5 as FieldError}
                   label="Telefone 5"
                 />
               </HStack>
@@ -251,13 +251,13 @@ function EditPerson({
                 <Input
                   name="Telefone5Contato"
                   {...register('Telefone5Contato')}
-                  error={errors.Telefone5Contato}
+                  error={errors.Telefone5Contato as FieldError}
                   label="Contato 5"
                 />
                 <Input
                   name="Observacoes"
                   {...register('Observacoes')}
-                  error={errors.Observacoes}
+                  error={errors.Observacoes as FieldError}
                   label="Observações"
                 />
               </HStack>
