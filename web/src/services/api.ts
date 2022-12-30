@@ -73,7 +73,7 @@ export function setupAPIClient(ctx = undefined) {
           return new Promise((resolve, reject) => {
             failedRequestQueue.push({
               onSuccess: (token: string) => {
-                originalConfig.headers.Authorization = `Bearer ${token}`
+                originalConfig.headers['Authorization'] = `Bearer ${token}`
 
                 resolve(api(originalConfig))
               },
