@@ -25,7 +25,7 @@
     "react-hook-form": "7.41.0",
     "react-icons": "^4.7.1",
     "react-input-mask": "^2.0.4",
-    "sweetalert2": "^11.6.16",
+    "sweetalert2": "^11.4.8",
     "yup": "^0.32.11"
   },
   "devDependencies": {
