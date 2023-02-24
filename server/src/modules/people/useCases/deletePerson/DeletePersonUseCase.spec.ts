@@ -7,36 +7,36 @@ let deletePersonUseCase: DeletePersonUseCase;
 let personRepositoryInMemory: PersonRepositoryInMemory;
 
 describe("Delete person use case", () => {
-  beforeEach(() => {
-    personRepositoryInMemory = new PersonRepositoryInMemory();
-    deletePersonUseCase = new DeletePersonUseCase(personRepositoryInMemory);
-  });
-
-  it("should be able to delete a person", async () => {
-    const id = uuid();
-
-    await personRepositoryInMemory.create({
-      id,
-      RazaoSocial: "JOÃO",
-      Telefone1: "000000000000",
-      Telefone2: "",
-      Telefone3: "",
-      Telefone4: "",
-      Telefone5: "",
-      Telefone1Contato: "",
-      Telefone2Contato: "",
-      Telefone3Contato: "",
-      Telefone4Contato: "",
-      Telefone5Contato: "",
-      Email: "",
-      Endereco: "",
-      Observacoes: "",
+    beforeEach(() => {
+        personRepositoryInMemory = new PersonRepositoryInMemory();
+        deletePersonUseCase = new DeletePersonUseCase(personRepositoryInMemory);
     });
 
-    await deletePersonUseCase.execute(id);
+    it("should be able to delete a person", async () => {
+        const id = uuid();
 
-    const findPerson = await personRepositoryInMemory.show(id);
+        await personRepositoryInMemory.create({
+            id,
+            RazaoSocial: "JOÃO",
+            Telefone1: "000000000000",
+            Telefone2: "",
+            Telefone3: "",
+            Telefone4: "",
+            Telefone5: "",
+            Telefone1Contato: "",
+            Telefone2Contato: "",
+            Telefone3Contato: "",
+            Telefone4Contato: "",
+            Telefone5Contato: "",
+            Email: "",
+            Endereco: "",
+            Observacoes: "",
+        });
 
-    expect(findPerson).toBeFalsy();
-  });
+        await deletePersonUseCase.execute(id);
+
+        const findPerson = await personRepositoryInMemory.show(id);
+
+        expect(findPerson).toBeFalsy();
+    });
 });

@@ -1,20 +1,22 @@
-import { Request, Response } from "express";
+import { type Request, type Response } from "express";
 import { container } from "tsyringe";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 class AuthenticateUserController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
+    async handle(req: Request, res: Response): Promise<Response> {
+        const { email, password } = req.body;
 
-    const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase);
+        const authenticateUserUseCase = container.resolve(
+            AuthenticateUserUseCase
+        );
 
-    const response = await authenticateUserUseCase.execute({
-      email,
-      password,
-    });
+        const response = await authenticateUserUseCase.execute({
+            email,
+            password,
+        });
 
-    return res.status(200).json(response);
-  }
+        return res.status(200).json(response);
+    }
 }
 
 export { AuthenticateUserController };

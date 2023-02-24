@@ -6,19 +6,19 @@ let createPersonUseCase: CreatePersonUseCase;
 let personRepositoryInMemory: PersonRepositoryInMemory;
 
 describe("Create person use case", () => {
-  beforeEach(() => {
-    personRepositoryInMemory = new PersonRepositoryInMemory();
-    createPersonUseCase = new CreatePersonUseCase(personRepositoryInMemory);
-  });
-
-  it("should be able to create a new person", async () => {
-    await createPersonUseCase.execute({
-      RazaoSocial: "JOÃO",
-      Telefone1: "000000000000",
+    beforeEach(() => {
+        personRepositoryInMemory = new PersonRepositoryInMemory();
+        createPersonUseCase = new CreatePersonUseCase(personRepositoryInMemory);
     });
 
-    const person = await personRepositoryInMemory.filter(1);
+    it("should be able to create a new person", async () => {
+        await createPersonUseCase.execute({
+            RazaoSocial: "JOÃO",
+            Telefone1: "000000000000",
+        });
 
-    expect(person[0]).toHaveProperty("id");
-  });
+        const person = await personRepositoryInMemory.filter(1);
+
+        expect(person[0]).toHaveProperty("id");
+    });
 });

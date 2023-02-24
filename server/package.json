@@ -11,7 +11,8 @@
     "start": "node dist/shared/infra/http/server.js",
     "migrate:dev": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
