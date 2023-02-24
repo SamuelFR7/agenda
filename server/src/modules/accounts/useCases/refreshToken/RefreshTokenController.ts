@@ -1,18 +1,18 @@
-import { Request, Response } from "express";
+import { type Request, type Response } from "express";
 import { container } from "tsyringe";
 import { RefreshTokenUseCase } from "./RefreshTokenUseCase";
 
 class RefreshTokenController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const token =
-      req.body.token || req.headers["x-access-token"] || req.query.token;
+    async handle(req: Request, res: Response): Promise<Response> {
+        const token =
+            req.body.token || req.headers["x-access-token"] || req.query.token;
 
-    const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
+        const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
 
-    const tokenResponse = await refreshTokenUseCase.execute(token);
+        const tokenResponse = await refreshTokenUseCase.execute(token);
 
-    return res.status(200).json(tokenResponse);
-  }
+        return res.status(200).json(tokenResponse);
+    }
 }
 
 export { RefreshTokenController };

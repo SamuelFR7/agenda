@@ -1,4 +1,4 @@
-import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
+import { type ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { AppError } from "@shared/errors/AppError";
 import bcrypt from "bcryptjs";
@@ -6,25 +6,25 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 class CreateUserUseCase {
-  constructor(
-    @inject("UserRepository")
-    private readonly usersRepository: IUserRepository
-  ) {}
+    constructor(
+        @inject("UserRepository")
+        private readonly usersRepository: IUserRepository
+    ) {}
 
-  async execute({ email, password }: ICreateUserDTO): Promise<void> {
-    const userAlreadyExists = await this.usersRepository.findByEmail(email);
+    async execute({ email, password }: ICreateUserDTO): Promise<void> {
+        const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
-    if (userAlreadyExists) {
-      throw new AppError("User already exists", 401);
+        if (userAlreadyExists) {
+            throw new AppError("User already exists", 401);
+        }
+
+        const passwordHash = await bcrypt.hash(password, 8);
+
+        await this.usersRepository.create({
+            email,
+            password: passwordHash,
+        });
     }
-
-    const passwordHash = await bcrypt.hash(password, 8);
-
-    await this.usersRepository.create({
-      email,
-      password: passwordHash,
-    });
-  }
 }
 
 export { CreateUserUseCase };
