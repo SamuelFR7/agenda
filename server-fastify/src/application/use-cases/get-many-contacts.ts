@@ -3,11 +3,11 @@ import { ContactsRepository } from '@/domain/repositories/contacts-repository'
 import { PaginatedResult } from '@/core/dto/paginated-result'
 
 interface GetManyContactsRequest {
-  page?: number
-  search?: string
+  page?: number | null
+  search?: string | null
 }
 
-export class GetManyContacts {
+export class GetManyContactsUseCase {
   constructor(private readonly contactsRepository: ContactsRepository) {}
 
   async execute(

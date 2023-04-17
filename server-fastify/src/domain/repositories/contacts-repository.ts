@@ -6,8 +6,8 @@ export abstract class ContactsRepository {
     page,
     search,
   }: {
-    page?: number
-    search?: string
+    page?: number | null
+    search?: string | null
   }): Promise<Contact[]>
 
   abstract findUnique(id: string): Promise<Contact>
