@@ -22,7 +22,7 @@ interface CreateContactResponse {
   contact: Contact
 }
 
-class CreateContact {
+class CreateContactUseCase {
   constructor(private readonly contactsRepository: ContactsRepository) {}
 
   async execute(req: CreateContactRequest): Promise<CreateContactResponse> {
@@ -68,4 +68,4 @@ class CreateContact {
   }
 }
 
-export { CreateContact }
+export { CreateContactUseCase }
