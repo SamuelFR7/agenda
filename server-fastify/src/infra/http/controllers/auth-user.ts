@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaUsersRepository } from '../database/prisma/repositories/prisma-users-repository'
+import { PrismaUsersRepository } from '@/infra/database/prisma/repositories/prisma-users-repository'
 import { AuthenticateUserUseCase } from '@/application/use-cases/auth-user'
 
 export class AuthUserController {
