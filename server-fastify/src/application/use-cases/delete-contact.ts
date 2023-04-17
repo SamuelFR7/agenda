@@ -4,7 +4,7 @@ interface DeleteContactRequest {
   id: string
 }
 
-export class DeleteContact {
+export class DeleteContactUseCase {
   constructor(private readonly contactsRepository: ContactsRepository) {}
 
   async execute(req: DeleteContactRequest): Promise<void> {
