@@ -8,21 +8,21 @@ datasource db {
 }
 
 model Contact {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   name         String
   phone_1      String
-  phone_2      String
-  phone_3      String
-  phone_4      String
-  phone_5      String
-  contact_1    String
-  contact_2    String
-  contact_3    String
-  contact_4    String
-  contact_5    String
-  email        String
-  address      String
-  observations String
+  phone_2      String?
+  phone_3      String?
+  phone_4      String?
+  phone_5      String?
+  contact_1    String?
+  contact_2    String?
+  contact_3    String?
+  contact_4    String?
+  contact_5    String?
+  email        String?
+  address      String?
+  observations String?
 
   @@map("contacts")
 }

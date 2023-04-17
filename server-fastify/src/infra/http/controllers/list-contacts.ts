@@ -7,7 +7,10 @@ import { ContactsViewModel } from '../view-models/ContactsViewModel'
 class ListContactsController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     const listContactsSchema = z.object({
-      page: z.number().nullish(),
+      page: z
+        .string()
+        .transform((arg) => Number(arg))
+        .nullish(),
       search: z.string().nullish(),
     })
 
@@ -19,8 +22,8 @@ class ListContactsController {
     )
 
     const { data, totalCount } = await getManyContactsUseCase.execute({
-      search,
       page,
+      search,
     })
 
     return res.status(200).send({

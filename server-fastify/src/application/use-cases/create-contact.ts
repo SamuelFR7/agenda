@@ -4,18 +4,18 @@ import { ContactsRepository } from '@/domain/repositories/contacts-repository'
 interface CreateContactRequest {
   name: string
   phone_1: string
-  phone_2: string
-  phone_3: string
-  phone_4: string
-  phone_5: string
-  contact_1: string
-  contact_2: string
-  contact_3: string
-  contact_4: string
-  contact_5: string
-  email: string
-  address: string
-  observations: string
+  phone_2?: string | null
+  phone_3?: string | null
+  phone_4?: string | null
+  phone_5?: string | null
+  contact_1?: string | null
+  contact_2?: string | null
+  contact_3?: string | null
+  contact_4?: string | null
+  contact_5?: string | null
+  email?: string | null
+  address?: string | null
+  observations?: string | null
 }
 
 interface CreateContactResponse {
