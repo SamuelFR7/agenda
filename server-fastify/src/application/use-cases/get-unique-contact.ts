@@ -9,7 +9,7 @@ interface GetUniqueContactResponse {
   contact: Contact
 }
 
-export class GetUniqueContact {
+export class GetUniqueContactUseCase {
   constructor(private readonly contactsRepository: ContactsRepository) {}
 
   async execute(
