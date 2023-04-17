@@ -11,7 +11,7 @@ export abstract class ContactsRepository {
   }): Promise<Contact[]>
 
   abstract findUnique(id: string): Promise<Contact>
-  abstract save(contact: Contact): Promise<void>
+  abstract save(contact: Contact): Promise<Contact>
   abstract create(contact: Contact): Promise<void>
   abstract count(): Promise<number>
 }
