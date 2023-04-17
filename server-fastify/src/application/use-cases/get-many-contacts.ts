@@ -17,7 +17,7 @@ export class GetManyContactsUseCase {
 
     const totalCount = await this.contactsRepository.count()
 
-    if (!search) {
+    if (search) {
       const contacts = await this.contactsRepository.findMany({
         search,
       })
