@@ -6,11 +6,11 @@ export abstract class ContactsRepository {
     page,
     search,
   }: {
-    page?: number | null
+    page: number
     search?: string | null
   }): Promise<Contact[]>
 
-  abstract findUnique(id: string): Promise<Contact>
+  abstract findUnique(id: string): Promise<Contact | null>
   abstract save(contact: Contact): Promise<Contact>
   abstract create(contact: Contact): Promise<void>
   abstract count(): Promise<number>

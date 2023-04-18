@@ -7,10 +7,7 @@ import { ContactsViewModel } from '../view-models/ContactsViewModel'
 class ListContactsController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     const listContactsSchema = z.object({
-      page: z
-        .string()
-        .transform((arg) => Number(arg))
-        .nullish(),
+      page: z.string().transform((arg) => Number(arg)),
       search: z.string().nullish(),
     })
 

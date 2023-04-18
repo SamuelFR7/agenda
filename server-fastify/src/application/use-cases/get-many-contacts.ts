@@ -3,7 +3,7 @@ import { ContactsRepository } from '@/domain/repositories/contacts-repository'
 import { PaginatedResult } from '@/core/dto/paginated-result'
 
 interface GetManyContactsRequest {
-  page?: number | null
+  page: number
   search?: string | null
 }
 
@@ -19,6 +19,7 @@ export class GetManyContactsUseCase {
 
     if (search) {
       const contacts = await this.contactsRepository.findMany({
+        page,
         search,
       })
 

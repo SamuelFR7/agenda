@@ -1,5 +1,6 @@
 import { Contact } from '@/domain/entities/Contact'
 import { ContactsRepository } from '@/domain/repositories/contacts-repository'
+import { UseCaseError } from '../errors/use-case-error'
 
 interface GetUniqueContactRequest {
   id: string
@@ -18,6 +19,10 @@ export class GetUniqueContactUseCase {
     const { id } = req
 
     const contact = await this.contactsRepository.findUnique(id)
+
+    if (!contact) {
+      throw new UseCaseError('Contact does not exists')
+    }
 
     return {
       contact,
