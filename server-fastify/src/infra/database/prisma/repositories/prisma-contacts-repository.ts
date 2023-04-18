@@ -16,7 +16,7 @@ export class PrismaContactsRepository implements ContactsRepository {
     page,
     search,
   }: {
-    page?: number | undefined
+    page: number
     search?: string | undefined
   }): Promise<Contact[]> {
     if (search) {
@@ -32,19 +32,15 @@ export class PrismaContactsRepository implements ContactsRepository {
       return contacts.map(PrismaContactMapper.toDomain)
     }
 
-    if (page) {
-      const contacts = await prisma.contact.findMany({
-        take: 10,
-        skip: (page - 1) * 10,
-      })
+    const contacts = await prisma.contact.findMany({
+      take: 10,
+      skip: (page - 1) * 10,
+    })
 
-      return contacts.map(PrismaContactMapper.toDomain)
-    }
-
-    throw new Error('Not page or search defined')
+    return contacts.map(PrismaContactMapper.toDomain)
   }
 
-  async findUnique(id: string): Promise<Contact> {
+  async findUnique(id: string): Promise<Contact | null> {
     const contact = await prisma.contact.findUnique({
       where: {
         id,
