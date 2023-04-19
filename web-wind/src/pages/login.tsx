@@ -1,12 +1,12 @@
-'use client'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Input } from '@/components/Form/Input'
 import { useMutation } from '@tanstack/react-query'
 import { api } from '@/services/api'
-import { setCookie } from 'nookies'
+import { parseCookies, setCookie } from 'nookies'
 import { useRouter } from 'next/navigation'
+import { GetServerSideProps } from 'next'
 
 const signInSchema = z.object({
   email: z.string(),
@@ -84,4 +84,22 @@ export default function LoginPage() {
       </form>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx)
+  const token = cookies['agendav2.token']
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
