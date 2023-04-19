@@ -58,7 +58,7 @@ export default function LoginPage() {
     <div className="h-[80vh] flex items-center justify-center">
       <form
         onSubmit={handleSubmit(handleSignIn)}
-        className="w-full max-w-[360px] p-8 bg-gray-50 shadow-md rounded-md flex flex-col gap-4"
+        className="w-full max-w-[360px] p-8 bg-white shadow-sm rounded-md flex flex-col gap-4"
       >
         <Input
           error={errors.email}
