@@ -1,4 +1,5 @@
 import { AddContactDialog } from '@/components/Dialogs/AddContact'
+import { EditContactDialog } from '@/components/Dialogs/EditContact'
 import { Pagination } from '@/components/Pagination'
 import { api } from '@/services/api'
 import { useQuery } from '@tanstack/react-query'
@@ -89,7 +90,9 @@ export default function Home() {
                     <td className="rounded-l-md">{contact.name}</td>
                     <td>{contact.phone_1}</td>
                     <td>{contact.email}</td>
-                    <td className="rounded-r-md">Opções</td>
+                    <td className="rounded-r-md">
+                      <EditContactDialog contact={contact} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
