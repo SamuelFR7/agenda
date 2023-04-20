@@ -4,7 +4,7 @@ import { Input } from '../Form/Input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/services/api'
 import { useEffect, useState } from 'react'
 
@@ -28,6 +28,7 @@ const addContactSchema = z.object({
 type AddContactSchemaType = z.infer<typeof addContactSchema>
 
 export function AddContactDialog() {
+  const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
   const {
     register,
@@ -42,7 +43,8 @@ export function AddContactDialog() {
     mutationFn: async (values: AddContactSchemaType) => {
       return api.post('/contacts/', values)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['contatos'])
       setIsOpen(false)
     },
   })

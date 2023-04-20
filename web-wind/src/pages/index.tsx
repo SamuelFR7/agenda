@@ -1,9 +1,11 @@
 import { AddContactDialog } from '@/components/Dialogs/AddContact'
+import { ConfirmationDialog } from '@/components/Dialogs/ConfirmationDialog'
 import { EditContactDialog } from '@/components/Dialogs/EditContact'
 import { Pagination } from '@/components/Pagination'
 import { api } from '@/services/api'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import classNames from 'classnames'
+import { Trash } from 'lucide-react'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
@@ -30,6 +32,7 @@ type ContactsListResponse = {
 }
 
 export default function Home() {
+  const queryClient = useQueryClient()
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
 
@@ -43,6 +46,15 @@ export default function Home() {
             : `/contacts/list/${currentPage}/`,
         )
         .then((res) => res.data)
+    },
+  })
+
+  const deleteContactMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return api.delete(`/contacts/${id}`)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['contatos'])
     },
   })
 
@@ -78,7 +90,7 @@ export default function Home() {
                   <th className="text-left font-medium py-3 px-2">Nome</th>
                   <th className="text-left font-medium py-3 px-2">Telefone</th>
                   <th className="text-left font-medium py-3 px-2">Email</th>
-                  <th className="text-left font-medium py-3 px-2">Opções</th>
+                  <th className="text-center font-medium py-3 px-2">Opções</th>
                 </tr>
               </thead>
               <tbody>
@@ -90,8 +102,19 @@ export default function Home() {
                     <td className="rounded-l-md">{contact.name}</td>
                     <td>{contact.phone_1}</td>
                     <td>{contact.email}</td>
-                    <td className="rounded-r-md">
+                    <td className="rounded-r-md justify-center flex items-center gap-2">
                       <EditContactDialog contact={contact} />
+                      <ConfirmationDialog
+                        description="Essa ação não poderá ser desfeita"
+                        name="Certeza que deseja deletar esse contato?"
+                        onConfirm={() =>
+                          deleteContactMutation.mutate(contact.id)
+                        }
+                      >
+                        <button className="p-2 bg-emerald-400 hover:bg-emerald-500 text-white font-medium rounded-md">
+                          <Trash size={16} />
+                        </button>
+                      </ConfirmationDialog>
                     </td>
                   </tr>
                 ))}
