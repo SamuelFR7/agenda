@@ -17,7 +17,7 @@ export class CreateContactController {
       contact_3: z.string().nullish(),
       contact_4: z.string().nullish(),
       contact_5: z.string().nullish(),
-      email: z.string().email().nullish(),
+      email: z.string().nullish(),
       address: z.string().nullish(),
       observations: z.string().nullish(),
     })

@@ -1,3 +1,4 @@
+import { AddContactDialog } from '@/components/Dialogs/AddContact'
 import { Pagination } from '@/components/Pagination'
 import { api } from '@/services/api'
 import { useQuery } from '@tanstack/react-query'
@@ -66,9 +67,7 @@ export default function Home() {
             )}
             placeholder="Pesquisar Contato"
           />
-          <button className="w-[15%] bg-emerald-400 hover:bg-emerald-500 text-white font-medium py-2 rounded-md">
-            Novo Contato
-          </button>
+          <AddContactDialog />
         </div>
         {!isLoading && data ? (
           <>
