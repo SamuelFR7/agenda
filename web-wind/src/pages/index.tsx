@@ -1,6 +1,7 @@
 import { AddContactDialog } from '@/components/Dialogs/AddContact'
 import { ConfirmationDialog } from '@/components/Dialogs/ConfirmationDialog'
 import { EditContactDialog } from '@/components/Dialogs/EditContact'
+import { ViewContactDialog } from '@/components/Dialogs/ViewContact'
 import { Pagination } from '@/components/Pagination'
 import { api } from '@/services/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -103,6 +104,7 @@ export default function Home() {
                     <td>{contact.phone_1}</td>
                     <td>{contact.email}</td>
                     <td className="rounded-r-md justify-center flex items-center gap-2">
+                      <ViewContactDialog contact={contact} />
                       <EditContactDialog contact={contact} />
                       <ConfirmationDialog
                         description="Essa ação não poderá ser desfeita"
