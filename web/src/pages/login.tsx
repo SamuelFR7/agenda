@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { Input } from '@/components/Form/Input'
 import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
-import { useAuth } from '@/components/hooks/useAuth'
+import { useAuth } from '@/hooks/useAuth'
 
 const signInSchema = z.object({
   email: z.string(),

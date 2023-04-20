@@ -1,27 +1,24 @@
-import React from 'react'
+import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { Header } from '@/components/Header'
+import { AuthProvider } from '@/contexts/AuthContext'
+import Head from 'next/head'
 
-import { AuthProvider } from '../contexts/AuthContext'
-import { ChakraProvider } from '@chakra-ui/react'
-import { theme } from '../styles/theme'
-import { Header } from '../components/Header'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '../services/queryClient'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+const queryClient = new QueryClient()
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <AuthProvider>
+    <>
+      <Head>
+        <title>Agenda</title>
+      </Head>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
           <Header />
           <Component {...pageProps} />
-        </AuthProvider>
-      </ChakraProvider>
-
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+        </QueryClientProvider>
+      </AuthProvider>
+    </>
   )
 }
-
-export default MyApp
