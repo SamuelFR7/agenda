@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useAuth } from './hooks/useAuth'
+import { useAuth } from '@/hooks/useAuth'
 
 const Header = () => {
   const { asPath } = useRouter()
