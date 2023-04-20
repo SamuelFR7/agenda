@@ -2,11 +2,9 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Input } from '@/components/Form/Input'
-import { useMutation } from '@tanstack/react-query'
-import { api } from '@/services/api'
-import { parseCookies, setCookie } from 'nookies'
-import { useRouter } from 'next/navigation'
+import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
+import { useAuth } from '@/components/hooks/useAuth'
 
 const signInSchema = z.object({
   email: z.string(),
@@ -15,15 +13,8 @@ const signInSchema = z.object({
 
 type SignInSchemaType = z.infer<typeof signInSchema>
 
-interface SignInResponse {
-  user: {
-    username: string
-  }
-  token: string
-}
-
 export default function LoginPage() {
-  const router = useRouter()
+  const { signIn } = useAuth()
   const {
     register,
     formState: { errors, isLoading },
@@ -32,26 +23,11 @@ export default function LoginPage() {
     resolver: zodResolver(signInSchema),
   })
 
-  const signInMutation = useMutation({
-    mutationFn: async (credentials: SignInSchemaType) => {
-      return api
-        .post<SignInResponse>('/users/session', credentials)
-        .then((res) => res.data)
-    },
-    onSuccess: ({ token }) => {
-      setCookie(undefined, 'agendav2.token', token, {
-        maxAge: 60 * 24, // 1 Day
-        path: '/',
-      })
-
-      api.defaults.headers.Authorization = `Bearer ${token}`
-
-      router.push('/')
-    },
-  })
-
   const handleSignIn: SubmitHandler<SignInSchemaType> = async (values) => {
-    signInMutation.mutate(values)
+    await signIn({
+      email: values.email,
+      password: values.password,
+    })
   }
 
   return (

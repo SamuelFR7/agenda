@@ -27,6 +27,9 @@ export class PrismaContactsRepository implements ContactsRepository {
           },
         },
         take: 10,
+        orderBy: {
+          name: 'asc',
+        },
       })
 
       return contacts.map(PrismaContactMapper.toDomain)
@@ -35,6 +38,9 @@ export class PrismaContactsRepository implements ContactsRepository {
     const contacts = await prisma.contact.findMany({
       take: 10,
       skip: (page - 1) * 10,
+      orderBy: {
+        name: 'asc',
+      },
     })
 
     return contacts.map(PrismaContactMapper.toDomain)
