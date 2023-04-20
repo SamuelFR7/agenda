@@ -2,6 +2,7 @@ import { AddContactDialog } from '@/components/Dialogs/AddContact'
 import { ConfirmationDialog } from '@/components/Dialogs/ConfirmationDialog'
 import { EditContactDialog } from '@/components/Dialogs/EditContact'
 import { ViewContactDialog } from '@/components/Dialogs/ViewContact'
+import { Loader } from '@/components/Loader'
 import { Pagination } from '@/components/Pagination'
 import { api } from '@/services/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -37,7 +38,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['contatos', currentPage, search],
     queryFn: async () => {
       return api
@@ -59,15 +60,10 @@ export default function Home() {
     },
   })
 
-  if (error) {
-    console.log(error)
-    return <h1>Error</h1>
-  }
-
   return (
     <div className="text-gray-800 h-screen w-full flex items-center justify-center">
       <div className="w-full max-w-[1200px] bg-white shadow-sm rounded-md p-4">
-        <h2 className="font-medium text-xl">Contatos</h2>
+        <h2 className="font-medium text-2xl">Contatos</h2>
         <div className="w-full flex items-center justify-between mt-4">
           <input
             value={search}
@@ -130,9 +126,9 @@ export default function Home() {
             />
           </>
         ) : (
-          <>
-            <h1>Loading</h1>
-          </>
+          <div className="mt-6 w-full items-center justify-center flex">
+            <Loader />
+          </div>
         )}
       </div>
     </div>
