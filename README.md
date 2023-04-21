@@ -1,6 +1,4 @@
-<h1 align="center">
-    <img alt="Agenda" src=".github/readme/assets/logo.png" width="300" />
-</h1>
+<h1 align="center">Agenda</h1>
 
 <p align="center">
    <a href="https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/">
