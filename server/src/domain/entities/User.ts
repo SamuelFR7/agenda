@@ -1,7 +1,7 @@
 import { Entity } from '@/core/domain/Entity'
 
 interface UserProps {
-  email: string
+  username: string
   password: string
 }
 
@@ -10,12 +10,12 @@ class User extends Entity<UserProps> {
     return this._id
   }
 
-  public get email(): string {
-    return this.props.email
+  public get username(): string {
+    return this.props.username
   }
 
-  public set email(email: string) {
-    this.props.email = email
+  public set username(username: string) {
+    this.props.username = username
   }
 
   public get password(): string {
