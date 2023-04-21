@@ -8,7 +8,7 @@ type User = {
 }
 
 type SignInCredentials = {
-  email: string
+  username: string
   password: string
 }
 
@@ -42,9 +42,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>()
   const isAuthenticated = !!user
 
-  async function signIn({ email, password }: SignInCredentials) {
+  async function signIn({ username, password }: SignInCredentials) {
     const response = await api.post<SignInResponse>('/users/session', {
-      email,
+      username,
       password,
     })
 

@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next'
 import { useAuth } from '@/hooks/useAuth'
 
 const signInSchema = z.object({
-  email: z.string(),
+  username: z.string().toUpperCase(),
   password: z.string(),
 })
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const handleSignIn: SubmitHandler<SignInSchemaType> = async (values) => {
     await signIn({
-      email: values.email,
+      username: values.username,
       password: values.password,
     })
   }
@@ -37,8 +37,8 @@ export default function LoginPage() {
         className="w-full max-w-[360px] p-8 bg-white shadow-sm rounded-md flex flex-col gap-4"
       >
         <Input
-          error={errors.email}
-          {...register('email')}
+          error={errors.username}
+          {...register('username')}
           type="text"
           label="Usuário"
           placeholder="Seu usuário"
