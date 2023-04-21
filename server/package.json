@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsup src/ && npx prisma migrate deploy",
+    "build": "tsup src/",
     "start": "node dist/server.js",
     "start:dev": "tsx --watch src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

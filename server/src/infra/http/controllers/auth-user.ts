@@ -6,11 +6,11 @@ import { AuthenticateUserUseCase } from '@/application/use-cases/auth-user'
 export class AuthUserController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     const authUserSchema = z.object({
-      email: z.string(),
+      username: z.string(),
       password: z.string(),
     })
 
-    const { email, password } = authUserSchema.parse(req.body)
+    const { username, password } = authUserSchema.parse(req.body)
 
     const prismaUserRepository = new PrismaUsersRepository()
     const authenticateUserUseCase = new AuthenticateUserUseCase(
@@ -19,7 +19,7 @@ export class AuthUserController {
 
     try {
       const user = await authenticateUserUseCase.execute({
-        email,
+        username,
         password,
       })
 
@@ -34,7 +34,7 @@ export class AuthUserController {
 
       return res.status(200).send({
         user: {
-          email: user.email,
+          username: user.username,
         },
         token,
       })

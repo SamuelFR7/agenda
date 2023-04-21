@@ -5,7 +5,7 @@ export class PrismaUserMapper {
   static toPrisma(user: User): RawUser {
     return {
       id: user.id,
-      email: user.email,
+      username: user.username,
       password: user.password,
     }
   }
@@ -13,7 +13,7 @@ export class PrismaUserMapper {
   static toDomain(raw: RawUser): User {
     return new User(
       {
-        email: raw.email,
+        username: raw.username,
         password: raw.password,
       },
       raw.id,

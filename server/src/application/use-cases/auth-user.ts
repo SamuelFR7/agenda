@@ -4,7 +4,7 @@ import { UseCaseError } from '../errors/use-case-error'
 import { User } from '@/domain/entities/User'
 
 interface AuthenticateUseCaseRequest {
-  email: string
+  username: string
   password: string
 }
 
@@ -12,19 +12,19 @@ class AuthenticateUserUseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async execute({
-    email,
+    username,
     password,
   }: AuthenticateUseCaseRequest): Promise<User> {
-    const user = await this.usersRepository.findByEmail(email)
+    const user = await this.usersRepository.findByUsername(username)
 
     if (!user) {
-      throw new UseCaseError('email or password incorrect!')
+      throw new UseCaseError('Username or password incorrect!')
     }
 
     const doesPasswordMatches = await compare(password, user.password)
 
     if (!doesPasswordMatches) {
-      throw new UseCaseError('email or password incorrect!')
+      throw new UseCaseError('Username or password incorrect!')
     }
 
     return user
