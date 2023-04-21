@@ -33,14 +33,6 @@
 * [How to Run](#computer-how-to-run)
 * [License](#page_facing_up-license)
 
-# :camera: Screenshots
-<div align="center">
-   <img src="./.github/readme/assets/screen1.png" width="400px">
-   <img src="./.github/readme/assets/screen2.png" width="400px">
-   <img src="./.github/readme/assets/screen3.png" width="400px">
-   <img src="./.github/readme/assets/screen4.png" width="400px">
-</div>
-
 # :rocket: Technologies
 This project was made using the follow technologies:
 

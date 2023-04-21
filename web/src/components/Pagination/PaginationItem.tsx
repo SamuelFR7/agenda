@@ -1,46 +1,28 @@
-import React from 'react'
-import { Button, useColorModeValue } from '@chakra-ui/react'
-
-interface IPaginationItemProps {
+interface PaginationItemProps {
   isCurrent?: boolean
   number: number
   onPageChange: (page: number) => void
 }
 
 export function PaginationItem({
-  isCurrent = false,
+  isCurrent,
   number,
   onPageChange,
-}: IPaginationItemProps) {
-  const notCurrentBg = useColorModeValue('gray.200', 'gray.500')
-
+}: PaginationItemProps) {
   if (isCurrent) {
     return (
-      <Button
-        size="sm"
-        fontSize="xs"
-        width="4"
-        colorScheme="green"
-        disabled
-        _disabled={{ bg: 'green.400', cursor: 'default' }}
-      >
+      <button className="text-sm h-8 w-9 text-white font-bold rounded-md bg-emerald-400 cursor-not-allowed">
         {number}
-      </Button>
+      </button>
     )
   }
 
   return (
-    <Button
-      size="sm"
-      fontSize="xs"
-      width="4"
-      bg={notCurrentBg}
-      _hover={{
-        bg: 'gray.300',
-      }}
+    <button
+      className="text-sm h-8 w-9 bg-gray-200 font-bold rounded-md hover:bg-gray-300"
       onClick={() => onPageChange(number)}
     >
       {number}
-    </Button>
+    </button>
   )
 }
