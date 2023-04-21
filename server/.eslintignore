@@ -1,3 +1,2 @@
-/*.js
-dist
-@types
+*.js
+node_modules

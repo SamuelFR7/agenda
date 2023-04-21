@@ -1,262 +1,156 @@
-import React, { useState } from 'react'
-import Head from 'next/head'
+import { AddContactDialog } from '@/components/Dialogs/AddContact'
+import { ConfirmationDialog } from '@/components/Dialogs/ConfirmationDialog'
+import { EditContactDialog } from '@/components/Dialogs/EditContact'
+import { ViewContactDialog } from '@/components/Dialogs/ViewContact'
+import { Loader } from '@/components/Loader'
+import { Pagination } from '@/components/Pagination'
+import { api } from '@/services/api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import classNames from 'classnames'
+import { Trash } from 'lucide-react'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import { useState } from 'react'
 
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Input as ChakraInput,
-  useDisclosure,
-  Spinner,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-  theme,
-} from '@chakra-ui/react'
-import {
-  RiAddLine,
-  RiDeleteBinLine,
-  RiEyeLine,
-  RiPencilLine,
-} from 'react-icons/ri'
-import { api } from '../services/apiClient'
-import { AddPerson } from '../components/AddPerson'
-import { ViewPerson } from '../components/ViewPerson'
-import { EditPerson } from '../components/EditPersonModal/'
-import { Pagination } from '../components/Pagination/'
-import { usePeople } from '../hooks/usePeople'
-import { queryClient } from '../services/queryClient'
-import { withSSRAuth } from '../utils/withSSRAuth'
-import Swal from 'sweetalert2'
+type ContactsListResponse = {
+  contacts: {
+    id: string
+    name: string
+    phone_1: string
+    phone_2: string
+    phone_3: string
+    phone_4: string
+    phone_5: string
+    contact_1: string
+    contact_2: string
+    contact_3: string
+    contact_4: string
+    contact_5: string
+    address: string
+    email: string
+    observations: string
+  }[]
+  totalCount: number
+}
 
-function Home() {
-  const {
-    isOpen: isAddOpen,
-    onOpen: onAddOpen,
-    onClose: onAddClose,
-  } = useDisclosure()
-  const {
-    isOpen: isViewOpen,
-    onOpen: onViewOpen,
-    onClose: onViewClose,
-  } = useDisclosure()
-  const {
-    isOpen: isEditOpen,
-    onOpen: onEditOpen,
-    onClose: onEditClose,
-  } = useDisclosure()
+export default function Home() {
+  const queryClient = useQueryClient()
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
-  const { data, isLoading, error } = usePeople(
-    currentPage,
-    search.toUpperCase()
-  )
-  const [personToView, setPersonToView] = useState('')
-  const [personToEdit, setPersonToEdit] = useState('')
 
-  const isWideVersion = useBreakpointValue({
-    base: false,
-    lg: true,
+  const { data, isLoading } = useQuery({
+    queryKey: ['contatos', currentPage, search],
+    queryFn: async () => {
+      return api
+        .get<ContactsListResponse>(
+          search
+            ? `/contacts/list/${currentPage}/${search.toUpperCase()}`
+            : `/contacts/list/${currentPage}/`,
+        )
+        .then((res) => res.data)
+    },
   })
 
-  function handleOpenView(id: string) {
-    setPersonToView(id)
-    onViewOpen()
-  }
-
-  function handleOpenEdit(id: string) {
-    setPersonToEdit(id)
-    onEditOpen()
-  }
-
-  async function handleDelete(id: string) {
-    const { isConfirmed } = await Swal.fire({
-      title: 'Certeza de que quer apagar este contato?',
-      confirmButtonText: 'Apagar',
-      icon: 'question',
-      confirmButtonColor: theme.colors.red['500'],
-      cancelButtonColor: theme.colors.gray['400'],
-      cancelButtonText: 'Cancelar',
-      showCancelButton: true,
-    })
-
-    if (isConfirmed) {
-      await api.delete(`/people/delete/${id}`)
-      queryClient.invalidateQueries(['people'])
-      Swal.fire({
-        title: 'Contato apagado',
-        icon: 'success',
-        timer: (3 / 2) * 10 * 10 * 10, // 1.5 Seconds,
-        timerProgressBar: true,
-      })
-    }
-  }
-
-  const tableBg = useColorModeValue('gray.50', 'gray.800')
-  const hoverInputBg = useColorModeValue('gray.100', 'gray.900')
-  const ButtonsBg = useColorModeValue('green.400', 'green.600')
+  const deleteContactMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return api.delete(`/contacts/${id}`)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['contatos'])
+    },
+  })
 
   return (
-    <>
-      <Head>
-        <title>Agenda</title>
-      </Head>
-      <AddPerson isOpen={isAddOpen} onClose={onAddClose} />
-      <ViewPerson
-        isOpen={isViewOpen}
-        onClose={onViewClose}
-        personToView={personToView}
-        setPersonToView={setPersonToView}
-      />
-      <EditPerson
-        isOpen={isEditOpen}
-        onClose={onEditClose}
-        personToEdit={personToEdit}
-        setPersonToEdit={setPersonToEdit}
-      />
-      <Flex
-        w="100%"
-        my="16"
-        maxWidth={1290}
-        mx="auto"
-        px="6"
-        direction="column"
-      >
-        <Box flex={1} borderRadius={8} bg={tableBg} p="8">
-          <Flex mb="8" justify="space-between" align="center">
-            <ChakraInput
-              size="lg"
-              focusBorderColor="green.500"
-              _hover={{ bgColor: `${hoverInputBg}` }}
-              placeholder="Pesquisar"
-              type="search"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            {isWideVersion && (
-              <Button
-                ml="8"
-                size="lg"
-                fontSize="md"
-                colorScheme="green"
-                bg={ButtonsBg}
-                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                onClick={onAddOpen}
-              >
-                Adicionar Contato
-              </Button>
+    <div className="text-gray-800 h-screen w-full flex items-center justify-center">
+      <div className="w-full max-w-[1200px] bg-white shadow-sm rounded-md p-4">
+        <h2 className="font-medium text-2xl">Contatos</h2>
+        <div className="w-full flex items-center justify-between mt-4">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className={classNames(
+              'bg-slate-100 w-[83%] px-3 py-2 rounded-md shadow-sm',
+              'focus:placeholder:px-1 placeholder:duration-200',
+              'disabled:cursor-not-allowed',
+              'focus:outline-none focus:ring-1',
+              'border border-transparent focus:border-emerald-400 focus:ring-emerald-400',
             )}
-          </Flex>
-          {isLoading ? (
-            <Flex justify="center">
-              <Spinner />
-            </Flex>
-          ) : error ? (
-            <Flex justify="center">
-              <Text>Falha ao obter dados dos contatos</Text>
-            </Flex>
-          ) : (
-            <>
-              <Table colorScheme="blackAlpha">
-                <Thead>
-                  <Tr>
-                    <Th>Nome</Th>
-                    {isWideVersion && (
-                      <>
-                        <Th>Telefone</Th>
-                        <Th></Th>
-                        <Th></Th>
-                      </>
-                    )}
-                    <Th></Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {data.people.map((person) => {
-                    return (
-                      <Tr key={person.id}>
-                        <Td>{person.RazaoSocial}</Td>
-                        {isWideVersion && (
-                          <>
-                            <Td>{person.Telefone1}</Td>
-                            <Td>
-                              <Button
-                                size="sm"
-                                fontSize="sm"
-                                colorScheme="green"
-                                bg={ButtonsBg}
-                                onClick={() => handleOpenView(person.id)}
-                              >
-                                <Icon as={RiEyeLine} />
-                              </Button>
-                            </Td>
-                            <Td>
-                              <Button
-                                size="sm"
-                                fontSize="sm"
-                                colorScheme="green"
-                                bg={ButtonsBg}
-                                onClick={() => handleOpenEdit(person.id)}
-                              >
-                                <Icon as={RiPencilLine} />
-                              </Button>
-                            </Td>
-                            <Td>
-                              <Button
-                                size="sm"
-                                fontSize="sm"
-                                colorScheme="green"
-                                bg={ButtonsBg}
-                                onClick={() => handleDelete(person.id)}
-                              >
-                                <Icon as={RiDeleteBinLine} />
-                              </Button>
-                            </Td>
-                          </>
-                        )}
-                        {!isWideVersion && (
-                          <Td>
-                            <Button
-                              size="sm"
-                              fontSize="sm"
-                              colorScheme="green"
-                              onClick={() => handleOpenView(person.id)}
-                            >
-                              <Icon as={RiEyeLine} />
-                            </Button>
-                          </Td>
-                        )}
-                      </Tr>
-                    )
-                  })}
-                </Tbody>
-              </Table>
-
-              {!search && (
-                <Pagination
-                  totalCountOfRegisters={data.totalCount}
-                  onPageChange={setCurrentPage}
-                  currentPage={currentPage}
-                />
-              )}
-            </>
-          )}
-        </Box>
-      </Flex>
-    </>
+            placeholder="Pesquisar Contato"
+          />
+          <AddContactDialog />
+        </div>
+        {!isLoading && data ? (
+          <>
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th className="text-left font-medium py-3 px-2">Nome</th>
+                  <th className="text-left font-medium py-3 px-2">Telefone</th>
+                  <th className="text-left font-medium py-3 px-2">Email</th>
+                  <th className="text-center font-medium py-3 px-2">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.contacts.map((contact) => (
+                  <tr
+                    className="[&_td]:py-3 [&_td]:px-3 odd:bg-slate-100"
+                    key={contact.id}
+                  >
+                    <td className="rounded-l-md">{contact.name}</td>
+                    <td>{contact.phone_1}</td>
+                    <td>{contact.email}</td>
+                    <td className="rounded-r-md">
+                      <div className="flex gap-2 items-center justify-center">
+                        <ViewContactDialog contact={contact} />
+                        <EditContactDialog contact={contact} />
+                        <ConfirmationDialog
+                          description="Essa ação não poderá ser desfeita"
+                          name="Certeza que deseja deletar esse contato?"
+                          onConfirm={() =>
+                            deleteContactMutation.mutate(contact.id)
+                          }
+                        >
+                          <button className="p-2 bg-emerald-400 hover:bg-emerald-500 text-white font-medium rounded-md">
+                            <Trash size={16} />
+                          </button>
+                        </ConfirmationDialog>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <Pagination
+              onPageChange={setCurrentPage}
+              totalCountOfRegisters={data.totalCount}
+              currentPage={currentPage}
+              registersPerPage={10}
+            />
+          </>
+        ) : (
+          <div className="mt-6 w-full items-center justify-center flex">
+            <Loader />
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
-export default Home
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx)
+  const token = cookies['agendav2.token']
 
-export const getServerSideProps = withSSRAuth(async () => {
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
   return {
     props: {},
   }
-})
+}
