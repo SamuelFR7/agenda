@@ -62,7 +62,7 @@ export default function Home() {
 
   return (
     <div className="text-gray-800 h-screen w-full flex items-center justify-center">
-      <div className="w-full max-w-[1290px] bg-white shadow-sm rounded-md p-4">
+      <div className="w-full max-w-[1200px] bg-white shadow-sm rounded-md p-4">
         <h2 className="font-medium text-2xl">Contatos</h2>
         <div className="w-full flex items-center justify-between mt-4">
           <input
@@ -83,7 +83,7 @@ export default function Home() {
           <>
             <table className="w-full">
               <thead>
-                <tr className="">
+                <tr>
                   <th className="text-left font-medium py-3 px-2">Nome</th>
                   <th className="text-left font-medium py-3 px-2">Telefone</th>
                   <th className="text-left font-medium py-3 px-2">Email</th>
@@ -93,26 +93,28 @@ export default function Home() {
               <tbody>
                 {data.contacts.map((contact) => (
                   <tr
-                    className="[&_td]:py-3 [&_td]:px-3 [&_td]:odd:bg-slate-100"
+                    className="[&_td]:py-3 [&_td]:px-3 odd:bg-slate-100"
                     key={contact.id}
                   >
                     <td className="rounded-l-md">{contact.name}</td>
                     <td>{contact.phone_1}</td>
                     <td>{contact.email}</td>
-                    <td className="rounded-r-md justify-center flex items-center gap-2">
-                      <ViewContactDialog contact={contact} />
-                      <EditContactDialog contact={contact} />
-                      <ConfirmationDialog
-                        description="Essa ação não poderá ser desfeita"
-                        name="Certeza que deseja deletar esse contato?"
-                        onConfirm={() =>
-                          deleteContactMutation.mutate(contact.id)
-                        }
-                      >
-                        <button className="p-2 bg-emerald-400 hover:bg-emerald-500 text-white font-medium rounded-md">
-                          <Trash size={16} />
-                        </button>
-                      </ConfirmationDialog>
+                    <td className="rounded-r-md">
+                      <div className="flex gap-2 items-center justify-center">
+                        <ViewContactDialog contact={contact} />
+                        <EditContactDialog contact={contact} />
+                        <ConfirmationDialog
+                          description="Essa ação não poderá ser desfeita"
+                          name="Certeza que deseja deletar esse contato?"
+                          onConfirm={() =>
+                            deleteContactMutation.mutate(contact.id)
+                          }
+                        >
+                          <button className="p-2 bg-emerald-400 hover:bg-emerald-500 text-white font-medium rounded-md">
+                            <Trash size={16} />
+                          </button>
+                        </ConfirmationDialog>
+                      </div>
                     </td>
                   </tr>
                 ))}
