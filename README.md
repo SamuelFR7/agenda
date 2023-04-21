@@ -39,8 +39,8 @@ This project was made using the follow technologies:
 * [Typescript](https://www.typescriptlang.org/)      
 * [React](https://reactjs.org/)      
 * [NextJS](https://nextjs.org)
-* [Chakra UI](https://chakra-ui.com)
-* [ExpressJS](https://expressjs.com/)
+* [Tailwind](https://tailwindcss.com)
+* [Fastify](https://www.fastify.io)
 * [Prisma](https://www.prisma.io)
 * [PostgreSQL](https://www.postgresql.org)
 
@@ -53,14 +53,20 @@ $ git clone https://github.com/SamuelFR7/agenda-react.git
 ```
 
 ```bash
-# Install Dependencies in backend and frontend
-$ yarn
+# Install dependencies in backend
+$ npm install
 
-# Create a .env with .env.example schema and run migrations in backend
-$ yarn prisma migrate dev
+# Run migrations in backend
+$ npx prisma migrate dev
 
-# Run Aplication in backend in frontend
-$ yarn start
+# Run application in backend
+$ npx start:dev
+
+# Install dependencies in frontend
+$ pnpm install
+
+# Run application in frontend
+$ pnpm dev
 ```
 Go to http://localhost:3000/ to see the result.
 
