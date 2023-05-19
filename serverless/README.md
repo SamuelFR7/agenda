@@ -1,2 +1,2 @@
-- [ ] Solve auth
+- [X] Solve auth
 - [ ] Import db

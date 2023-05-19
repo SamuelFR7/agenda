@@ -20,6 +20,9 @@ export const contactsRouter = createTRPCRouter({
           },
           skip: (input.page - 1) * 10,
           take: 10,
+          orderBy: {
+            name: 'asc',
+          },
         })
 
         const count = await ctx.prisma.contact.count({
@@ -39,6 +42,9 @@ export const contactsRouter = createTRPCRouter({
       const contacts = await ctx.prisma.contact.findMany({
         skip: (input.page - 1) * 10,
         take: 10,
+        orderBy: {
+          name: 'asc',
+        },
       })
 
       const count = await ctx.prisma.contact.count()
