@@ -1,4 +1,4 @@
-*.js
-*.cjs
-*.mjs
 node_modules
+*.cjs
+*.js
+*.mjs
