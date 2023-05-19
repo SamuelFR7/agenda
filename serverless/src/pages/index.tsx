@@ -40,7 +40,12 @@ export default function Home() {
         <div className="w-full flex items-center justify-between mt-4">
           <input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              if (search.length === 0) {
+                setCurrentPage(1)
+              }
+              setSearch(e.target.value)
+            }}
             className={classNames(
               'bg-slate-100 w-[83%] px-3 py-2 rounded-md shadow-sm',
               'focus:placeholder:px-1 placeholder:duration-200',

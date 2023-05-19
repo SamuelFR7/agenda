@@ -47,6 +47,7 @@ export function EditContactDialog({
   const editContactMutation = api.contacts.edit.useMutation({
     onSuccess: () => {
       utils.contacts.getMany.invalidate()
+      setIsOpen(false)
     },
   })
 

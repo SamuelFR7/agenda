@@ -9,7 +9,7 @@ import { Input } from '~/components/Form/Input'
 import { getServerAuthSession } from '~/server/auth'
 
 const signInSchema = z.object({
-  username: z.string().toLowerCase(),
+  username: z.string().toUpperCase(),
   password: z.string(),
 })
 
