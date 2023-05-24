@@ -7,7 +7,7 @@ const Header = () => {
   const isLogin = asPath === '/login'
 
   return (
-    <div className="bg-emerald-400 text-white w-full">
+    <div className="bg-emerald-400 text-white w-full px-4">
       <div className="w-full max-w-[1290px] mx-auto flex justify-between items-center py-3">
         <h1 className="text-3xl font-bold">Agenda</h1>
         {!isLogin && (

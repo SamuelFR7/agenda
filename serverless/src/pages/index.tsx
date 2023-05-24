@@ -10,6 +10,14 @@ import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import { api } from '~/utils/api'
 import { getServerAuthSession } from '~/server/auth'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '~/components/Table'
 
 export default function Home() {
   const utils = api.useContext()
@@ -34,10 +42,10 @@ export default function Home() {
   }
 
   return (
-    <div className="text-gray-800 h-screen w-full flex items-center justify-center">
-      <div className="w-full max-w-[1200px] bg-white shadow-sm rounded-md p-4">
+    <div className="text-gray-800 mt-8 lg:w-[60%] w-[80%] py-4 mx-auto">
+      <div className=" bg-white shadow-sm rounded-md p-4">
         <h2 className="font-medium text-2xl">Contatos</h2>
-        <div className="w-full flex items-center justify-between mt-4">
+        <div className="w-full flex flex-col gap-4 md:flex-row md:gap-0 items-center justify-between mt-4">
           <input
             value={search}
             onChange={(e) => {
@@ -59,25 +67,22 @@ export default function Home() {
         </div>
         {!isLoading && data ? (
           <>
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <th className="text-left font-medium py-3 px-2">Nome</th>
-                  <th className="text-left font-medium py-3 px-2">Telefone</th>
-                  <th className="text-left font-medium py-3 px-2">Email</th>
-                  <th className="text-center font-medium py-3 px-2">Opções</th>
-                </tr>
-              </thead>
-              <tbody>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Telefone</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Opções</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {data.contacts.map((contact) => (
-                  <tr
-                    className="[&_td]:py-3 [&_td]:px-3 odd:bg-slate-100"
-                    key={contact.id}
-                  >
-                    <td className="rounded-l-md">{contact.name}</td>
-                    <td>{contact.phone_1}</td>
-                    <td>{contact.email}</td>
-                    <td className="rounded-r-md">
+                  <TableRow key={contact.id}>
+                    <TableCell>{contact.name}</TableCell>
+                    <TableCell>{contact.phone_1}</TableCell>
+                    <TableCell>{contact.email}</TableCell>
+                    <TableCell>
                       <div className="flex gap-2 items-center justify-center">
                         <ViewContactDialog contact={contact} />
                         <EditContactDialog contact={contact} />
@@ -91,11 +96,11 @@ export default function Home() {
                           </button>
                         </ConfirmationDialog>
                       </div>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
             <Pagination
               onPageChange={setCurrentPage}
               totalCountOfRegisters={data.count}

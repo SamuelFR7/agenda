@@ -37,7 +37,7 @@ export function Pagination({
       : []
 
   return (
-    <div className="text-sm p-4 flex justify-between items-center rounded-b-md">
+    <div className="text-sm p-4 flex flex-col gap-2 md:flex-row md:gap-0 justify-between items-center rounded-b-md">
       <div className="text-text-gray">
         <strong>{(currentPage - 1) * 10 + 1}</strong> -{' '}
         <strong>

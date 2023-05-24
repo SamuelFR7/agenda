@@ -58,7 +58,7 @@ export function AddContactDialog() {
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
-        <button className="w-[15%] bg-emerald-400 hover:bg-emerald-500 text-white font-medium py-2 rounded-md">
+        <button className="md:w-[15%] w-[83%] bg-emerald-400 hover:bg-emerald-500 text-white font-medium py-2 rounded-md">
           Novo Contato
         </button>
       </Dialog.Trigger>
