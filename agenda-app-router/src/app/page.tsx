@@ -1,6 +1,8 @@
 import { db } from "@/db"
-import { Contact, contacts } from "@/db/schema"
+import { contacts, type Contact } from "@/db/schema"
 import { and, asc, desc, like, sql } from "drizzle-orm"
+
+import { Shell } from "@/components/shells/shell"
 
 interface IndexPageProps {
   searchParams: {
@@ -71,8 +73,8 @@ export default async function Home({ searchParams }: IndexPageProps) {
   const pageCount = Math.ceil(totalContacts / limit)
 
   return (
-    <main>
+    <Shell>
       <h1>Agenda</h1>
-    </main>
+    </Shell>
   )
 }
