@@ -1,7 +1,8 @@
 import { db } from "@/db"
-import { contacts, type Contact } from "@/db/schema"
-import { and, asc, desc, like, sql } from "drizzle-orm"
+import { contacts } from "@/db/schema"
+import { and, like, sql } from "drizzle-orm"
 
+import { ContactTableShell } from "@/components/shells/contact-table-shell"
 import { Shell } from "@/components/shells/shell"
 
 interface IndexPageProps {
@@ -11,9 +12,9 @@ interface IndexPageProps {
 }
 
 export default async function Home({ searchParams }: IndexPageProps) {
-  const { page, per_page, sort, name } = searchParams
+  const { page, name } = searchParams
 
-  const limit = typeof per_page === "string" ? parseInt(per_page) : 10
+  const limit = 10
 
   const offset =
     typeof page === "string"
@@ -21,14 +22,6 @@ export default async function Home({ searchParams }: IndexPageProps) {
         ? (parseInt(page) - 1) * limit
         : 0
       : 0
-
-  const [column, order] =
-    typeof sort === "string"
-      ? (sort.split(".") as [
-          keyof Contact | undefined,
-          "asc" | "desc" | undefined
-        ])
-      : []
 
   const { allContacts, totalContacts } = await db.transaction(async (tx) => {
     const allContacts = await tx
@@ -43,13 +36,7 @@ export default async function Home({ searchParams }: IndexPageProps) {
             : undefined
         )
       )
-      .orderBy(
-        column && column in contacts
-          ? order === "asc"
-            ? asc(contacts[column])
-            : desc(contacts[column])
-          : desc(contacts.name)
-      )
+      .orderBy(contacts.name)
 
     const totalContacts = await tx
       .select({
@@ -70,11 +57,13 @@ export default async function Home({ searchParams }: IndexPageProps) {
     }
   })
 
-  const pageCount = Math.ceil(totalContacts / limit)
-
   return (
     <Shell>
-      <h1>Agenda</h1>
+      <ContactTableShell
+        allContacts={allContacts}
+        totalContacts={totalContacts}
+        currentPage={page}
+      />
     </Shell>
   )
 }
