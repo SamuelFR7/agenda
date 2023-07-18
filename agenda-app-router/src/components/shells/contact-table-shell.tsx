@@ -1,15 +1,14 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { type Contact } from "@/db/schema"
 
 import { useDebounce } from "@/hooks/use-debounce"
 
+import { NewContactDialog } from "../dialogs/new-contact-dialog"
 import { TableLoading } from "../table-loading"
 import { TablePagination } from "../table-pagination"
-import { Button } from "../ui/button"
 import { Card, CardContent } from "../ui/card"
 import { Input } from "../ui/input"
 import {
@@ -54,9 +53,7 @@ export function ContactTableShell({
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <Link className="w-full max-w-[300px]" href="/contacts/new">
-          <Button className="w-full font-medium">Novo Contato</Button>
-        </Link>
+        <NewContactDialog />
       </div>
       <Card className="w-full">
         <CardContent className="p-0">
