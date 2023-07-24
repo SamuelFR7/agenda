@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -19,11 +19,12 @@ export function TablePagination({
   currentPage,
   dataCount,
 }: TablePaginationProps) {
+  const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
 
   function setPage(page: number) {
-    router.push(`${pathname}?page=${page}`)
+    router.push(`${pathname}?name=${searchParams.get('name')}&page=${page}`)
   }
 
   return (
