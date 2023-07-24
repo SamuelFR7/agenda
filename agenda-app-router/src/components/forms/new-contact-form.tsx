@@ -1,6 +1,6 @@
 "use client"
 
-import React, { SetStateAction } from "react"
+import React, { type SetStateAction } from "react"
 import { newContactAction } from "@/_actions/contact"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
