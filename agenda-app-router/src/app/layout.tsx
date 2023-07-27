@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster"
+import { Providers } from "@/components/providers"
 
 import "@/styles/globals.css"
 
@@ -18,9 +19,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-      <Toaster />
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+        <Toaster />
+      </html>
+    </Providers>
   )
 }
