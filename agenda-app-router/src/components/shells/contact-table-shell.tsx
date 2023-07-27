@@ -80,10 +80,12 @@ export function ContactTableShell({
                 <TableCell className="truncate">{contact.name}</TableCell>
                 <TableCell>{contact.phone1}</TableCell>
                 <TableCell>{contact.email}</TableCell>
-                <TableCell className="flex items-center gap-4 text-center">
-                  <UpdateContactDialog contact={contact} />
-                  <DeleteContactAlertDialog id={contact.id} />
-                  <ViewContactDialog contact={contact} />
+                <TableCell>
+                  <div className="flex items-center justify-center gap-2">
+                    <UpdateContactDialog contact={contact} />
+                    <DeleteContactAlertDialog id={contact.id} />
+                    <ViewContactDialog contact={contact} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))
