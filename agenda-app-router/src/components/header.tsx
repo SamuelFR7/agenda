@@ -23,7 +23,7 @@ export function Header({ session }: HeaderProps) {
       <div className="mx-auto flex w-full max-w-[1290px] items-center justify-between py-3">
         <h1 className="text-3xl font-bold">Agenda</h1>
         {session && (
-          <Button variant="ghost" type="button" onClick={submitSignOut}>
+          <Button type="button" onClick={submitSignOut}>
             Sair
           </Button>
         )}

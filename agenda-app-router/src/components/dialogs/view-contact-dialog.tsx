@@ -32,7 +32,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Nome</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.name}
             />
@@ -41,7 +41,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Telefone 1</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.phone1}
             />
@@ -50,7 +50,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Contato 1</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.contact1 ?? ""}
             />
@@ -59,7 +59,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Telefone 2</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.phone2 ?? ""}
             />
@@ -68,7 +68,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Contato 2</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.contact2 ?? ""}
             />
@@ -77,7 +77,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Telefone 3</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.phone3 ?? ""}
             />
@@ -86,7 +86,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Contato 3</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.contact3 ?? ""}
             />
@@ -95,7 +95,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Telefone 4</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.phone4 ?? ""}
             />
@@ -104,7 +104,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Contato 4</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.contact4 ?? ""}
             />
@@ -113,7 +113,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Telefone 5</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.phone5 ?? ""}
             />
@@ -122,7 +122,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Contato 5</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.contact5 ?? ""}
             />
@@ -131,7 +131,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Endereço</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.address ?? ""}
             />
@@ -140,7 +140,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Email</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.email ?? ""}
             />
@@ -149,7 +149,7 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
             <Label>Observações</Label>
             <Input
               type="text"
-              className="disabled:opacity-80"
+              className="disabled:opacity-100"
               disabled={true}
               value={contact.observations ?? ""}
             />
