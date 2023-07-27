@@ -7,6 +7,7 @@ import { type Contact } from "@/db/schema"
 import { useDebounce } from "@/hooks/use-debounce"
 
 import { AddContactDialog } from "../dialogs/add-contact-dialog"
+import { DeleteContactAlertDialog } from "../dialogs/delete-contact-alert-dialog"
 import { UpdateContactDialog } from "../dialogs/update-contact-dialog"
 import { TableLoading } from "../table-loading"
 import { TablePagination } from "../table-pagination"
@@ -83,6 +84,7 @@ export function ContactTableShell({
                     <TableCell>{contact.email}</TableCell>
                     <TableCell>
                       <UpdateContactDialog contact={contact} />
+                      <DeleteContactAlertDialog id={contact.id} />
                     </TableCell>
                   </TableRow>
                 ))
