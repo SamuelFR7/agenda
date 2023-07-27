@@ -9,9 +9,9 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { AddContactDialog } from "../dialogs/add-contact-dialog"
 import { DeleteContactAlertDialog } from "../dialogs/delete-contact-alert-dialog"
 import { UpdateContactDialog } from "../dialogs/update-contact-dialog"
+import { ViewContactDialog } from "../dialogs/view-contact-dialog"
 import { TableLoading } from "../table-loading"
 import { TablePagination } from "../table-pagination"
-import { Card, CardContent } from "../ui/card"
 import { Input } from "../ui/input"
 import {
   Table,
@@ -62,37 +62,34 @@ export function ContactTableShell({
         />
         <AddContactDialog />
       </div>
-      <Card className="w-full">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Telefone</TableHead>
-                <TableHead>Email</TableHead>
-                <TableCell>Opções</TableCell>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Nome</TableHead>
+            <TableHead>Telefone</TableHead>
+            <TableHead>Email</TableHead>
+            <TableCell className="text-center">Opções</TableCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isPending ? (
+            <TableLoading />
+          ) : (
+            allContacts.map((contact) => (
+              <TableRow key={contact.id}>
+                <TableCell className="truncate">{contact.name}</TableCell>
+                <TableCell>{contact.phone1}</TableCell>
+                <TableCell>{contact.email}</TableCell>
+                <TableCell className="flex items-center gap-4 text-center">
+                  <UpdateContactDialog contact={contact} />
+                  <DeleteContactAlertDialog id={contact.id} />
+                  <ViewContactDialog contact={contact} />
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {isPending ? (
-                <TableLoading />
-              ) : (
-                allContacts.map((contact) => (
-                  <TableRow key={contact.id}>
-                    <TableCell>{contact.name}</TableCell>
-                    <TableCell>{contact.phone1}</TableCell>
-                    <TableCell>{contact.email}</TableCell>
-                    <TableCell>
-                      <UpdateContactDialog contact={contact} />
-                      <DeleteContactAlertDialog id={contact.id} />
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            ))
+          )}
+        </TableBody>
+      </Table>
       <TablePagination
         currentPage={
           typeof currentPage === "string" ? parseInt(currentPage) : 1
