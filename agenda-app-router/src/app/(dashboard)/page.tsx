@@ -2,7 +2,6 @@ import { db } from "@/db"
 import { contacts } from "@/db/schema"
 import { and, like, sql } from "drizzle-orm"
 
-import { contactSchema } from "@/lib/validations/contact"
 import { ContactTableShell } from "@/components/shells/contact-table-shell"
 import { Shell } from "@/components/shells/shell"
 
