@@ -24,7 +24,7 @@ export function TablePagination({
   const pathname = usePathname()
 
   function setPage(page: number) {
-    router.push(`${pathname}?name=${searchParams.get('name')}&page=${page}`)
+    router.push(`${pathname}?name=${searchParams.get("name")}&page=${page}`)
   }
 
   return (
