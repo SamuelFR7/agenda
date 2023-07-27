@@ -1,14 +1,15 @@
 "use client"
 
 import React, { type SetStateAction } from "react"
-import { newContactAction } from "@/_actions/contact"
+import { updateContactAction } from "@/_actions/contact"
+import { type Contact } from "@/db/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
 
 import { catchError } from "@/lib/utils"
-import { createContactSchema } from "@/lib/validations/contact"
+import { contactSchema } from "@/lib/validations/contact"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
@@ -23,22 +24,32 @@ import {
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 
-type Inputs = z.infer<typeof createContactSchema>
+type Inputs = z.infer<typeof contactSchema>
 
-interface NewContactFormProps {
+interface UpdateContactFormProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>
+  contact: Contact
 }
 
-export function NewContactForm({ setIsOpen }: NewContactFormProps) {
+export function UpdateContactForm({
+  setIsOpen,
+  contact,
+}: UpdateContactFormProps) {
   const form = useForm<Inputs>({
-    resolver: zodResolver(createContactSchema),
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      ...contact,
+    },
   })
   const [isPending, startTransition] = React.useTransition()
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        await newContactAction(data)
+        await updateContactAction({
+          ...data,
+          id: contact.id,
+        })
 
         toast.success("Contato criado com sucesso")
         setIsOpen(false)
@@ -68,7 +79,7 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="phone_1"
+            name="phone1"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Telefone 1</FormLabel>
@@ -81,12 +92,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="contact_1"
-            render={({ field }) => (
+            name="contact1"
+            render={() => (
               <FormItem>
                 <FormLabel>Contato 1</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("contact1")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,12 +105,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="phone_2"
-            render={({ field }) => (
+            name="phone2"
+            render={() => (
               <FormItem>
                 <FormLabel>Telefone 2</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("phone2")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -107,12 +118,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="contact_2"
-            render={({ field }) => (
+            name="contact2"
+            render={() => (
               <FormItem>
                 <FormLabel>Contato 2</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("contact2")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -120,12 +131,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="phone_3"
-            render={({ field }) => (
+            name="phone3"
+            render={() => (
               <FormItem>
                 <FormLabel>Telefone 3</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("phone3")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -133,12 +144,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="contact_3"
-            render={({ field }) => (
+            name="contact3"
+            render={() => (
               <FormItem>
                 <FormLabel>Contato 3</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("contact3")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -146,12 +157,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="phone_4"
-            render={({ field }) => (
+            name="phone4"
+            render={() => (
               <FormItem>
                 <FormLabel>Telefone 4</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("phone4")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -159,12 +170,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="contact_4"
-            render={({ field }) => (
+            name="contact4"
+            render={() => (
               <FormItem>
                 <FormLabel>Contato 4</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("contact4")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -172,12 +183,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="phone_5"
-            render={({ field }) => (
+            name="phone5"
+            render={() => (
               <FormItem>
                 <FormLabel>Telefone 5</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("phone5")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,12 +196,12 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           />
           <FormField
             control={form.control}
-            name="contact_5"
-            render={({ field }) => (
+            name="contact5"
+            render={() => (
               <FormItem>
                 <FormLabel>Contato 5</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("contact5")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -199,11 +210,11 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           <FormField
             control={form.control}
             name="address"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Endereço</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("address")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -212,11 +223,11 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...form.register("email")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -225,11 +236,14 @@ export function NewContactForm({ setIsOpen }: NewContactFormProps) {
           <FormField
             control={form.control}
             name="observations"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Observações</FormLabel>
                 <FormControl>
-                  <Textarea className="h-10 resize-none" {...field} />
+                  <Textarea
+                    className="h-10 resize-none"
+                    {...form.register("observations")}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

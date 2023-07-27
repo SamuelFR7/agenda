@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import { NewContactForm } from "../forms/new-contact-form"
+import { AddContactForm } from "../forms/add-contact-form"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog"
 
-export function NewContactDialog() {
+export function AddContactDialog() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -24,7 +24,7 @@ export function NewContactDialog() {
         <DialogHeader>
           <DialogTitle>Novo Contato</DialogTitle>
         </DialogHeader>
-        <NewContactForm setIsOpen={setIsOpen} />
+        <AddContactForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   )

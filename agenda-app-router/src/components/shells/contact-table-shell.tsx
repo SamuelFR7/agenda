@@ -6,7 +6,8 @@ import { type Contact } from "@/db/schema"
 
 import { useDebounce } from "@/hooks/use-debounce"
 
-import { NewContactDialog } from "../dialogs/new-contact-dialog"
+import { AddContactDialog } from "../dialogs/add-contact-dialog"
+import { UpdateContactDialog } from "../dialogs/update-contact-dialog"
 import { TableLoading } from "../table-loading"
 import { TablePagination } from "../table-pagination"
 import { Card, CardContent } from "../ui/card"
@@ -40,7 +41,11 @@ export function ContactTableShell({
 
   React.useEffect(() => {
     startTransition(() => {
-      router.push(`${pathname}?name=${debouncedQuery}&page=${searchParams.get('page') ?? 1}`)
+      router.push(
+        `${pathname}?name=${debouncedQuery}&page=${
+          searchParams.get("page") ?? 1
+        }`
+      )
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +59,7 @@ export function ContactTableShell({
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <NewContactDialog />
+        <AddContactDialog />
       </div>
       <Card className="w-full">
         <CardContent className="p-0">
@@ -64,6 +69,7 @@ export function ContactTableShell({
                 <TableHead>Nome</TableHead>
                 <TableHead>Telefone</TableHead>
                 <TableHead>Email</TableHead>
+                <TableCell>Opções</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -75,6 +81,9 @@ export function ContactTableShell({
                     <TableCell>{contact.name}</TableCell>
                     <TableCell>{contact.phone1}</TableCell>
                     <TableCell>{contact.email}</TableCell>
+                    <TableCell>
+                      <UpdateContactDialog contact={contact} />
+                    </TableCell>
                   </TableRow>
                 ))
               )}
