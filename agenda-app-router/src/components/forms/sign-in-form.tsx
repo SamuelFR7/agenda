@@ -36,7 +36,11 @@ export function SignInForm({ signInError }: SignInFormProps) {
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        await signIn("credentials", data)
+        await signIn("credentials", {
+          ...data,
+          callbackUrl: "/?name=&page=1",
+          redirect: true,
+        })
       } catch (error) {
         catchError(error)
       }
