@@ -18,7 +18,7 @@ export function AddContactDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full max-w-[10rem] font-medium">
+        <Button className="w-full font-medium md:max-w-[10rem]">
           Novo Contato
         </Button>
       </DialogTrigger>

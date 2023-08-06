@@ -54,7 +54,7 @@ export function ContactTableShell({
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex flex-col-reverse gap-4 md:flex-row">
         <Input
           placeholder="Pesquisar pelo nome"
           value={query}
