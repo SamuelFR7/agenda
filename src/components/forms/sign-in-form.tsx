@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
+import { useRouter } from "next/navigation"
+import { useSignIn } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
 
-import { catchError } from "@/lib/utils"
+import { catchClerkError, catchError } from "@/lib/utils"
 import { userSchema } from "@/lib/validations/user"
 
 import { Icons } from "../icons"
@@ -23,42 +24,38 @@ import { Input } from "../ui/input"
 
 type Inputs = z.infer<typeof userSchema>
 
-interface SignInFormProps {
-  signInError: boolean
-}
-
-export function SignInForm({ signInError }: SignInFormProps) {
+export function SignInForm() {
   const form = useForm<Inputs>({
     resolver: zodResolver(userSchema),
   })
   const [isPending, startTransition] = React.useTransition()
+  const { signIn, setActive, isLoaded } = useSignIn()
+  const router = useRouter()
 
   function onSubmit(data: Inputs) {
+    if (!isLoaded) return
+
     startTransition(async () => {
       try {
-        await signIn("credentials", {
-          ...data,
-          callbackUrl: "/?name=&page=1",
-          redirect: true,
+        const result = await signIn.create({
+          identifier: data.username,
+          password: data.password,
         })
+
+        console.log(result)
+
+        if (result.status === "complete") {
+          await setActive({ session: result.createdSessionId })
+
+          router.push(`${window.location.origin}/`)
+        } else {
+          console.log(result)
+        }
       } catch (error) {
-        catchError(error)
+        catchClerkError(error)
       }
     })
   }
-
-  React.useEffect(() => {
-    if (signInError) {
-      form.setError("password", {
-        message: "Usuário ou senha incorretos",
-      })
-      form.setError("username", {
-        message: "Usuário ou senha incorretos",
-      })
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signInError])
 
   return (
     <Form {...form}>

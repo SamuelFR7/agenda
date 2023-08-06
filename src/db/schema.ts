@@ -20,11 +20,3 @@ export const contacts = mysqlTable("contacts", {
 })
 
 export type Contact = InferModel<typeof contacts>
-
-export const users = mysqlTable("users", {
-  id: varchar("id", { length: 191 }).primaryKey().notNull(),
-  username: varchar("username", { length: 191 }).notNull().unique(),
-  password: varchar("password", { length: 191 }).notNull(),
-})
-
-export type User = InferModel<typeof users>
