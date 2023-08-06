@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
 
-import { catchClerkError, catchError } from "@/lib/utils"
+import { catchClerkError } from "@/lib/utils"
 import { userSchema } from "@/lib/validations/user"
 
 import { Icons } from "../icons"
