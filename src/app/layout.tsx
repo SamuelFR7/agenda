@@ -1,11 +1,10 @@
 import { Toaster } from "@/components/ui/toaster"
-import { Providers } from "@/components/providers"
 
 import "@/styles/globals.css"
 
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { getServerSession } from "next-auth"
+import { ClerkProvider, currentUser } from "@clerk/nextjs"
 
 import { Header } from "@/components/header"
 
@@ -24,17 +23,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession()
+  const user = await currentUser()
 
   return (
-    <Providers>
+    <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Header session={session} />
+          <Header user={user} />
           <main>{children}</main>
         </body>
         <Toaster />
       </html>
-    </Providers>
+    </ClerkProvider>
   )
 }
