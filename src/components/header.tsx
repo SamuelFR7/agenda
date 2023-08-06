@@ -28,11 +28,7 @@ export function Header({ user }: HeaderProps) {
               })
             }}
           >
-            <Button
-              aria-label="Sair"
-              size="sm"
-              disabled={isPending}
-            >
+            <Button aria-label="Sair" size="sm" disabled={isPending}>
               {isPending ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               ) : (

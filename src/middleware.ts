@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
-import { authMiddleware } from '@clerk/nextjs' 
+import { authMiddleware } from "@clerk/nextjs"
 
 export default authMiddleware({
   publicRoutes: ["/sign-in(.*)"],
-  async afterAuth(auth, req) {
+  afterAuth(auth, req) {
     if (auth.isPublicRoute) {
       return NextResponse.next()
     }
