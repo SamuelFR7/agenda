@@ -2,14 +2,12 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
-import { SignOutButton } from "@clerk/nextjs"
-import { type User } from "@clerk/nextjs/dist/types/server"
 
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
 
 interface HeaderProps {
-  user: User | null
+  user: null
 }
 
 export function Header({ user }: HeaderProps) {
@@ -21,13 +19,6 @@ export function Header({ user }: HeaderProps) {
       <div className="mx-auto flex w-full max-w-[1290px] items-center justify-between py-3">
         <h1 className="text-3xl font-bold">Agenda</h1>
         {user && (
-          <SignOutButton
-            signOutCallback={() => {
-              startTransition(() => {
-                router.push(`${window.location.origin}/sign-in`)
-              })
-            }}
-          >
             <Button aria-label="Sair" size="sm" disabled={isPending}>
               {isPending ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -36,7 +27,6 @@ export function Header({ user }: HeaderProps) {
               )}
               Sair
             </Button>
-          </SignOutButton>
         )}
       </div>
     </header>
