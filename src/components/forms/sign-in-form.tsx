@@ -3,9 +3,11 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
 
+import { catchError } from "@/lib/utils"
 import { userSchema } from "@/lib/validations/user"
 
 import { Icons } from "../icons"
@@ -19,7 +21,6 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { catchError } from "@/lib/utils"
 
 type Inputs = z.infer<typeof userSchema>
 
@@ -33,6 +34,22 @@ export function SignInForm() {
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
+        const authData = await signIn("credentials", {
+          redirect: false,
+          ...data,
+        })
+
+        if (!authData) {
+          throw new Error("Algo deu errado, tente novamente mais tarde")
+        }
+
+        if (authData.error) {
+          form.setError("username", { message: "Usuário ou senha incorretos" })
+          form.setError("password", { message: "Usuário ou senha incorretos" })
+          return
+        }
+
+        return router.push("/")
       } catch (error) {
         catchError(error)
       }
@@ -42,7 +59,7 @@ export function SignInForm() {
   return (
     <Form {...form}>
       <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="username"

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { type Contact } from "@/db/schema"
 
 import { useDebounce } from "@/hooks/use-debounce"
@@ -33,7 +33,6 @@ export function ContactTableShell({
   totalContacts,
   currentPage,
 }: ContactTableShellProps) {
-  const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = React.useTransition()
@@ -42,11 +41,7 @@ export function ContactTableShell({
 
   React.useEffect(() => {
     startTransition(() => {
-      router.push(
-        `${pathname}?name=${debouncedQuery}&page=${
-          searchParams.get("page") ?? 1
-        }`
-      )
+      router.push(`${pathname}?name=${debouncedQuery}&page=1`)
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
