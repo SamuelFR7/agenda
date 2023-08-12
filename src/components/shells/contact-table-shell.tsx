@@ -77,9 +77,9 @@ export function ContactTableShell({
                 <TableCell>{contact.email}</TableCell>
                 <TableCell>
                   <div className="flex items-center justify-center gap-2">
+                    <ViewContactDialog contact={contact} />
                     <UpdateContactDialog contact={contact} />
                     <DeleteContactAlertDialog id={contact.id} />
-                    <ViewContactDialog contact={contact} />
                   </div>
                 </TableCell>
               </TableRow>
