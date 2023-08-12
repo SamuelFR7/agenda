@@ -7,6 +7,7 @@ import { signOut } from "next-auth/react"
 import { catchError } from "@/lib/utils"
 
 import { Icons } from "./icons"
+import { Shell } from "./shells/shell"
 import { Button } from "./ui/button"
 
 export function Header() {
@@ -28,7 +29,7 @@ export function Header() {
 
   return (
     <header className="w-full bg-primary/80 text-white">
-      <div className="mx-auto flex w-full max-w-[1290px] items-center justify-between py-3">
+      <Shell className="grid-cols-2 justify-between">
         <h1 className="text-3xl font-bold">Agenda</h1>
         {pathname === "/" && (
           <Button
@@ -45,7 +46,7 @@ export function Header() {
             Sair
           </Button>
         )}
-      </div>
+      </Shell>
     </header>
   )
 }
