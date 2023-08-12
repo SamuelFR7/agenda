@@ -1,8 +1,14 @@
 import { z } from "zod"
 
 export const contactSchema = z.object({
-  name: z.string().nonempty({ message: "Digite um nome" }).toUpperCase(),
-  phone1: z.string().nonempty({ message: "Digite um telefone" }).toUpperCase(),
+  name: z
+    .string({ required_error: "Digite um nome " })
+    .nonempty({ message: "Digite um nome" })
+    .toUpperCase(),
+  phone1: z
+    .string({ required_error: "Digite um nome " })
+    .nonempty({ message: "Digite um telefone" })
+    .toUpperCase(),
   phone2: z.string().optional().nullable(),
   phone3: z.string().optional().nullable(),
   phone4: z.string().optional().nullable(),
