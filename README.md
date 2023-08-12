@@ -23,25 +23,21 @@
   </sub>
 </div>
 
-
 # 📌 Contents
 
-* [Screenshots](#camera-screenshot) 
-* [Technologies](#rocket-technologies) 
-* [How to Run](#computer-how-to-run)
-* [License](#page_facing_up-license)
+- [Screenshots](#camera-screenshot)
+- [Technologies](#rocket-technologies)
+- [How to Run](#computer-how-to-run)
+- [License](#page_facing_up-license)
 
 # :rocket: Technologies
+
 This project was made using the follow technologies:
 
-* [Typescript](https://www.typescriptlang.org/)      
-* [React](https://reactjs.org/)      
-* [NextJS](https://nextjs.org)
-* [Tailwind](https://tailwindcss.com)
-* [Fastify](https://www.fastify.io)
-* [Prisma](https://www.prisma.io)
-* [PostgreSQL](https://www.postgresql.org)
-
+- [NextJS](https://nextjs.org)
+- [TailwindCSS](https://tailwindcss.com)
+- [DrizzleORM](https://orm.drizzle.team)
+- [Planetscale](https://planetscale.com)
 
 # :computer: How to run
 
@@ -51,26 +47,21 @@ $ git clone https://github.com/SamuelFR7/agenda-react.git
 ```
 
 ```bash
-# Install dependencies in backend
-$ npm install
-
-# Run migrations in backend
-$ npx prisma migrate dev
-
-# Run application in backend
-$ npx start:dev
-
-# Install dependencies in frontend
+# Install dependencies
 $ pnpm install
 
-# Run application in frontend
+# Define env variables
+$ cp .env.example .env
+
+# Run the app
 $ pnpm dev
 ```
+
 Go to http://localhost:3000/ to see the result.
 
 # :page_facing_up: License
 
 This project is under the [MIT license](./LICENSE).
-Made with 💖 by [Samuel Rezende](https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/). 
+Made with 💖 by [Samuel Rezende](https://www.linkedin.com/in/samuel-ferreira-rezende-7bbbba206/).
 
 Thank You! 🚀
