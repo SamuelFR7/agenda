@@ -6,7 +6,7 @@ on:
 
 env:
   DATABASE_URL: "fake"
-  NEXTAUTH_URL: "nexturl_fake"
+  NEXTAUTH_URL: "http://fake_url.fake"
   NEXTAUTH_SECRET: "secret_fake"
 
 jobs:
