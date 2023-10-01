@@ -20,8 +20,12 @@ export function UpdateContactDialog({ contact }: { contact: Contact }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="ghost">
-          <Pencil />
+        <Button
+          variant="ghost"
+          className="flex w-full items-center justify-start gap-2 px-2 font-normal"
+        >
+          <Pencil size={16} />
+          <span>Editar</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[700px]">

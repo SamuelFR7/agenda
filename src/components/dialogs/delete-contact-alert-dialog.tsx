@@ -44,8 +44,12 @@ export function DeleteContactAlertDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Trash />
+        <Button
+          variant="ghost"
+          className="flex w-full items-center justify-start gap-2 px-2 font-normal"
+        >
+          <Trash size={16} />
+          <span>Deletar</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
