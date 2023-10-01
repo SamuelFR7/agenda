@@ -40,8 +40,16 @@ export function ContactTableShell({
   const debouncedQuery = useDebounce(query, 300)
 
   React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (debouncedQuery) {
+      params.set("name", debouncedQuery)
+      params.delete("page")
+    } else {
+      params.delete("name")
+    }
+
     startTransition(() => {
-      router.push(`${pathname}?name=${debouncedQuery}&page=1`)
+      router.replace(`${pathname}?${params.toString()}`)
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
