@@ -1,3 +1,5 @@
+"use client"
+
 import { type Contact } from "@/db/schema"
 import { Eye } from "lucide-react"
 
@@ -19,8 +21,12 @@ export function ViewContactDialog({ contact }: ViewContactDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Eye />
+        <Button
+          variant="ghost"
+          className="flex w-full items-center justify-start gap-2 px-2 font-normal"
+        >
+          <Eye size={16} />
+          <span>Visualizar</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[700px]">
