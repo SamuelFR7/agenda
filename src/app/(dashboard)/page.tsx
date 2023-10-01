@@ -11,6 +11,8 @@ interface IndexPageProps {
   }
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function Home({ searchParams }: IndexPageProps) {
   const { page, name } = searchParams
 
