@@ -1,9 +1,8 @@
 "use client"
 
 import React from "react"
-import { useRouter } from "next/navigation"
+import { signInAction } from "@/_actions/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
 
@@ -29,27 +28,11 @@ export function SignInForm() {
     resolver: zodResolver(userSchema),
   })
   const [isPending, startTransition] = React.useTransition()
-  const router = useRouter()
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const authData = await signIn("credentials", {
-          redirect: false,
-          ...data,
-        })
-
-        if (!authData) {
-          throw new Error("Algo deu errado, tente novamente mais tarde")
-        }
-
-        if (authData.error) {
-          form.setError("username", { message: "Usuário ou senha incorretos" })
-          form.setError("password", { message: "Usuário ou senha incorretos" })
-          return
-        }
-
-        return router.push("/")
+        await signInAction(data)
       } catch (error) {
         catchError(error)
       }

@@ -1,5 +1,4 @@
-import { type InferModel } from "drizzle-orm"
-import { mysqlTable, text, varchar } from "drizzle-orm/mysql-core"
+import { bigint, mysqlTable, text, varchar } from "drizzle-orm/mysql-core"
 
 export const contacts = mysqlTable("contacts", {
   id: varchar("id", { length: 191 }).primaryKey().notNull(),
@@ -19,12 +18,38 @@ export const contacts = mysqlTable("contacts", {
   observations: text("observations"),
 })
 
-export type Contact = InferModel<typeof contacts>
+export type Contact = typeof contacts.$inferSelect
 
 export const users = mysqlTable("users", {
-  id: varchar("id", { length: 191 }).primaryKey().notNull(),
+  id: varchar("id", { length: 15 }).primaryKey().notNull(),
   username: varchar("username", { length: 191 }).notNull().unique(),
-  password: varchar("password", { length: 191 }).notNull(),
 })
 
-export type User = InferModel<typeof users>
+export type User = typeof users.$inferSelect
+
+export const keys = mysqlTable("user_key", {
+  id: varchar("id", {
+    length: 255,
+  }).primaryKey(),
+  userId: varchar("user_id", {
+    length: 15,
+  }).notNull(),
+  hashedPassword: varchar("hashed_password", {
+    length: 255,
+  }),
+})
+
+export const sessions = mysqlTable("user_session", {
+  id: varchar("id", {
+    length: 128,
+  }).primaryKey(),
+  userId: varchar("user_id", {
+    length: 15,
+  }).notNull(),
+  activeExpires: bigint("active_expires", {
+    mode: "number",
+  }).notNull(),
+  idleExpires: bigint("idle_expires", {
+    mode: "number",
+  }).notNull(),
+})
