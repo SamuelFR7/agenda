@@ -25,7 +25,6 @@ export function TablePagination({
   function setPage(page: number) {
     const params = new URLSearchParams(window.location.search)
 
-    console.log(page)
     if (page === 1) {
       params.delete("page")
     } else {
