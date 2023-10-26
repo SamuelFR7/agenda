@@ -1,0 +1,10 @@
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0000uku1qz6hy0ji', '$2a$10$peRtULsbqB4EoWID9XjSVuUAJNhVCbp1rGl6wEalk7W307AHds53a', 'SAMUEL');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0001uku12m2i1r1s', '$2a$10$ZAtf1EOOGTVoAf5efJD8fOhZr1NGUsNiNKAnK3ux3vKxbfgNvk1N.', 'DENISE');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0002uku1vrqdh9cm', '$2a$10$cadLBFJYCnuy2287AeUjSeAxQMb.GQrFLDZFmB9SiI9XhkB4t.7fC', 'ESCRITORIO');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0003uku17v4oww3y', '$2a$10$8HtMJQjOzAfwCaAvQ4GCGOhtXJ6S9PBc5RNVAOq1LE.CiZfBmKHXi', 'ROBERIO');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0004uku1gk2lwihf', '$2a$10$WJC1uxkigsYrbcWjPsiurOFMbuQ9SrceiiXn8lxiu6HVn7lGEuTji', 'JULIANNA');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0005uku14ygjfz4s', '$2a$10$Xp6V5jzyvzTuBTT5uAWPhOwz918O17CR8GBOvWry8xANU7Q9YfSqm', 'MARLENE');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0006uku1wlcl67yx', '$2a$10$HJF0BGyBipbrC1shTykaSe4PAeJhjwpdo51LTTeo/8ORK/j9YiwS6', 'MARCIO');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0007uku1w26omtmp', '$2a$10$iARrPsQq/xeHV2565lmu8uvx5YoxR2WClIsHXIJ1xJEIerzDRm3SO', 'FRANCIELE');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0008uku13t4590pc', '$2a$08$uYpFB9PWB5f85OnbLjyjw.hjL7eruDUE/OUDLicTAKci32A85JfWS', 'RECEPCAO');
+insert into `users` (`id`, `password`, `username`) values ('cll7itazd0009uku1gnbjgwkt', '$2a$08$ze06bzEtfd26/aGVcjzSIOfgfsRX3S9xepbi0TqYjUO04dohF0mMO', 'RONIGLEIDA');
