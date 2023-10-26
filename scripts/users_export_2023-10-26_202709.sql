@@ -1,0 +1,10 @@
+insert into `users` (`id`, `username`) values ('1i794j81xgvcdc5', 'DENISE');
+insert into `users` (`id`, `username`) values ('ao0u2wpp4y5wupg', 'ESCRITORIO');
+insert into `users` (`id`, `username`) values ('v54rm9a7rukmdrc', 'FRANCIELE');
+insert into `users` (`id`, `username`) values ('gb6jfqthb8exlm4', 'JULIANNA');
+insert into `users` (`id`, `username`) values ('wfx29elvzvt2oh4', 'MARCIO');
+insert into `users` (`id`, `username`) values ('aunjoatu6ptjijw', 'MARLENE');
+insert into `users` (`id`, `username`) values ('6b76axy98zhmstw', 'RECEPCAO');
+insert into `users` (`id`, `username`) values ('8puyiht2dj0ohd6', 'ROBERIO');
+insert into `users` (`id`, `username`) values ('qtgl2aj83bx6s1d', 'RONIGLEIDA');
+insert into `users` (`id`, `username`) values ('d6mrvwh9bxc8aiq', 'SAMUEL');

@@ -1,0 +1,10 @@
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$ZAtf1EOOGTVoAf5efJD8fOhZr1NGUsNiNKAnK3ux3vKxbfgNvk1N.', 'username:denise', '1i794j81xgvcdc5');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$cadLBFJYCnuy2287AeUjSeAxQMb.GQrFLDZFmB9SiI9XhkB4t.7fC', 'username:escritorio', 'ao0u2wpp4y5wupg');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$iARrPsQq/xeHV2565lmu8uvx5YoxR2WClIsHXIJ1xJEIerzDRm3SO', 'username:franciele', 'v54rm9a7rukmdrc');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$WJC1uxkigsYrbcWjPsiurOFMbuQ9SrceiiXn8lxiu6HVn7lGEuTji', 'username:julianna', 'gb6jfqthb8exlm4');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$HJF0BGyBipbrC1shTykaSe4PAeJhjwpdo51LTTeo/8ORK/j9YiwS6', 'username:marcio', 'wfx29elvzvt2oh4');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$Xp6V5jzyvzTuBTT5uAWPhOwz918O17CR8GBOvWry8xANU7Q9YfSqm', 'username:marlene', 'aunjoatu6ptjijw');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$08$uYpFB9PWB5f85OnbLjyjw.hjL7eruDUE/OUDLicTAKci32A85JfWS', 'username:recepcao', '6b76axy98zhmstw');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$8HtMJQjOzAfwCaAvQ4GCGOhtXJ6S9PBc5RNVAOq1LE.CiZfBmKHXi', 'username:roberio', '8puyiht2dj0ohd6');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$08$ze06bzEtfd26/aGVcjzSIOfgfsRX3S9xepbi0TqYjUO04dohF0mMO', 'username:ronigleida', 'qtgl2aj83bx6s1d');
+insert into `user_key` (`hashed_password`, `id`, `user_id`) values ('$2a$10$peRtULsbqB4EoWID9XjSVuUAJNhVCbp1rGl6wEalk7W307AHds53a', 'username:samuel', 'd6mrvwh9bxc8aiq');
