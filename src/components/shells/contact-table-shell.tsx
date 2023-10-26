@@ -7,9 +7,7 @@ import { type Contact } from "@/db/schema"
 import { useDebounce } from "@/hooks/use-debounce"
 
 import { AddContactDialog } from "../dialogs/add-contact-dialog"
-import { DeleteContactAlertDialog } from "../dialogs/delete-contact-alert-dialog"
-import { UpdateContactDialog } from "../dialogs/update-contact-dialog"
-import { ViewContactDialog } from "../dialogs/view-contact-dialog"
+import { TableActions } from "../table-actions"
 import { TableLoading } from "../table-loading"
 import { TablePagination } from "../table-pagination"
 import { Input } from "../ui/input"
@@ -40,8 +38,16 @@ export function ContactTableShell({
   const debouncedQuery = useDebounce(query, 300)
 
   React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (debouncedQuery) {
+      params.set("name", debouncedQuery)
+      params.delete("page")
+    } else {
+      params.delete("name")
+    }
+
     startTransition(() => {
-      router.push(`${pathname}?name=${debouncedQuery}&page=1`)
+      router.replace(`${pathname}?${params.toString()}`)
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,8 +68,7 @@ export function ContactTableShell({
           <TableRow>
             <TableHead>Nome</TableHead>
             <TableHead>Telefone</TableHead>
-            <TableHead>Email</TableHead>
-            <TableCell className="text-center">Opções</TableCell>
+            <TableCell>Ações</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -72,15 +77,10 @@ export function ContactTableShell({
           ) : (
             allContacts.map((contact) => (
               <TableRow key={contact.id}>
-                <TableCell className="truncate">{contact.name}</TableCell>
+                <TableCell>{contact.name}</TableCell>
                 <TableCell>{contact.phone1}</TableCell>
-                <TableCell>{contact.email}</TableCell>
                 <TableCell>
-                  <div className="flex items-center justify-center gap-2">
-                    <ViewContactDialog contact={contact} />
-                    <UpdateContactDialog contact={contact} />
-                    <DeleteContactAlertDialog id={contact.id} />
-                  </div>
+                  <TableActions contact={contact} />
                 </TableCell>
               </TableRow>
             ))

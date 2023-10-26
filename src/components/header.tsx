@@ -2,7 +2,7 @@
 
 import React from "react"
 import { usePathname } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { signOutAction } from "@/_actions/auth"
 
 import { catchError } from "@/lib/utils"
 
@@ -17,10 +17,7 @@ export function Header() {
   function handleSignOut() {
     startTransition(async () => {
       try {
-        await signOut({
-          callbackUrl: "/sign-in",
-          redirect: true,
-        })
+        await signOutAction()
       } catch (error) {
         catchError(error)
       }
