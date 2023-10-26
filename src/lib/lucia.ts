@@ -1,6 +1,7 @@
 import { connection } from "@/db"
 import { env } from "@/env.mjs"
 import { planetscale } from "@lucia-auth/adapter-mysql"
+import { compare, hash } from "bcryptjs"
 import { lucia } from "lucia"
 import { nextjs_future } from "lucia/middleware"
 
@@ -19,6 +20,14 @@ export const auth = lucia({
     return {
       username: data.username,
     }
+  },
+  passwordHash: {
+    generate: (password) => {
+      return hash(password, 8)
+    },
+    validate: (password, hash) => {
+      return compare(password, hash)
+    },
   },
 })
 
