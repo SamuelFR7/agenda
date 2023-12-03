@@ -1,6 +1,6 @@
 import { db } from "@/db"
 import { contacts } from "@/db/schema"
-import { and, like, sql } from "drizzle-orm"
+import { and, count, like } from "drizzle-orm"
 
 import { ContactTableShell } from "@/components/shells/contact-table-shell"
 import { Shell } from "@/components/shells/shell"
@@ -42,7 +42,7 @@ export default async function Home({ searchParams }: IndexPageProps) {
 
     const totalContacts = await tx
       .select({
-        count: sql<number>`count(${contacts.id})`,
+        count: count(contacts.id),
       })
       .from(contacts)
       .where(
