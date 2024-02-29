@@ -1,9 +1,7 @@
 import { env } from "@/env.mjs"
-import { connect } from "@planetscale/database"
-import { drizzle } from "drizzle-orm/planetscale-serverless"
+import { drizzle } from "drizzle-orm/postgres-js"
+import postgres from "postgres"
 
-export const connection = connect({
-  url: env["DATABASE_URL"],
-})
+export const connection = postgres(env.DATABASE_URL)
 
 export const db = drizzle(connection)

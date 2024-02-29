@@ -1,6 +1,6 @@
 import { db } from "@/db"
 import { contacts } from "@/db/schema"
-import { and, count, like } from "drizzle-orm"
+import { and, count, ilike } from "drizzle-orm"
 
 import { ContactTableShell } from "@/components/shells/contact-table-shell"
 import { Shell } from "@/components/shells/shell"
@@ -34,7 +34,7 @@ export default async function Home({ searchParams }: IndexPageProps) {
       .where(
         and(
           typeof name === "string"
-            ? like(contacts.name, `%${name}%`)
+            ? ilike(contacts.name, `%${name}%`)
             : undefined
         )
       )
@@ -48,7 +48,7 @@ export default async function Home({ searchParams }: IndexPageProps) {
       .where(
         and(
           typeof name === "string"
-            ? like(contacts.name, `%${name}%`)
+            ? ilike(contacts.name, `%${name}%`)
             : undefined
         )
       )

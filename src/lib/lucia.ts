@@ -1,6 +1,6 @@
 import { connection } from "@/db"
 import { env } from "@/env.mjs"
-import { planetscale } from "@lucia-auth/adapter-mysql"
+import { postgres } from "@lucia-auth/adapter-postgresql"
 import { compare, hash } from "bcryptjs"
 import { lucia } from "lucia"
 import { nextjs_future } from "lucia/middleware"
@@ -11,7 +11,7 @@ export const auth = lucia({
   sessionCookie: {
     expires: false,
   },
-  adapter: planetscale(connection, {
+  adapter: postgres(connection, {
     user: "users",
     key: "user_key",
     session: "user_session",
