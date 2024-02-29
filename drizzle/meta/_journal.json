@@ -1,33 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1689594663281,
-      "tag": "0000_mysterious_caretaker",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1691298895317,
-      "tag": "0001_absurd_shinko_yamashiro",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1691777804809,
-      "tag": "0002_short_surge",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1696274550446,
-      "tag": "0003_violet_peter_quill",
+      "when": 1709207473340,
+      "tag": "0000_worthless_joystick",
       "breakpoints": true
     }
   ]
