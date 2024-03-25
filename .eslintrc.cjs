@@ -4,14 +4,20 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint", "tailwindcss"],
+  plugins: ["@typescript-eslint", "drizzle"],
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
-    "prettier",
-    "plugin:tailwindcss/recommended",
+    "plugin:@typescript-eslint/stylistic-type-checked",
   ],
   rules: {
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/consistent-indexed-object-style": "off",
+    "drizzle/enforce-delete-with-where": "error",
+    "drizzle/enforce-update-with-where": "error",
+
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
@@ -20,16 +26,6 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "@typescript-eslint/ban-types": "off",
-  },
-  settings: {
-    tailwindcss: {
-      callees: ["cn"],
-      config: "./tailwind.config.ts",
-    },
-    next: {
-      rootDir: ["./"],
-    },
   },
 }
 

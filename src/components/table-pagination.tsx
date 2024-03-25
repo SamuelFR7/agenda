@@ -26,6 +26,7 @@ export function TablePagination({
     const params = new URLSearchParams(window.location.search)
 
     if (page === 1) {
+      // eslint-disable-next-line drizzle/enforce-delete-with-where
       params.delete("page")
     } else {
       params.set("page", String(page))
