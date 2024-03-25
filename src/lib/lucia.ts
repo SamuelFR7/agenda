@@ -1,5 +1,5 @@
 import { connection } from "@/db"
-import { env } from "@/env.mjs"
+import { env } from "@/env.js"
 import { postgres } from "@lucia-auth/adapter-postgresql"
 import { compare, hash } from "bcryptjs"
 import { lucia } from "lucia"

@@ -41,8 +41,10 @@ export function ContactTableShell({
     const params = new URLSearchParams(window.location.search)
     if (debouncedQuery) {
       params.set("name", debouncedQuery)
+      // eslint-disable-next-line drizzle/enforce-delete-with-where
       params.delete("page")
     } else {
+      // eslint-disable-next-line drizzle/enforce-delete-with-where
       params.delete("name")
     }
 
