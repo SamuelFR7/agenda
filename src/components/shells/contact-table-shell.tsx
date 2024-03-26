@@ -4,8 +4,6 @@ import React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { type Contact } from "@/db/schema"
 
-import { useDebounce } from "@/hooks/use-debounce"
-
 import { AddContactDialog } from "../dialogs/add-contact-dialog"
 import { TableActions } from "../table-actions"
 import { TableLoading } from "../table-loading"
@@ -35,12 +33,11 @@ export function ContactTableShell({
   const pathname = usePathname()
   const [isPending, startTransition] = React.useTransition()
   const [query, setQuery] = React.useState("")
-  const debouncedQuery = useDebounce(query, 300)
 
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    if (debouncedQuery) {
-      params.set("name", debouncedQuery)
+    if (query) {
+      params.set("name", query)
       // eslint-disable-next-line drizzle/enforce-delete-with-where
       params.delete("page")
     } else {
@@ -53,7 +50,7 @@ export function ContactTableShell({
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedQuery])
+  }, [query])
 
   return (
     <>
