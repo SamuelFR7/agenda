@@ -49,7 +49,7 @@ export function UpdateContactForm({
         id: contact.id,
       })
 
-      toast.success("Contato criado com sucesso")
+      toast.success("Contato atualizado com sucesso")
       setIsOpen(false)
       form.reset()
     })
