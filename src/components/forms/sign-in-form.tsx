@@ -42,7 +42,7 @@ export function SignInForm() {
   return (
     <Form {...form}>
       <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
-        <div className="flex flex-col gap-2">
+        <div className="space-y-2">
           <FormField
             control={form.control}
             name="username"
