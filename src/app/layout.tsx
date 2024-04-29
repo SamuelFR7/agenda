@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
 
 import "@/styles/globals.css"
 
@@ -24,9 +25,16 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <div className="flex min-h-screen w-full flex-col">
-          <main>{children}</main>
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen w-full flex-col">
+            <main>{children}</main>
+          </div>
+        </ThemeProvider>
       </body>
       <Toaster />
     </html>
