@@ -2,7 +2,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getUser } from "@/_actions/auth"
 import { db } from "@/db"
-import { Plus } from "lucide-react"
+import { Pencil, Plus } from "lucide-react"
 
 import { translateRole } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -70,6 +70,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
               <TableRow>
                 <TableHead className="w-[150px]">Nome de usuário</TableHead>
                 <TableHead className="w-[120px]">Cargo</TableHead>
+                <TableHead className="w-[70px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,6 +80,17 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                     {user.username.toUpperCase()}
                   </TableCell>
                   <TableCell>{translateRole(user.role)}</TableCell>
+                  <TableCell>
+                    <Link
+                      className={buttonVariants({
+                        size: "icon",
+                        variant: "outline",
+                      })}
+                      href={`/users/${user.id}`}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
 
@@ -86,7 +98,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                 <TableRow>
                   <TableCell
                     className="py-10 text-center text-muted-foreground"
-                    colSpan={2}
+                    colSpan={3}
                   >
                     Nenhum resultado encontrado.
                   </TableCell>

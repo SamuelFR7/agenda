@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { users, type User } from "@/db/schema"
 import bcrypt from "bcryptjs"
+import { eq } from "drizzle-orm"
 import { generateIdFromEntropySize } from "lucia"
 
 import { lucia } from "@/lib/lucia"
@@ -128,6 +129,40 @@ export async function signUpUserAction({
     username,
     role,
   })
+
+  return redirect("/users")
+}
+
+export async function updateUserAction({
+  username,
+  role,
+  id,
+}: {
+  username: string
+  role: User["role"]
+  id: string
+}): Promise<{ error?: string }> {
+  const usernameAlreadyExists = await db.query.users.findFirst({
+    where: (users, { and, eq, ne }) =>
+      and(ne(users.id, id), eq(users.username, username)),
+    columns: {
+      id: true,
+    },
+  })
+
+  if (usernameAlreadyExists) {
+    return {
+      error: "Nome de usuário já existe",
+    }
+  }
+
+  await db
+    .update(users)
+    .set({
+      username,
+      role,
+    })
+    .where(eq(users.id, id))
 
   return redirect("/users")
 }

@@ -48,7 +48,10 @@ export function Header({ isAdmin }: { isAdmin: boolean }) {
         {isAdmin && (
           <Link
             href="/users"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className={cn(
+              "text-muted-foreground transition-colors hover:text-foreground",
+              pathname.startsWith("/users") && "text-primary"
+            )}
           >
             Usuários
           </Link>
@@ -80,7 +83,10 @@ export function Header({ isAdmin }: { isAdmin: boolean }) {
             {isAdmin && (
               <Link
                 href="/users"
-                className="text-muted-foreground hover:text-foreground"
+                className={cn(
+                  "text-muted-foreground hover:text-foreground",
+                  pathname.startsWith("/users") && "text-primary"
+                )}
               >
                 Usuários
               </Link>
