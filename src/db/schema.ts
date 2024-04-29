@@ -22,7 +22,7 @@ export const contacts = pgTable("contacts", {
 export type Contact = typeof contacts.$inferSelect
 
 export const users = pgTable("users", {
-  id: varchar("id", { length: 16 }).primaryKey().notNull(),
+  id: varchar("id", { length: 255 }).primaryKey().notNull(),
   username: varchar("username", { length: 255 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
 })
