@@ -166,3 +166,22 @@ export async function updateUserAction({
 
   return redirect("/users")
 }
+
+export async function deleteUserAction({ id }: { id: string }) {
+  const userExists = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.id, id),
+    columns: {
+      id: true,
+    },
+  })
+
+  if (!userExists) {
+    return {
+      error: "Usuário não existe",
+    }
+  }
+
+  await db.delete(users).where(eq(users.id, userExists.id))
+
+  return redirect("/users")
+}

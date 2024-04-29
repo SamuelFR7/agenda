@@ -60,7 +60,7 @@ export function UpdateUserForm({ userToUpdate }: UpdateUserFormProps) {
         ...data,
       })
 
-      if (response.error) {
+      if (response?.error) {
         toast.error(response.error)
       }
     })

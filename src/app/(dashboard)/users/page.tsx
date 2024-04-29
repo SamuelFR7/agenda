@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { DeleteUserAlertDialog } from "@/components/dialogs/users/delete-user-alert-dialog"
 
 import { UsersTableFilter } from "./users-table-filter"
 
@@ -71,6 +72,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                 <TableHead className="w-[150px]">Nome de usuário</TableHead>
                 <TableHead className="w-[120px]">Cargo</TableHead>
                 <TableHead className="w-[70px]"></TableHead>
+                <TableHead className="w-[70px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -90,6 +92,9 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                     >
                       <Pencil className="h-4 w-4" />
                     </Link>
+                  </TableCell>
+                  <TableCell>
+                    <DeleteUserAlertDialog id={user.id} />
                   </TableCell>
                 </TableRow>
               ))}
