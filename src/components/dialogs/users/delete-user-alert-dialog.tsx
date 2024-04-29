@@ -1,11 +1,10 @@
 "use client"
 
 import React from "react"
-import { deleteContactAction } from "@/_actions/contact"
+import { deleteUserAction } from "@/_actions/auth"
 import { Trash } from "lucide-react"
 import { toast } from "sonner"
 
-import { Icons } from "../icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,34 +15,33 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog"
-import { Button } from "../ui/button"
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
-interface DeleteContactAlertDialogProps {
+interface DeleteUserAlertDialogProps {
   id: string
 }
 
-export function DeleteContactAlertDialog({
-  id,
-}: DeleteContactAlertDialogProps) {
+export function DeleteUserAlertDialog({ id }: DeleteUserAlertDialogProps) {
   const [isPending, startTransition] = React.useTransition()
 
   function submit() {
     startTransition(async () => {
-      await deleteContactAction({ id })
-      toast.success("Contato deletado com sucesso")
+      const response = await deleteUserAction({ id })
+
+      if (response?.error) {
+        toast.error(response.error)
+      }
     })
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex w-full items-center justify-start gap-2 px-2 font-normal"
-        >
-          <Trash size={16} />
-          <span>Deletar</span>
+        <Button variant="outline" size="icon">
+          <Trash className="h-4 w-4" />
+          <span className="sr-only">Deletar</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

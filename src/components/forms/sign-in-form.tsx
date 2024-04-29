@@ -33,7 +33,7 @@ export function SignInForm() {
     startTransition(async () => {
       const response = await signInAction(data)
 
-      if (response.error) {
+      if (response?.error) {
         toast.error(response.error)
       }
     })

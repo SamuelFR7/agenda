@@ -8,6 +8,7 @@ export const lucia = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
     return {
       username: attributes.username,
+      role: attributes.role,
     }
   },
   sessionCookie: {
@@ -34,6 +35,7 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   username: string
+  role: "user" | "admin"
 }
 
 interface DatabaseSessionAttributes {}

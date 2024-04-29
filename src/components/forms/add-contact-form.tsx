@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
 
-import { catchError } from "@/lib/utils"
 import { contactSchema } from "@/lib/validations/contact"
 
 import { Icons } from "../icons"
@@ -37,15 +36,11 @@ export function AddContactForm({ setIsOpen }: AddContactFormProps) {
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
-      try {
-        await addContactAction(data)
+      await addContactAction(data)
 
-        toast.success("Contato criado com sucesso")
-        setIsOpen(false)
-        form.reset()
-      } catch (error) {
-        catchError(error)
-      }
+      toast.success("Contato criado com sucesso")
+      setIsOpen(false)
+      form.reset()
     })
   }
 

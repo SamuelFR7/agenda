@@ -3,7 +3,10 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
+import { users, type User } from "@/db/schema"
 import bcrypt from "bcryptjs"
+import { eq } from "drizzle-orm"
+import { generateIdFromEntropySize } from "lucia"
 
 import { lucia } from "@/lib/lucia"
 
@@ -71,7 +74,7 @@ export async function signInAction({
   return redirect("/")
 }
 
-export async function signOutAction() {
+export async function signOutAction(): Promise<{ error: string } | null> {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
   if (!sessionId)
     return {
@@ -95,4 +98,90 @@ export async function signOutAction() {
   )
 
   return redirect("/sign-in")
+}
+
+export async function signUpUserAction({
+  username,
+  password,
+  role,
+}: {
+  username: string
+  password: string
+  role: User["role"]
+}): Promise<{ error?: string }> {
+  const userAlreadyExists = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.username, username),
+  })
+
+  if (userAlreadyExists) {
+    return {
+      error: "Usuário já existe",
+    }
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10)
+
+  const userId = generateIdFromEntropySize(16)
+
+  await db.insert(users).values({
+    passwordHash,
+    id: userId,
+    username,
+    role,
+  })
+
+  return redirect("/users")
+}
+
+export async function updateUserAction({
+  username,
+  role,
+  id,
+}: {
+  username: string
+  role: User["role"]
+  id: string
+}): Promise<{ error?: string }> {
+  const usernameAlreadyExists = await db.query.users.findFirst({
+    where: (users, { and, eq, ne }) =>
+      and(ne(users.id, id), eq(users.username, username)),
+    columns: {
+      id: true,
+    },
+  })
+
+  if (usernameAlreadyExists) {
+    return {
+      error: "Nome de usuário já existe",
+    }
+  }
+
+  await db
+    .update(users)
+    .set({
+      username,
+      role,
+    })
+    .where(eq(users.id, id))
+
+  return redirect("/users")
+}
+
+export async function deleteUserAction({ id }: { id: string }) {
+  const userExists = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.id, id),
+    columns: {
+      id: true,
+    },
+  })
+
+  if (!userExists) {
+    return {
+      error: "Usuário não existe",
+    }
+  }
+
+  await db.delete(users).where(eq(users.id, userExists.id))
+
+  return redirect("/users")
 }

@@ -5,8 +5,6 @@ import "@/styles/globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import { Header } from "@/components/header"
-
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -26,8 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
+        <div className="flex min-h-screen w-full flex-col">
+          <main>{children}</main>
+        </div>
       </body>
       <Toaster />
     </html>
