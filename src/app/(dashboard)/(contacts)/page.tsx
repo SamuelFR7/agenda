@@ -81,7 +81,7 @@ export default async function Home({ searchParams }: IndexPageProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
-          Usuários
+          Contatos
         </h1>
         <AddContactDialog />
       </div>
