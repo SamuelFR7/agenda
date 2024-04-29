@@ -1,4 +1,5 @@
-import { bigint, pgTable, text, varchar } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
 
 export const contacts = pgTable("contacts", {
   id: varchar("id", { length: 255 }).primaryKey().notNull(),
@@ -21,39 +22,31 @@ export const contacts = pgTable("contacts", {
 export type Contact = typeof contacts.$inferSelect
 
 export const users = pgTable("users", {
-  id: varchar("id", { length: 15 }).primaryKey().notNull(),
+  id: varchar("id", { length: 16 }).primaryKey().notNull(),
   username: varchar("username", { length: 255 }).notNull().unique(),
+  passwordHash: varchar("password_hash", { length: 255 }).notNull(),
 })
+
+export const usersRelations = relations(users, ({ many }) => ({
+  sessions: many(sessions),
+}))
 
 export type User = typeof users.$inferSelect
 
-export const keys = pgTable("user_key", {
-  id: varchar("id", {
-    length: 255,
-  }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 15,
-  })
+export const sessions = pgTable("sessions", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
-  hashedPassword: varchar("hashed_password", {
-    length: 255,
-  }),
+  expiresAt: timestamp("expires_at", {
+    withTimezone: true,
+    mode: "date",
+  }).notNull(),
 })
 
-export const sessions = pgTable("user_session", {
-  id: varchar("id", {
-    length: 128,
-  }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 15,
-  })
-    .notNull()
-    .references(() => users.id),
-  activeExpires: bigint("active_expires", {
-    mode: "number",
-  }).notNull(),
-  idleExpires: bigint("idle_expires", {
-    mode: "number",
-  }).notNull(),
-})
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}))

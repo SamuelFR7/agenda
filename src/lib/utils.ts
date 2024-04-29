@@ -19,3 +19,13 @@ export function catchError(err: unknown) {
     return toast("Something went wrong, please try again later.")
   }
 }
+
+export type ActionResponseType<Output> =
+  | {
+      success: true
+      data: Output
+    }
+  | {
+      success: false
+      error: string
+    }

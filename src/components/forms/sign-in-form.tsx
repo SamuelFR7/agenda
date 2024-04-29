@@ -4,9 +4,9 @@ import React from "react"
 import { signInAction } from "@/_actions/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { type z } from "zod"
 
-import { catchError } from "@/lib/utils"
 import { userSchema } from "@/lib/validations/user"
 
 import { Icons } from "../icons"
@@ -31,10 +31,10 @@ export function SignInForm() {
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
-      try {
-        await signInAction(data)
-      } catch (error) {
-        catchError(error)
+      const response = await signInAction(data)
+
+      if (response.error) {
+        toast.error(response.error)
       }
     })
   }

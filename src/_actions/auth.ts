@@ -1,45 +1,98 @@
 "use server"
 
-import * as context from "next/headers"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { LuciaError } from "lucia"
-import { type z } from "zod"
+import { db } from "@/db"
+import bcrypt from "bcryptjs"
 
-import { auth } from "@/lib/lucia"
-import { type userSchema } from "@/lib/validations/user"
+import { lucia } from "@/lib/lucia"
 
-export async function signInAction(data: z.infer<typeof userSchema>) {
+export async function getUser() {
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+  if (!sessionId) return null
+  const { user, session } = await lucia.validateSession(sessionId)
   try {
-    const key = await auth.useKey("username", data.username, data.password)
-    const session = await auth.createSession({
-      userId: key.userId,
-      attributes: {},
-    })
-
-    const authRequest = auth.handleRequest("POST", context)
-    authRequest.setSession(session)
-    return redirect("/")
-  } catch (e) {
-    if (e instanceof LuciaError) {
-      throw new Error("Senha ou usuário incorretos")
+    if (session && session.fresh) {
+      const sessionCookie = lucia.createSessionCookie(session.id)
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      )
     }
-
-    throw e
+    if (!session) {
+      const sessionCookie = lucia.createBlankSessionCookie()
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      )
+    }
+  } catch {
+    // Next.js throws error when attempting to set cookies when rendering page
   }
+  return user
+}
+
+export async function signInAction({
+  username,
+  password,
+}: {
+  username: string
+  password: string
+}) {
+  const user = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.username, username.toUpperCase()),
+  })
+
+  if (!user) {
+    return {
+      error: "Usuário ou senha incorretos",
+    }
+  }
+
+  const validPassword = await bcrypt.compare(password, user.passwordHash)
+
+  if (!validPassword) {
+    return {
+      error: "Usuário ou senha incorretos",
+    }
+  }
+
+  const session = await lucia.createSession(user.id, {})
+  const sessionCookie = lucia.createSessionCookie(session.id)
+
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  )
+
+  return redirect("/")
 }
 
 export async function signOutAction() {
-  const authRequest = auth.handleRequest("POST", context)
-
-  const session = await authRequest.validate()
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+  if (!sessionId)
+    return {
+      error: "Unauthorized",
+    }
+  const { session } = await lucia.validateSession(sessionId)
 
   if (!session) {
-    throw new Error("No session found")
+    return {
+      error: "Unauthorized",
+    }
   }
 
-  await auth.invalidateSession(session.sessionId)
+  await lucia.invalidateSession(session.id)
 
-  authRequest.setSession(null)
+  const sessionCookie = lucia.createBlankSessionCookie()
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  )
 
-  return redirect("/")
+  return redirect("/sign-in")
 }
