@@ -14,6 +14,7 @@ const config = {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
     "drizzle/enforce-delete-with-where": "error",
     "drizzle/enforce-update-with-where": "error",

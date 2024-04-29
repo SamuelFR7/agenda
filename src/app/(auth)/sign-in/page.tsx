@@ -1,13 +1,12 @@
-import * as context from "next/headers"
 import { redirect } from "next/navigation"
+import { getUser } from "@/_actions/auth"
 
-import { auth } from "@/lib/lucia"
 import { SignInForm } from "@/components/forms/sign-in-form"
 
 export default async function SignInPage() {
-  const authRequest = auth.handleRequest("GET", context)
-  const session = await authRequest.validate()
-  if (session) {
+  const user = await getUser()
+
+  if (user) {
     redirect("/")
   }
 

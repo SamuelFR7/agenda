@@ -1,10 +1,9 @@
-import * as context from "next/headers"
 import { redirect } from "next/navigation"
+import { getUser } from "@/_actions/auth"
 import { db } from "@/db"
 import { contacts } from "@/db/schema"
 import { and, count, ilike } from "drizzle-orm"
 
-import { auth } from "@/lib/lucia"
 import { ContactTableShell } from "@/components/shells/contact-table-shell"
 import { Shell } from "@/components/shells/shell"
 
@@ -17,9 +16,8 @@ interface IndexPageProps {
 export const dynamic = "force-dynamic"
 
 export default async function Home({ searchParams }: IndexPageProps) {
-  const authRequest = auth.handleRequest("GET", context)
-  const session = await authRequest.validate()
-  if (!session) {
+  const user = await getUser()
+  if (!user) {
     redirect("/sign-in")
   }
 

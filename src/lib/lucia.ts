@@ -1,34 +1,39 @@
-import { connection } from "@/db"
+import { adapter } from "@/db"
 import { env } from "@/env.js"
-import { postgres } from "@lucia-auth/adapter-postgresql"
-import { compare, hash } from "bcryptjs"
-import { lucia } from "lucia"
-import { nextjs_future } from "lucia/middleware"
+import { Lucia } from "lucia"
 
-export const auth = lucia({
-  env: env.NODE_ENV === "production" ? "PROD" : "DEV",
-  middleware: nextjs_future(),
-  sessionCookie: {
-    expires: false,
-  },
-  adapter: postgres(connection, {
-    user: "users",
-    key: "user_key",
-    session: "user_session",
-  }),
-  getUserAttributes: (data) => {
+const isProduction = env.NODE_ENV === "production"
+
+export const lucia = new Lucia(adapter, {
+  getUserAttributes: (attributes) => {
     return {
-      username: data.username,
+      username: attributes.username,
     }
   },
-  passwordHash: {
-    generate: (password) => {
-      return hash(password, 8)
-    },
-    validate: (password, hash) => {
-      return compare(password, hash)
+  sessionCookie: {
+    expires: false,
+    attributes: {
+      ...(isProduction
+        ? {
+            secure: true,
+            domain: "agenda.grupoacs.net.br",
+            sameSite: "lax",
+          }
+        : {}),
     },
   },
 })
 
-export type Auth = typeof auth
+declare module "lucia" {
+  interface Register {
+    Lucia: typeof lucia
+    DatabaseSessionAttributes: DatabaseSessionAttributes
+    DatabaseUserAttributes: DatabaseUserAttributes
+  }
+}
+
+interface DatabaseUserAttributes {
+  username: string
+}
+
+interface DatabaseSessionAttributes {}
