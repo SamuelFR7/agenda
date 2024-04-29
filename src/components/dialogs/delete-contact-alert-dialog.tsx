@@ -5,8 +5,6 @@ import { deleteContactAction } from "@/_actions/contact"
 import { Trash } from "lucide-react"
 import { toast } from "sonner"
 
-import { catchError } from "@/lib/utils"
-
 import { Icons } from "../icons"
 import {
   AlertDialog,
@@ -32,12 +30,8 @@ export function DeleteContactAlertDialog({
 
   function submit() {
     startTransition(async () => {
-      try {
-        await deleteContactAction({ id })
-        toast.success("Contato deletado com sucesso")
-      } catch (error) {
-        catchError(error)
-      }
+      await deleteContactAction({ id })
+      toast.success("Contato deletado com sucesso")
     })
   }
 
