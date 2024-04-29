@@ -34,6 +34,10 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
     return redirect("/sign-in")
   }
 
+  if (user.role !== "admin") {
+    return redirect("/")
+  }
+
   const users = await db.query.users.findMany({
     columns: {
       id: true,

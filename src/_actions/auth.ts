@@ -3,7 +3,9 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
+import { users, type User } from "@/db/schema"
 import bcrypt from "bcryptjs"
+import { generateIdFromEntropySize } from "lucia"
 
 import { lucia } from "@/lib/lucia"
 
@@ -95,4 +97,37 @@ export async function signOutAction(): Promise<{ error: string } | null> {
   )
 
   return redirect("/sign-in")
+}
+
+export async function signUpUserAction({
+  username,
+  password,
+  role,
+}: {
+  username: string
+  password: string
+  role: User["role"]
+}): Promise<{ error?: string }> {
+  const userAlreadyExists = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.username, username),
+  })
+
+  if (userAlreadyExists) {
+    return {
+      error: "Usuário já existe",
+    }
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10)
+
+  const userId = generateIdFromEntropySize(16)
+
+  await db.insert(users).values({
+    passwordHash,
+    id: userId,
+    username,
+    role,
+  })
+
+  return redirect("/users")
 }
