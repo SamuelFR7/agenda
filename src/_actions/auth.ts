@@ -71,7 +71,7 @@ export async function signInAction({
   return redirect("/")
 }
 
-export async function signOutAction() {
+export async function signOutAction(): Promise<{ error: string } | null> {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
   if (!sessionId)
     return {

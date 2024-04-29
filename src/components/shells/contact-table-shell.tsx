@@ -62,30 +62,32 @@ export function ContactTableShell({
         />
         <AddContactDialog />
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>Telefone</TableHead>
-            <TableCell>Ações</TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isPending ? (
-            <TableLoading />
-          ) : (
-            allContacts.map((contact) => (
-              <TableRow key={contact.id}>
-                <TableCell>{contact.name}</TableCell>
-                <TableCell>{contact.phone1}</TableCell>
-                <TableCell>
-                  <TableActions contact={contact} />
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nome</TableHead>
+              <TableHead>Telefone</TableHead>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isPending ? (
+              <TableLoading />
+            ) : (
+              allContacts.map((contact) => (
+                <TableRow key={contact.id}>
+                  <TableCell>{contact.name}</TableCell>
+                  <TableCell>{contact.phone1}</TableCell>
+                  <TableCell>
+                    <TableActions contact={contact} />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
       <TablePagination
         currentPage={
           typeof currentPage === "string" ? parseInt(currentPage) : 1

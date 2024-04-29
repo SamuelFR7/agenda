@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm"
-import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
 
 export const contacts = pgTable("contacts", {
   id: varchar("id", { length: 255 }).primaryKey().notNull(),
@@ -21,10 +21,13 @@ export const contacts = pgTable("contacts", {
 
 export type Contact = typeof contacts.$inferSelect
 
+export const roleEnum = pgEnum("roles", ["admin", "user"])
+
 export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey().notNull(),
   username: varchar("username", { length: 255 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+  role: roleEnum("roles").notNull().default("user"),
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
