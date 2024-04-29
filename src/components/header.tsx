@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
+import { ModeToggle } from "./mode-toggle"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 
@@ -95,11 +96,11 @@ export function Header({ isAdmin }: { isAdmin: boolean }) {
         </SheetContent>
       </Sheet>
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <ModeToggle />
         <Button
           onClick={handleSignOut}
           size="icon"
           variant="outline"
-          className="ml-auto"
           disabled={isPending}
         >
           {isPending ? (
