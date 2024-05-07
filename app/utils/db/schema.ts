@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm"
 import { pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
+import { createId } from "@paralleldrive/cuid2"
 
 export const contacts = pgTable("contacts", {
   id: varchar("id", { length: 255 }).primaryKey().notNull(),
@@ -30,6 +31,8 @@ export const users = pgTable("users", {
   role: roleEnum("roles").notNull().default("user"),
 })
 
+export type Role = User["role"]
+
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
 }))
@@ -37,7 +40,9 @@ export const usersRelations = relations(users, ({ many }) => ({
 export type User = typeof users.$inferSelect
 
 export const sessions = pgTable("sessions", {
-  id: varchar("id", { length: 255 }).primaryKey(),
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
   userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
@@ -46,6 +51,8 @@ export const sessions = pgTable("sessions", {
     mode: "date",
   }).notNull(),
 })
+
+export type Session = typeof sessions.$inferSelect
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, {
