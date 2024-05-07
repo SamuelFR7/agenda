@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { Role } from "./db/schema"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,4 +30,13 @@ export function combineResponseInits(
     }
   }
   return combined
+}
+
+export function translateRole(role: Role) {
+  switch (role) {
+    case "admin":
+      return "Administrador"
+    case "user":
+      return "Usuário"
+  }
 }

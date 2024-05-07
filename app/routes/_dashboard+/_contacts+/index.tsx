@@ -148,7 +148,7 @@ export default function Index() {
                 <TableRow>
                   <TableCell
                     className="py-10 text-center text-muted-foreground"
-                    colSpan={3}
+                    colSpan={5}
                   >
                     Nenhum resultado encontrado.
                   </TableCell>
