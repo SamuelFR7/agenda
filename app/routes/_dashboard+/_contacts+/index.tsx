@@ -10,6 +10,7 @@ import { count, ilike } from "drizzle-orm"
 import { PlusCircle } from "lucide-react"
 import { z } from "zod"
 import { Pagination } from "~/components/pagination"
+import { buttonVariants } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import {
   Table,
@@ -83,7 +84,7 @@ export default function Index() {
         <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
           Contatos
         </h1>
-        <Link to="/new">
+        <Link to="/new" className={buttonVariants()}>
           <PlusCircle className="mr-2 h-4 w-4" />
           Novo contato
         </Link>

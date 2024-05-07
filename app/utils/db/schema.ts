@@ -3,7 +3,10 @@ import { pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
 import { createId } from "@paralleldrive/cuid2"
 
 export const contacts = pgTable("contacts", {
-  id: varchar("id", { length: 255 }).primaryKey().notNull(),
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => createId()),
   name: varchar("name", { length: 255 }).notNull(),
   phone1: varchar("phone_1", { length: 255 }).notNull(),
   phone2: varchar("phone_2", { length: 255 }),
