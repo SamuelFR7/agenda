@@ -28,7 +28,10 @@ export type Contact = typeof contacts.$inferSelect
 export const roleEnum = pgEnum("roles", ["admin", "user"])
 
 export const users = pgTable("users", {
-  id: varchar("id", { length: 255 }).primaryKey().notNull(),
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => createId()),
   username: varchar("username", { length: 255 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   role: roleEnum("roles").notNull().default("user"),
