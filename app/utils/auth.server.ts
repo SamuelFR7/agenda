@@ -13,7 +13,7 @@ export function getSessionExpirationDate() {
 }
 export const sessionKey = "sessionId"
 
-export async function getUserId(request: Request) {
+export async function getUser(request: Request) {
   const authSession = await authSessionStorage.getSession(
     request.headers.get("cookie")
   )
@@ -40,15 +40,18 @@ export async function getUserId(request: Request) {
     })
   }
 
-  return session.user.id
+  return {
+    userId: session.user.id,
+    role: session.user.role,
+  }
 }
 
-export async function requireUserId(
+export async function requireUser(
   request: Request,
   { redirectTo }: { redirectTo?: string | null } = {}
 ) {
-  const userId = await getUserId(request)
-  if (!userId) {
+  const user = await getUser(request)
+  if (!user) {
     const requestUrl = new URL(request.url)
     redirectTo =
       redirectTo === null
@@ -62,12 +65,12 @@ export async function requireUserId(
     throw redirect(loginRedirect)
   }
 
-  return userId
+  return user
 }
 
 export async function requireAnonymous(request: Request) {
-  const userId = await getUserId(request)
-  if (userId) {
+  const user = await getUser(request)
+  if (user) {
     throw redirect("/")
   }
 }
