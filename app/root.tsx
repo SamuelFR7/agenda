@@ -15,6 +15,8 @@ import {
 import { themeSessionResolver } from "./utils/themes.server"
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes"
 import clsx from "clsx"
+import { honeypot } from "./utils/honeypot.server"
+import { HoneypotProvider } from "remix-utils/honeypot/react"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -26,8 +28,10 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request)
+
   return {
     theme: getTheme(),
+    honeypotInputProps: honeypot.getInputProps(),
   }
 }
 
@@ -36,7 +40,9 @@ export default function AppWithProviders() {
 
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
-      <App />
+      <HoneypotProvider {...data.honeypotInputProps}>
+        <App />
+      </HoneypotProvider>
     </ThemeProvider>
   )
 }

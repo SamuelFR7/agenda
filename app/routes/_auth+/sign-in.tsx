@@ -13,6 +13,8 @@ import { FormMessage } from "~/components/form-message"
 import { Input } from "~/components/ui/input"
 import { Button } from "~/components/ui/button"
 import { Loader2 } from "lucide-react"
+import { HoneypotInputs } from "remix-utils/honeypot/react"
+import { checkHoneypot } from "~/utils/honeypot.server"
 
 const signInSchema = userSchema.extend({
   redirectTo: z.string().optional(),
@@ -56,6 +58,7 @@ export default function SignInPage() {
           </div>
 
           <Form className="space-y-2" method="post" {...getFormProps(form)}>
+            <HoneypotInputs />
             <FormItem>
               <Label htmlFor={fields.username.id}>Usuário</Label>
               <Input {...getInputProps(fields.username, { type: "text" })} />
@@ -83,6 +86,7 @@ export default function SignInPage() {
 export async function action({ request }: ActionFunctionArgs) {
   await requireAnonymous(request)
   const formData = await request.formData()
+  checkHoneypot(formData)
 
   const submission = await parseWithZod(formData, {
     schema: (intent) =>
