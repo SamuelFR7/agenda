@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node"
 import { Form, Link, useLoaderData, useSubmit } from "@remix-run/react"
 import { Pencil, PlusCircle } from "lucide-react"
+import { DeleteUserDialog } from "~/components/delete-user-dialog"
 import { buttonVariants } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import {
@@ -102,7 +103,7 @@ export default function UsersPage() {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {/* <DeleteUserAlertDialog id={user.id} /> */}
+                    <DeleteUserDialog userId={user.id} />
                   </TableCell>
                 </TableRow>
               ))}
