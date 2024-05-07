@@ -3,11 +3,11 @@ import { z } from "zod"
 export const contactSchema = z.object({
   name: z
     .string({ required_error: "Digite um nome " })
-    .nonempty({ message: "Digite um nome" })
+    .min(1, "Digite um nome")
     .toUpperCase(),
   phone1: z
     .string({ required_error: "Digite um nome " })
-    .nonempty({ message: "Digite um telefone" })
+    .min(1, "Digite um telefone")
     .toUpperCase(),
   phone2: z.string().optional().nullable(),
   phone3: z.string().optional().nullable(),
@@ -21,8 +21,4 @@ export const contactSchema = z.object({
   email: z.string().toLowerCase().optional().nullable(),
   address: z.string().toUpperCase().optional().nullable(),
   observations: z.string().toUpperCase().optional().nullable(),
-})
-
-export const getContactSchema = z.object({
-  id: z.string(),
 })
