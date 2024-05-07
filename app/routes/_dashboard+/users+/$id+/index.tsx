@@ -1,3 +1,4 @@
+import { getFormProps, getInputProps, useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod"
 import { invariantResponse } from "@epic-web/invariant"
 import {
@@ -6,10 +7,25 @@ import {
   json,
   redirect,
 } from "@remix-run/node"
+import { Form, Link, useActionData, useLoaderData } from "@remix-run/react"
 import { eq } from "drizzle-orm"
+import { Loader2 } from "lucide-react"
 import { z } from "zod"
+import { FormItem } from "~/components/form-item"
+import { FormMessage } from "~/components/form-message"
+import { Button, buttonVariants } from "~/components/ui/button"
+import { Input } from "~/components/ui/input"
+import { Label } from "~/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select"
 import { db } from "~/utils/db/index.server"
 import { users } from "~/utils/db/schema"
+import { useIsPending } from "~/utils/misc"
 import { requireUserWithRole } from "~/utils/permissions.server"
 
 const schema = z.object({
@@ -21,14 +37,15 @@ const schema = z.object({
 })
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  await requireUserWithRole(request, "admin")
+  const me = await requireUserWithRole(request, "admin")
 
   const userId = params.id
 
   invariantResponse(userId, "User ID is required")
 
   const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.id, userId),
+    where: (users, { eq, and, ne }) =>
+      and(eq(users.id, userId), ne(users.id, me)),
     columns: {
       id: true,
       username: true,
@@ -45,7 +62,69 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   })
 }
 
-export default function UpdateUserPage() {}
+export default function UpdateUserPage() {
+  const data = useLoaderData<typeof loader>()
+  const lastResult = useActionData<typeof action>()
+
+  const [form, fields] = useForm({
+    lastResult,
+    id: `update-user-form-${data.user.id}`,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema })
+    },
+    defaultValue: {
+      role: data.user.role,
+      username: data.user.username,
+    },
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  })
+
+  const isPending = useIsPending()
+
+  return (
+    <div>
+      <Form className="space-y-2.5" method="post" {...getFormProps(form)}>
+        <FormItem>
+          <Label htmlFor={fields.username.id}>Nome de usuário</Label>
+          <Input {...getInputProps(fields.username, { type: "text" })} />
+          <FormMessage errors={fields.username.errors} />
+        </FormItem>
+
+        <FormItem>
+          <Label htmlFor={fields.role.id}>Cargo</Label>
+          <Select
+            name={fields.role.name}
+            defaultValue={fields.role.initialValue}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="user">Usuário</SelectItem>
+              <SelectItem value="admin">Administrador</SelectItem>
+            </SelectContent>
+          </Select>
+          <FormMessage errors={fields.role.errors} />
+        </FormItem>
+        <div className="flex justify-end gap-4">
+          <Link
+            to="/users"
+            className={buttonVariants({
+              variant: "secondary",
+            })}
+          >
+            Voltar
+          </Link>
+          <Button type="submit" disabled={isPending}>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Salvar
+          </Button>
+        </div>
+      </Form>
+    </div>
+  )
+}
 
 export async function action({ request, params }: ActionFunctionArgs) {
   await requireUserWithRole(request, "admin")

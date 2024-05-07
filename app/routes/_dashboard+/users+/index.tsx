@@ -16,7 +16,7 @@ import { requireUserWithRole } from "~/utils/permissions.server"
 import { translateRole } from "~/utils/utils"
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await requireUserWithRole(request, "admin")
+  const me = await requireUserWithRole(request, "admin")
 
   const url = new URL(request.url)
   const searchParams = url.searchParams
@@ -24,8 +24,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const name = searchParams.get("q")
 
   const users = await db.query.users.findMany({
-    where: (users, { ilike }) =>
-      name ? ilike(users.username, `%${name}%`) : undefined,
+    where: (users, { ilike, and, ne }) =>
+      and(
+        ne(users.id, me),
+        name ? ilike(users.username, `%${name}%`) : undefined
+      ),
     columns: {
       id: true,
       username: true,
