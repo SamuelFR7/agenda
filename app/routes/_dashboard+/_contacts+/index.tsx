@@ -7,7 +7,7 @@ import {
   useSubmit,
 } from "@remix-run/react"
 import { count, ilike } from "drizzle-orm"
-import { PlusCircle } from "lucide-react"
+import { Pencil, PlusCircle } from "lucide-react"
 import { z } from "zod"
 import { Pagination } from "~/components/pagination"
 import { buttonVariants } from "~/components/ui/button"
@@ -110,7 +110,7 @@ export default function Index() {
               <TableRow>
                 <TableHead className="w-[174px]">Nome</TableHead>
                 <TableHead className="w-[140px]">Telefone</TableHead>
-                <TableHead className="w-[120px]">Ações</TableHead>
+                <TableHead className="w-[120px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -119,6 +119,16 @@ export default function Index() {
                   <TableCell className="font-medium">{contact.name}</TableCell>
                   <TableCell>{contact.phone1}</TableCell>
                   <TableCell>
+                    <Link
+                      className={buttonVariants({
+                        size: "xs",
+                        variant: "outline",
+                      })}
+                      to={`/${contact.id}`}
+                    >
+                      Editar
+                      <Pencil className="ml-2 h-3 w-3" />
+                    </Link>
                     {/* <TableActions contact={contact} /> */}
                   </TableCell>
                 </TableRow>
