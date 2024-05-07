@@ -9,7 +9,9 @@ import {
 import { count, ilike } from "drizzle-orm"
 import { Pencil, PlusCircle } from "lucide-react"
 import { z } from "zod"
+import { DeleteContactDialog } from "~/components/delete-contact-dialog"
 import { Pagination } from "~/components/pagination"
+
 import { buttonVariants } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import {
@@ -111,6 +113,7 @@ export default function Index() {
                 <TableHead className="w-[174px]">Nome</TableHead>
                 <TableHead className="w-[140px]">Telefone</TableHead>
                 <TableHead className="w-[120px]"></TableHead>
+                <TableHead className="w-[120px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -129,7 +132,9 @@ export default function Index() {
                       Editar
                       <Pencil className="ml-2 h-3 w-3" />
                     </Link>
-                    {/* <TableActions contact={contact} /> */}
+                  </TableCell>
+                  <TableCell>
+                    <DeleteContactDialog contactId={contact.id} />
                   </TableCell>
                 </TableRow>
               ))}
