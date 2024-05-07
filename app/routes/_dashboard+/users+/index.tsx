@@ -1,7 +1,16 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node"
-import { Form, Link, useLoaderData, useSubmit } from "@remix-run/react"
+import {
+  Form,
+  Link,
+  useLoaderData,
+  useSearchParams,
+  useSubmit,
+} from "@remix-run/react"
+import { and, count, ilike, ne } from "drizzle-orm"
 import { Pencil, PlusCircle } from "lucide-react"
+import { z } from "zod"
 import { DeleteUserDialog } from "~/components/delete-user-dialog"
+import { Pagination } from "~/components/pagination"
 import { buttonVariants } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import {
@@ -13,6 +22,7 @@ import {
   TableRow,
 } from "~/components/ui/table"
 import { db } from "~/utils/db/index.server"
+import { users } from "~/utils/db/schema"
 import { requireUserWithRole } from "~/utils/permissions.server"
 import { translateRole } from "~/utils/utils"
 
@@ -23,8 +33,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const searchParams = url.searchParams
 
   const name = searchParams.get("q")
+  const page = parseInt(searchParams.get("page") || "1")
 
-  const users = await db.query.users.findMany({
+  const limit = 10
+  const offset = (page - 1) * limit
+
+  const usersQuery = await db.query.users.findMany({
     where: (users, { ilike, and, ne }) =>
       and(
         ne(users.id, me),
@@ -35,17 +49,43 @@ export async function loader({ request }: LoaderFunctionArgs) {
       username: true,
       role: true,
     },
+    limit,
+    offset,
   })
 
+  const [usersCount] = await db
+    .select({
+      count: count(users.id),
+    })
+    .from(users)
+    .where(
+      and(
+        ne(users.id, me),
+        name ? ilike(users.username, `%${name}%`) : undefined
+      )
+    )
+
   return json({
-    users,
+    users: usersQuery,
     name,
+    totalCount: usersCount.count,
   })
 }
 
 export default function UsersPage() {
   const data = useLoaderData<typeof loader>()
   const submit = useSubmit()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const currentPage = z.coerce.number().parse(searchParams.get("page") ?? "1")
+
+  function handlePaginate(pageNumber: number) {
+    setSearchParams((prev) => {
+      prev.set("page", pageNumber.toString())
+
+      return prev
+    })
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -121,6 +161,12 @@ export default function UsersPage() {
             </TableBody>
           </Table>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePaginate}
+          perPage={10}
+          totalCount={data.totalCount}
+        />
       </div>
     </div>
   )
