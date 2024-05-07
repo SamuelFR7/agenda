@@ -17,6 +17,7 @@ import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes"
 import clsx from "clsx"
 import { honeypot } from "./utils/honeypot.server"
 import { HoneypotProvider } from "remix-utils/honeypot/react"
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -35,15 +36,22 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 }
 
+const queryClient = new QueryClient()
+
 export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
-      <HoneypotProvider {...data.honeypotInputProps}>
-        <App />
-      </HoneypotProvider>
-    </ThemeProvider>
+    <HoneypotProvider {...data.honeypotInputProps}>
+      <ThemeProvider
+        specifiedTheme={data.theme}
+        themeAction="/action/set-theme"
+      >
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </ThemeProvider>
+    </HoneypotProvider>
   )
 }
 

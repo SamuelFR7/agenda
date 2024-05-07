@@ -44,6 +44,9 @@ importers:
       '@remix-run/react':
         specifier: ^2.9.1
         version: 2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
+      '@tanstack/react-query':
+        specifier: ^5.35.1
+        version: 5.35.1(react@18.3.1)
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -1498,6 +1501,14 @@ packages:
     resolution: {integrity: sha512-TGGO7v7qOq4CYmSBVEYpI1Y5xDuCEnbVC5Vth8mOsW0gDSzxNrVERPc790IGHsrT2dQSimgMr9Ub3Y1Jci5/8w==}
     cpu: [x64]
     os: [win32]
+
+  '@tanstack/query-core@5.35.1':
+    resolution: {integrity: sha512-0Dnpybqb8+ps6WgqBnqFEC+1F/xLvUosRAq+wiGisTgolOZzqZfkE2995dEXmhuzINiTM7/a6xSGznU0NIvBkw==}
+
+  '@tanstack/react-query@5.35.1':
+    resolution: {integrity: sha512-i2T7m2ffQdNqlX3pO+uMsnQ0H4a59Ens2GxtlMsRiOvdSB4SfYmHb27MnvFV8rGmtWRaa4gPli0/rpDoSS5LbQ==}
+    peerDependencies:
+      react: ^18.0.0
 
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -5806,6 +5817,13 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.17.2':
     optional: true
+
+  '@tanstack/query-core@5.35.1': {}
+
+  '@tanstack/react-query@5.35.1(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.35.1
+      react: 18.3.1
 
   '@types/acorn@4.0.6':
     dependencies:

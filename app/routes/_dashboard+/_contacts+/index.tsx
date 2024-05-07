@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table"
+import { ViewContactDialog } from "~/components/view-contact-dialog"
 import { requireUser } from "~/utils/auth.server"
 import { db } from "~/utils/db/index.server"
 import { contacts } from "~/utils/db/schema"
@@ -110,7 +111,8 @@ export default function Index() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[174px]">Nome</TableHead>
+                <TableHead className="w-[64px]"></TableHead>
+                <TableHead className="w-[200px]">Nome</TableHead>
                 <TableHead className="w-[140px]">Telefone</TableHead>
                 <TableHead className="w-[120px]"></TableHead>
                 <TableHead className="w-[120px]"></TableHead>
@@ -119,6 +121,9 @@ export default function Index() {
             <TableBody>
               {data.contacts.map((contact) => (
                 <TableRow key={contact.id}>
+                  <TableCell>
+                    <ViewContactDialog contactId={contact.id} />
+                  </TableCell>
                   <TableCell className="font-medium">{contact.name}</TableCell>
                   <TableCell>{contact.phone1}</TableCell>
                   <TableCell>
