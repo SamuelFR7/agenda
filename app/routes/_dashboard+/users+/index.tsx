@@ -91,7 +91,7 @@ export default function UsersPage() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
-          Contatos
+          Usuários
         </h1>
         <Link to="/users/new" className={buttonVariants()}>
           <PlusCircle className="mr-2 h-4 w-4" />
