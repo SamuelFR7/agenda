@@ -22,4 +22,4 @@ primary_region = 'gru'
   cpus = 2
 
 [deploy]
-  release_command = "npm run db:migrate"
+  release_command = " pnpm db:migrate"
