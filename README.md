@@ -33,10 +33,10 @@
 
 This project was made using the follow technologies:
 
-- [NextJS](https://nextjs.org)
+- [RemixJS](https://remix.run/)
 - [TailwindCSS](https://tailwindcss.com)
 - [DrizzleORM](https://orm.drizzle.team)
-- [Planetscale](https://planetscale.com)
+- [Postgres](https://www.postgresql.org/)
 
 # :computer: How to run
 
