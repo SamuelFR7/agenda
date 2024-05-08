@@ -20,3 +20,6 @@ primary_region = 'gru'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 2
+
+[deploy]
+  release_command = " pnpm db:migrate"
