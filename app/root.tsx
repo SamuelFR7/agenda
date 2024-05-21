@@ -18,6 +18,7 @@ import clsx from "clsx"
 import { honeypot } from "./utils/honeypot.server"
 import { HoneypotProvider } from "remix-utils/honeypot/react"
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
+import { GeneralErrorBoundary } from "./components/error-boundary"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -70,6 +71,24 @@ function App() {
       </head>
       <body>
         <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  )
+}
+
+export function ErrorBoundary() {
+  return (
+    <html lang="pt-BR">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <GeneralErrorBoundary />
         <ScrollRestoration />
         <Scripts />
       </body>
