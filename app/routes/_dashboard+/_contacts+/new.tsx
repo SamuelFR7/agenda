@@ -128,6 +128,7 @@ export default function NewContactPage() {
         </div>
         <div className="flex w-full justify-end gap-4">
           <Link
+            prefetch="intent"
             className={buttonVariants({
               variant: "secondary",
             })}

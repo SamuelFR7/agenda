@@ -87,7 +87,7 @@ export default function Index() {
         <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
           Contatos
         </h1>
-        <Link to="/new" className={buttonVariants()}>
+        <Link prefetch="intent" to="/new" className={buttonVariants()}>
           <PlusCircle className="mr-2 h-4 w-4" />
           Novo contato
         </Link>
@@ -128,6 +128,7 @@ export default function Index() {
                   <TableCell>{contact.phone1}</TableCell>
                   <TableCell>
                     <Link
+                      prefetch="intent"
                       className={buttonVariants({
                         size: "xs",
                         variant: "outline",

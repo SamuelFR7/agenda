@@ -93,7 +93,7 @@ export default function UsersPage() {
         <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
           Usuários
         </h1>
-        <Link to="/users/new" className={buttonVariants()}>
+        <Link prefetch="intent" to="/users/new" className={buttonVariants()}>
           <PlusCircle className="mr-2 h-4 w-4" />
           Novo usuário
         </Link>
@@ -132,6 +132,7 @@ export default function UsersPage() {
                   <TableCell>{translateRole(user.role)}</TableCell>
                   <TableCell>
                     <Link
+                      prefetch="intent"
                       className={buttonVariants({
                         size: "xs",
                         variant: "outline",

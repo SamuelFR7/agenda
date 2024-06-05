@@ -109,6 +109,7 @@ export default function UpdateUserPage() {
         </FormItem>
         <div className="flex justify-end gap-4">
           <Link
+            prefetch="intent"
             to="/users"
             className={buttonVariants({
               variant: "secondary",
