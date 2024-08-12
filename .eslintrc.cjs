@@ -74,6 +74,10 @@ module.exports = {
         "plugin:import/recommended",
         "plugin:import/typescript",
       ],
+      rules: {
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-require-imports": "off",
+      },
     },
 
     // Node
